@@ -7,9 +7,9 @@
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
-WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
-WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+HINSTANCE   hInst;                                    // 현재 인스턴스입니다.
+WCHAR       szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
+WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -17,6 +17,13 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+// _In_(SAL 주석) : 자주 사용되는 주석을 키워드로
+// hInstance     : 프로세스 시작 주소, 인스턴스 핸들
+// hPrevInstance : 이전에 실행된 인스턴스 핸들
+// lpCmdLine     : 명령으로 입력된 프로그램 인수
+// nCmdShow      : 프로그램이 시작될 형태
+
+// wWinMain : 윈도우창 세팅 후 화면에 띄우고 메세지 루프
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -28,6 +35,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // TODO: 여기에 코드를 입력합니다.
 
     // 전역 문자열을 초기화합니다.
+    // 위에 선언된 WCHAR 전역 문자열 변수들 리소스로 초기화
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_WINAPI2DCOPY, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
@@ -38,18 +46,34 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    // 단축키 : 리소스뷰에서 단축키들 건들 수 있음
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINAPI2DCOPY));
 
     MSG msg;
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    // 메시지 큐에서 메시지 확인될 때까지 대기하는 방식(cin처럼)
+
+    // GetMessage  : 메시지 큐에 메시지 없으면 대기, 메시지 있다면 true 반환.단, WM_QUIT 메시지 있으면 false 반환
+    // PeekMessage : 메시지 큐에 메시지 없으면 false, 메시지 있다면 true 반환.
+
+    // 게임처리를 계속 진행하다가 메시지 큐에 메시지 들어오면 메시지를 처리하는 방식으로
+    // PM_'키워드'를 5번째 인자로 넣어 메시지 가져오는 행동 입력가능
+        //PM_REMOVE PM_NOREMOVE 등등
+    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (WM_QUIT == msg.message) break;
+
+        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) // 단축키 처리
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            TranslateMessage(&msg);     // 키보드 입력메시지 처리 담당 
+            DispatchMessage(&msg);      // WndProc에서 전달된 메시지를 실제 윈도우에 전달
         }
+        else
+        {
+            // TODO : 게임 처리
+        }
+        
     }
 
     return (int) msg.wParam;
@@ -68,17 +92,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
+    wcex.style          = CS_HREDRAW | CS_VREDRAW;                                  // 스타일
+    wcex.lpfnWndProc    = WndProc;                                                  // 메시지 처리하는 함수 지정
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
+    wcex.hInstance      = hInstance;                                                // 윈도우 클래스를 등록한 인스턴스의 핸들
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINAPI2DCOPY));
+    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINAPI2DCOPY);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.lpszMenuName   = nullptr;                                                  // 메뉴 (게임에선 필요 없으므로 nullptr했음)
+    wcex.lpszClassName  = szWindowClass;                                            // 윈도우 클래스 이름
 
     return RegisterClassExW(&wcex);
 }
@@ -97,13 +121,34 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   HWND hWnd = CreateWindowW(szWindowClass,         // 클래스 이름
+                             szTitle,               // 타이틀 이름
+                             WINSTYLE,              // 윈도우 스타일 (비트연산 때 봤던 거)
+                             WINPOSITIONX,          // 윈도우 화면 좌표
+                             WINPOSITIONY,          // 
+                             WINSIZEX,              // 윈도우 화면 크기
+                             WINSIZEY,              // 
+                             nullptr,               // 부모 윈도우(누군가가 호출한)
+                             nullptr,               // 메뉴 핸들
+                             hInstance,             // 인스턴스 지정
+                             nullptr);              // 추가 매개변수
 
    if (!hWnd)
    {
       return FALSE;
    }
+
+   // 현재 타이틀바 포함한 전체크기가 1280 720 이므로 실제 윈도우 내용 화면의 크기를 1280 720으로 맞추기 위해서
+   RECT rect;
+   rect.left = 0;
+   rect.right = WINSIZEX;
+   rect.top = 0;
+   rect.bottom = WINSIZEY;
+
+   AdjustWindowRect(&rect, WINSTYLE, false); //(현재 윈도우 크기, 윈도우 스타일, 메뉴 여부)
+   SetWindowPos(hWnd, NULL, WINPOSITIONX, WINPOSITIONY, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+                                                                                        // Z-Order : 어떤 창이 다른 창들 위에 가려지는 것
+
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
