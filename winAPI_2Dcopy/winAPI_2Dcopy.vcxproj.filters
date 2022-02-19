@@ -42,6 +42,9 @@
     <ClInclude Include="winAPI_2Dcopy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="SingleTon.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">

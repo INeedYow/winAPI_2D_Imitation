@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SingleTon.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="winAPI_2Dcopy.h" />
   </ItemGroup>
