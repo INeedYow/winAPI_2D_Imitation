@@ -16,11 +16,11 @@
 
 
 
-/////////////////////
 ////// 전처리기 //////
-////////////////////
-#define WINSTYLE		WS_CAPTION || WS_MINIMIZEBOX || WS_SYSMENU
-#define WINPOSITIONX	255
-#define WINPOSITIONY	255
+
+#define WINSTYLE		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
+#define WINPOSITIONX	100
+#define WINPOSITIONY	100
 #define WINSIZEX		1280
 #define WINSIZEY		720
+

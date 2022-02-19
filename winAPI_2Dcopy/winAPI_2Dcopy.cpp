@@ -8,6 +8,7 @@
 
 // 전역 변수:
 HINSTANCE   hInst;                                    // 현재 인스턴스입니다.
+HWND        hWnd;                                     // 윈도우 핸들
 WCHAR       szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -60,14 +61,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 게임처리를 계속 진행하다가 메시지 큐에 메시지 들어오면 메시지를 처리하는 방식으로
     // PM_'키워드'를 5번째 인자로 넣어 메시지 가져오는 행동 입력가능
         //PM_REMOVE PM_NOREMOVE 등등
-    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+ 
+    while (TRUE)
     {
-        if (WM_QUIT == msg.message) break;
-
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) // 단축키 처리
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);     // 키보드 입력메시지 처리 담당 
-            DispatchMessage(&msg);      // WndProc에서 전달된 메시지를 실제 윈도우에 전달
+            if (WM_QUIT == msg.message) break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) // 단축키 처리
+            {
+                TranslateMessage(&msg);     // 키보드 입력메시지 처리 담당 
+                DispatchMessage(&msg);      // WndProc에서 전달된 메시지를 실제 윈도우에 전달
+            }
         }
         else
         {
@@ -75,6 +80,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         
     }
+
 
     return (int) msg.wParam;
 }
@@ -121,17 +127,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass,         // 클래스 이름
-                             szTitle,               // 타이틀 이름
-                             WINSTYLE,              // 윈도우 스타일 (비트연산 때 봤던 거)
-                             WINPOSITIONX,          // 윈도우 화면 좌표
-                             WINPOSITIONY,          // 
-                             WINSIZEX,              // 윈도우 화면 크기
-                             WINSIZEY,              // 
-                             nullptr,               // 부모 윈도우(누군가가 호출한)
-                             nullptr,               // 메뉴 핸들
-                             hInstance,             // 인스턴스 지정
-                             nullptr);              // 추가 매개변수
+   hWnd = CreateWindowW(szWindowClass,         // 클래스 이름
+                        szTitle,               // 타이틀 이름
+                        WINSTYLE,              // 윈도우 스타일 (비트연산 때 봤던 거)
+                        WINPOSITIONX,          // 윈도우 화면 좌표
+                        WINPOSITIONY,          // 
+                        WINSIZEX,              // 윈도우 화면 크기
+                        WINSIZEY,              // 
+                        nullptr,               // 부모 윈도우(누군가가 호출한)
+                        nullptr,               // 메뉴 핸들
+                        hInstance,             // 인스턴스 지정
+                        nullptr);              // 추가 매개변수
 
    if (!hWnd)
    {
@@ -139,11 +145,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
    // 현재 타이틀바 포함한 전체크기가 1280 720 이므로 실제 윈도우 내용 화면의 크기를 1280 720으로 맞추기 위해서
-   RECT rect;
-   rect.left = 0;
-   rect.right = WINSIZEX;
-   rect.top = 0;
-   rect.bottom = WINSIZEY;
+   RECT rect = { 0, 0, WINSIZEX, WINSIZEY};
+   //rect.left = 0;
+   //rect.top = 0;
+   //rect.right = WINSIZEX;
+   //rect.bottom = WINSIZEY;
 
    AdjustWindowRect(&rect, WINSTYLE, false); //(현재 윈도우 크기, 윈도우 스타일, 메뉴 여부)
    SetWindowPos(hWnd, NULL, WINPOSITIONX, WINPOSITIONY, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
@@ -165,7 +171,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
-//
+POINT g_mousePos = {0, 0};
+POINT g_keyPos = {0, 0};
+int g_color = 0;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -187,11 +196,75 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    case WM_LBUTTONDOWN:
+        g_mousePos.x = LOWORD(lParam);
+        g_mousePos.y = HIWORD(lParam);
+        InvalidateRect(hWnd, NULL, TRUE);   // (갱신할 윈도우 핸들값, 갱신하고 싶은 영역 좌표(ex:&rect / NULL:전체), 지우고 다시그리기:T/F)
+        break;
+    case WM_MOUSEMOVE:
+        g_mousePos.x = LOWORD(lParam);
+        g_mousePos.y = HIWORD(lParam);
+        InvalidateRect(hWnd, NULL, FALSE);
+        break;
+    case WM_KEYDOWN:
+        switch (wParam)
+        {
+        case VK_UP:
+        case 'W':
+            g_keyPos.y -= 10;
+            break;
+        case VK_LEFT:
+        case 'A':
+            g_keyPos.x -= 10;
+            break;
+        case VK_DOWN:
+        case 'S':
+            g_keyPos.y += 10;
+            break;
+        case VK_RIGHT:
+        case 'D':
+            g_keyPos.x += 10;
+            break;
+        case 'K':
+            if (g_color < 255)
+                g_color++;
+            break;
+        case 'J':
+            if (g_color > 0)
+                g_color--;
+            break;
+        }
+        InvalidateRect(hWnd, NULL, FALSE);
+        break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
+            //Device Context 만들어서 ID 반환
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+
+            Rectangle(hdc, 0, 0, 200, 200);
+            Ellipse(hdc, 300, 300, 600, 600);
+
+            // 직접 펜과 브러쉬 만들어서 DC에 적용
+            HPEN hGreenPen = CreatePen(PS_DOT, 10, RGB(g_color, g_color, g_color)); // J, K 눌러서 색 변화 가능
+            HBRUSH hRedBrush = CreateSolidBrush(RGB(255, 255, 255));
+
+            // 기존 펜과 브러쉬 ID값 저장
+            HPEN hOldPen = (HPEN)SelectObject(hdc, hGreenPen);
+            HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hRedBrush);
+
+            Ellipse(hdc, g_mousePos.x - 50, g_mousePos.y - 50, g_mousePos.x + 50, g_mousePos.y + 50);
+            Rectangle(hdc, g_keyPos.x - 10, g_keyPos.y - 10, g_keyPos.x + 10, g_keyPos.y + 10);
+
+            // DC의 펜과 브러쉬를 원래 것으로 되돌림
+            SelectObject(hdc, hOldPen);
+            SelectObject(hdc, hOldBrush);
+
+            // 다 쓴 펜, 브러쉬 삭제
+            DeleteObject(hGreenPen);
+            DeleteObject(hRedBrush);
+
+
             EndPaint(hWnd, &ps);
         }
         break;
