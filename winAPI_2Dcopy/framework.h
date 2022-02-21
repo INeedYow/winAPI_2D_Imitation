@@ -14,17 +14,17 @@
 #include <memory.h>
 #include <tchar.h>
 
-
-// #
+// # STL
 #include <vector>
 
-// #
+// # Util
 #include "struct.h"
-#include "SingleTon.h"					
+#include "SingleTon.h"
 
-// #
+// # Core, Manager, Class
 #include "CCore.h"
 #include "CObject.h"
+#include "CTimeManager.h"
 
 // # 전처리기
 #define WINSTYLE		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
@@ -32,6 +32,8 @@
 #define WINPOSITIONY	100
 #define WINSIZEX		1280
 #define WINSIZEY		720
+
+#define DT				CTimeManager::getInst()->getDT()
 
 
 // # 전역변수

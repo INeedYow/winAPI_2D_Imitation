@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />
   </ItemGroup>
   <ItemGroup>

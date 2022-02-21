@@ -24,33 +24,35 @@ CCore::~CCore()
 // 게임 전체 업데이트 진행
 void CCore::update()
 {
+	CTimeManager::getInst()->update();
+
 	fPoint objPos = obj.getPos();
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
-		objPos.y -= 1;
+		objPos.y -= 150 * DT;
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
-		objPos.y += 1;
+		objPos.y += 150 * DT;
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
-		objPos.x -= 1;
+		objPos.x -= 150 * DT;
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		objPos.x += 1;
+		objPos.x += 150 * DT;
 	}
 
 	obj.setPos(objPos);
 }
 
 // 게임 전체 그리기 진행
-void CCore::render()
+void CCore::render()												
 {
 	 //메모리 DC 전체를 덮어 버리기(리셋)
-	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
+	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);		////// Q. 왜 이렇게 깜빡거리지?
 
 	//HPEN hPen = CreatePen(PS_SOLID, 10, RGB(255, 255, 0));
 	//HBRUSH hBrush = CreateSolidBrush(RGB(0, 250, 0));				////// Q. 왜 색이 아니라 무늬가 나오지?
@@ -64,7 +66,6 @@ void CCore::render()
 		obj.getPos().y - obj.getSize().y / 2, 
 		obj.getPos().x + obj.getSize().x / 2, 
 		obj.getPos().y + obj.getSize().y / 2);
-
 
 
 	//SelectObject(m_hMemDC, hOldPen);
@@ -81,12 +82,14 @@ void CCore::render()
 	// 이중 버퍼링 구현 미흡
 void CCore::init()
 {
+	CTimeManager::getInst()->init();
+
 	m_hDC = GetDC(hWnd);		// hWnd 전역변수로 선언할 필요성;
 
 	// bitmap 생성과 메모리 DC 생성 및 호환
 		// compatible : 호환
 	m_hMemDC = CreateCompatibleDC(m_hDC);
-	m_hBitMap = CreateCompatibleBitmap(m_hMemDC, WINSIZEX, WINSIZEY);
+	m_hBitMap = CreateCompatibleBitmap(m_hDC, WINSIZEX, WINSIZEY);
 
 	HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_hMemDC, m_hBitMap);
 	DeleteObject(hOldBitMap);

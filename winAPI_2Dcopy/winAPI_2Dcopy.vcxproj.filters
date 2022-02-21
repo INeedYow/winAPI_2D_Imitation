@@ -28,6 +28,9 @@
     <Filter Include="Object">
       <UniqueIdentifier>{4577d27f-6e03-4aa9-9469-9ae0b3167ad1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Manager\CTimeManager">
+      <UniqueIdentifier>{1e918d9e-a2b1-4999-bfbf-153c0ee4f36f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,6 +57,9 @@
     <ClInclude Include="struct.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="CTimeManager.h">
+      <Filter>Engine\Manager\CTimeManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -64,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="CObject.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeManager.cpp">
+      <Filter>Engine\Manager\CTimeManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
