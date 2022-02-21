@@ -15,12 +15,24 @@
 #include <tchar.h>
 
 
+// #
+#include <vector>
 
-////// 전처리기 //////
+// #
+#include "struct.h"
+#include "SingleTon.h"					
 
+// #
+#include "CCore.h"
+#include "CObject.h"
+
+// # 전처리기
 #define WINSTYLE		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
 #define WINPOSITIONX	100
 #define WINPOSITIONY	100
 #define WINSIZEX		1280
 #define WINSIZEY		720
 
+
+// # 전역변수
+extern HWND hWnd;

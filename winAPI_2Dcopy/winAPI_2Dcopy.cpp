@@ -61,7 +61,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 게임처리를 계속 진행하다가 메시지 큐에 메시지 들어오면 메시지를 처리하는 방식으로
     // PM_'키워드'를 5번째 인자로 넣어 메시지 가져오는 행동 입력가능
         //PM_REMOVE PM_NOREMOVE 등등
- 
+
+    // 코어 초기화 진행
+    CCore::getInst()->init();
+
     while (TRUE)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -76,7 +79,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            // TODO : 게임 처리
+            CCore::getInst()->update();
+            CCore::getInst()->render();
         }
         
     }
@@ -153,7 +157,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    AdjustWindowRect(&rect, WINSTYLE, false); //(현재 윈도우 크기, 윈도우 스타일, 메뉴 여부)
    SetWindowPos(hWnd, NULL, WINPOSITIONX, WINPOSITIONY, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
-                                                                                        // Z-Order : 어떤 창이 다른 창들 위에 가려지는 것
+                                                                                        // Z-Order : 어떤 창이 다른 창들 위에 가려지는 것  // 0으로 둬도 됨
 
 
    ShowWindow(hWnd, nCmdShow);
@@ -171,6 +175,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
+
+// 임시
 POINT g_mousePos = {0, 0};
 POINT g_keyPos = {0, 0};
 int g_color = 0;
@@ -196,74 +202,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_LBUTTONDOWN:
-        g_mousePos.x = LOWORD(lParam);
-        g_mousePos.y = HIWORD(lParam);
-        InvalidateRect(hWnd, NULL, TRUE);   // (갱신할 윈도우 핸들값, 갱신하고 싶은 영역 좌표(ex:&rect / NULL:전체), 지우고 다시그리기:T/F)
-        break;
-    case WM_MOUSEMOVE:
-        g_mousePos.x = LOWORD(lParam);
-        g_mousePos.y = HIWORD(lParam);
-        InvalidateRect(hWnd, NULL, FALSE);
-        break;
-    case WM_KEYDOWN:
-        switch (wParam)
-        {
-        case VK_UP:
-        case 'W':
-            g_keyPos.y -= 10;
-            break;
-        case VK_LEFT:
-        case 'A':
-            g_keyPos.x -= 10;
-            break;
-        case VK_DOWN:
-        case 'S':
-            g_keyPos.y += 10;
-            break;
-        case VK_RIGHT:
-        case 'D':
-            g_keyPos.x += 10;
-            break;
-        case 'K':
-            if (g_color < 255)
-                g_color++;
-            break;
-        case 'J':
-            if (g_color > 0)
-                g_color--;
-            break;
-        }
-        InvalidateRect(hWnd, NULL, FALSE);
-        break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             //Device Context 만들어서 ID 반환
             HDC hdc = BeginPaint(hWnd, &ps);
 
-            Rectangle(hdc, 0, 0, 200, 200);
-            Ellipse(hdc, 300, 300, 600, 600);
+            //Rectangle(hdc, 0, 0, 200, 200);
+            //Ellipse(hdc, 300, 300, 600, 600);
 
-            // 직접 펜과 브러쉬 만들어서 DC에 적용
-            HPEN hGreenPen = CreatePen(PS_DOT, 10, RGB(g_color, g_color, g_color)); // J, K 눌러서 색 변화 가능
-            HBRUSH hRedBrush = CreateSolidBrush(RGB(255, 255, 255));
+            //// 직접 펜과 브러쉬 만들어서 DC에 적용
+            //HPEN hGreenPen = CreatePen(PS_DOT, 10, RGB(g_color, g_color, g_color)); // J, K 눌러서 색 변화 가능
+            //HBRUSH hRedBrush = CreateSolidBrush(RGB(255, 255, 255));
 
-            // 기존 펜과 브러쉬 ID값 저장
-            HPEN hOldPen = (HPEN)SelectObject(hdc, hGreenPen);
-            HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hRedBrush);
+            //// 기존 펜과 브러쉬 ID값 저장
+            //HPEN hOldPen = (HPEN)SelectObject(hdc, hGreenPen);
+            //HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hRedBrush);
 
-            Ellipse(hdc, g_mousePos.x - 50, g_mousePos.y - 50, g_mousePos.x + 50, g_mousePos.y + 50);
-            Rectangle(hdc, g_keyPos.x - 10, g_keyPos.y - 10, g_keyPos.x + 10, g_keyPos.y + 10);
+            //Ellipse(hdc, g_mousePos.x - 50, g_mousePos.y - 50, g_mousePos.x + 50, g_mousePos.y + 50);
+            //Rectangle(hdc, g_keyPos.x - 10, g_keyPos.y - 10, g_keyPos.x + 10, g_keyPos.y + 10);
 
-            // DC의 펜과 브러쉬를 원래 것으로 되돌림
-            SelectObject(hdc, hOldPen);
-            SelectObject(hdc, hOldBrush);
+            //// DC의 펜과 브러쉬를 원래 것으로 되돌림
+            //SelectObject(hdc, hOldPen);
+            //SelectObject(hdc, hOldBrush);
 
-            // 다 쓴 펜, 브러쉬 삭제
-            DeleteObject(hGreenPen);
-            DeleteObject(hRedBrush);
-
+            //// 다 쓴 펜, 브러쉬 삭제
+            //DeleteObject(hGreenPen);
+            //DeleteObject(hRedBrush);
 
             EndPaint(hWnd, &ps);
         }

@@ -45,10 +45,25 @@
     <ClInclude Include="SingleTon.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="CCore.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CCore.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

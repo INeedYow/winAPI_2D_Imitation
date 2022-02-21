@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CCore.h" />
+    <ClInclude Include="CObject.h" />
+    <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTon.h" />
@@ -154,6 +157,8 @@
     <ClInclude Include="winAPI_2Dcopy.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CCore.cpp" />
+    <ClCompile Include="CObject.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />
   </ItemGroup>
   <ItemGroup>
