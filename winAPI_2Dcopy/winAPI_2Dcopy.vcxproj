@@ -150,6 +150,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="CScene.h" />
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />
   </ItemGroup>

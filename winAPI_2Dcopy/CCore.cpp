@@ -99,6 +99,11 @@ void CCore::render()
 	DeleteObject(hPen);
 	DeleteObject(hBrush);
 
+	// FPS 출력하기
+	WCHAR strFPS[6];
+	swprintf_s(strFPS, L"%5d", CTimeManager::getInst()->getFPS());
+	TextOutW(m_hMemDC, WINSIZEX - 50, 20, strFPS, 5);
+
 	// 메모리 DC에서 원래 DC로 옮겨오는 함수
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);
 }

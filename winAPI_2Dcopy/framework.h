@@ -17,6 +17,7 @@
 
 // # STL
 #include <vector>
+#include <string>
 
 
 // # Util
@@ -43,5 +44,18 @@
 #define KEYON(key)		CKeyManager::getInst()->getKeyOn(key)
 #define KEYOFF(key)		CKeyManager::getInst()->getKeyOff(key)
 
+
+// # enum 열거형 
+enum class OBJ
+{
+	DEFAULT,
+	PLAYER,
+	MONSTER,
+	MISSILE,
+	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
+};
+
 // # 전역변수
 extern HWND hWnd;
+
+using namespace std;
