@@ -14,17 +14,22 @@
 #include <memory.h>
 #include <tchar.h>
 
+
 // # STL
 #include <vector>
+
 
 // # Util
 #include "struct.h"
 #include "SingleTon.h"
 
+
 // # Core, Manager, Class
 #include "CCore.h"
 #include "CObject.h"
 #include "CTimeManager.h"
+#include "CKeyManager.h"
+
 
 // # 전처리기
 #define WINSTYLE		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
@@ -34,7 +39,9 @@
 #define WINSIZEY		720
 
 #define DT				CTimeManager::getInst()->getDT()
-
+#define	KEY(key)		CKeyManager::getInst()->getKeyPress(key)
+#define KEYON(key)		CKeyManager::getInst()->getKeyOn(key)
+#define KEYOFF(key)		CKeyManager::getInst()->getKeyOff(key)
 
 // # 전역변수
 extern HWND hWnd;

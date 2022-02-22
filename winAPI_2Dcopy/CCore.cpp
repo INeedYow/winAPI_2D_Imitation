@@ -25,53 +25,79 @@ CCore::~CCore()
 void CCore::update()
 {
 	CTimeManager::getInst()->update();
+	CKeyManager::getInst()->update();
 
 	fPoint objPos = obj.getPos();
+	fPoint objSize = obj.getSize();
 
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	if (KEY(VK_UP))
 	{
-		objPos.y -= 150 * DT;
+		objPos.y -= 333 * DT;
 	}
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+	if (KEY(VK_DOWN))
 	{
-		objPos.y += 150 * DT;
+		objPos.y += 333 * DT;
 	}
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	if (KEY(VK_LEFT))
 	{
-		objPos.x -= 150 * DT;
+		objPos.x -= 333 * DT;
 	}
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (KEY(VK_RIGHT))
 	{
-		objPos.x += 150 * DT;
+		objPos.x += 333 * DT;
+	}
+
+	if (KEYON('A'))
+	{
+		objSize.x -= 2;
+	}
+	if (KEYON('D'))
+	{
+		objSize.x += 2;
+	}
+	if (KEYON('W'))
+	{
+		objSize.y += 2;
+	}
+	if (KEYON('S'))
+	{
+		objSize.y -= 2;
+	}
+
+	if (KEYOFF('Q'))
+	{
+		objSize.x = 36;
+		objSize.y = 36;
 	}
 
 	obj.setPos(objPos);
+	obj.setSize(objSize);
 }
 
 // 게임 전체 그리기 진행
 void CCore::render()												
 {
 	 //메모리 DC 전체를 덮어 버리기(리셋)
-	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);		////// Q. 왜 이렇게 깜빡거리지?
+	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
-	//HPEN hPen = CreatePen(PS_SOLID, 10, RGB(255, 255, 0));
-	//HBRUSH hBrush = CreateSolidBrush(RGB(0, 250, 0));				////// Q. 왜 색이 아니라 무늬가 나오지?
+	HPEN hPen = CreatePen(PS_SOLID, 6, RGB(100, 255, 100));
+	HBRUSH hBrush = CreateSolidBrush(RGB(175, 255, 150));
 
-	//HPEN hOldPen = (HPEN)SelectObject(m_hMemDC, hPen);
-	//HBRUSH hOldBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
+	HPEN hOldPen = (HPEN)SelectObject(m_hMemDC, hPen);
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
 
 
-	Rectangle(m_hDC,
+	Rectangle(m_hMemDC,
 		obj.getPos().x - obj.getSize().x / 2,
 		obj.getPos().y - obj.getSize().y / 2, 
 		obj.getPos().x + obj.getSize().x / 2, 
 		obj.getPos().y + obj.getSize().y / 2);
 
 
-	//SelectObject(m_hMemDC, hOldPen);
-	//SelectObject(m_hMemDC, hOldBrush);
-	//DeleteObject(hPen);
-	//DeleteObject(hBrush);
+	SelectObject(m_hMemDC, hOldPen);
+	SelectObject(m_hMemDC, hOldBrush);
+	DeleteObject(hPen);
+	DeleteObject(hBrush);
 
 	// 메모리 DC에서 원래 DC로 옮겨오는 함수
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);
@@ -79,10 +105,11 @@ void CCore::render()
 
 // render() 위해서 DC받아와야
 // 더블 버퍼링 위해서 bitmap 생성과 해당 메모리 DC필요
-	// 이중 버퍼링 구현 미흡
+	// 더블 버퍼링 구현 미흡
 void CCore::init()
 {
 	CTimeManager::getInst()->init();
+	CKeyManager::getInst()->init();
 
 	m_hDC = GetDC(hWnd);		// hWnd 전역변수로 선언할 필요성;
 
@@ -95,6 +122,6 @@ void CCore::init()
 	DeleteObject(hOldBitMap);
 
 	// 임시 테스트용
-	obj.setPos(fPoint(100, 100));
-	obj.setSize(fPoint(100, 100));
+	obj.setPos(fPoint(640, 360));
+	obj.setSize(fPoint(36, 36));
 }

@@ -31,6 +31,9 @@
     <Filter Include="Engine\Manager\CTimeManager">
       <UniqueIdentifier>{1e918d9e-a2b1-4999-bfbf-153c0ee4f36f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Manager\CKeyManager">
+      <UniqueIdentifier>{a77e5162-40e6-48d1-ae15-a948f78b639b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="CTimeManager.h">
       <Filter>Engine\Manager\CTimeManager</Filter>
     </ClInclude>
+    <ClInclude Include="CKeyManager.h">
+      <Filter>Engine\Manager\CKeyManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -73,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="CTimeManager.cpp">
       <Filter>Engine\Manager\CTimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyManager.cpp">
+      <Filter>Engine\Manager\CKeyManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
