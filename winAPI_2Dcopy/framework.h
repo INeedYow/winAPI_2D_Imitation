@@ -25,13 +25,6 @@
 #include "SingleTon.h"
 
 
-// # Core, Manager, Class
-#include "CCore.h"
-#include "CObject.h"
-#include "CTimeManager.h"
-#include "CKeyManager.h"
-
-
 // # 전처리기
 #define WINSTYLE		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
 #define WINPOSITIONX	100
@@ -40,9 +33,9 @@
 #define WINSIZEY		720
 
 #define DT				CTimeManager::getInst()->getDT()
-#define	KEY(key)		CKeyManager::getInst()->getKeyPress(key)
-#define KEYON(key)		CKeyManager::getInst()->getKeyOn(key)
-#define KEYOFF(key)		CKeyManager::getInst()->getKeyOff(key)
+#define	KEY_HOLD(key)	CKeyManager::getInst()->getKeyPress(key)
+#define KEY_ON(key)		CKeyManager::getInst()->getKeyOn(key)
+#define KEY_OFF(key)	CKeyManager::getInst()->getKeyOff(key)
 
 
 // # enum 열거형 
@@ -52,10 +45,30 @@ enum class OBJ
 	PLAYER,
 	MONSTER,
 	MISSILE,
+
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
 };
 
+enum class SCENE
+{
+	TITLE,
+	STAGE_01,
+	STAGE_02,
+	
+	SIZE
+};
+
+
 // # 전역변수
 extern HWND hWnd;
+extern HINSTANCE hInstance;
 
 using namespace std;
+
+
+// # Core, Manager, Class
+#include "CCore.h"
+#include "CObject.h"
+#include "CTimeManager.h"
+#include "CKeyManager.h"
+#include "CSceneManager.h"

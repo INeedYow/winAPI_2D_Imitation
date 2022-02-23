@@ -37,6 +37,21 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{aaa052ff-d719-4e76-9738-f3ac4ac7e71a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Manager\CSceneManager">
+      <UniqueIdentifier>{b76509f7-10d4-4c2a-a358-275f9884d5f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Scene_parent">
+      <UniqueIdentifier>{be615e21-3a80-4865-85bf-30c94f7617de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Scene_child">
+      <UniqueIdentifier>{f87e5ed6-ce6f-45c0-abfa-559867092529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_parent">
+      <UniqueIdentifier>{34f34221-77c5-4ea6-90ec-fa2369335b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_child">
+      <UniqueIdentifier>{a5287edd-4538-492b-9b81-003bbf8e5132}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -57,9 +72,6 @@
     <ClInclude Include="CCore.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="CObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -69,8 +81,26 @@
     <ClInclude Include="CKeyManager.h">
       <Filter>Engine\Manager\CKeyManager</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneManager.h">
+      <Filter>Engine\Manager\CSceneManager</Filter>
+    </ClInclude>
     <ClInclude Include="CScene.h">
-      <Filter>Scene</Filter>
+      <Filter>Scene\Scene_parent</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>Object\Obj_parent</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Title.h">
+      <Filter>Scene\Scene_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Stage01.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>Object\Obj_child</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,17 +110,32 @@
     <ClCompile Include="CCore.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="CObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="CTimeManager.cpp">
       <Filter>Engine\Manager\CTimeManager</Filter>
     </ClCompile>
     <ClCompile Include="CKeyManager.cpp">
       <Filter>Engine\Manager\CKeyManager</Filter>
     </ClCompile>
+    <ClCompile Include="CSceneManager.cpp">
+      <Filter>Engine\Manager\CSceneManager</Filter>
+    </ClCompile>
     <ClCompile Include="CScene.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Scene\Scene_parent</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>Object\Obj_parent</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Title.cpp">
+      <Filter>Scene\Scene_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Stage01.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Object\Obj_child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

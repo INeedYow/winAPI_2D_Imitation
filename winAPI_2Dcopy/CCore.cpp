@@ -1,9 +1,6 @@
 #include "framework.h"
 #include "CCore.h"
 
-// 임시 테스트용
-CObject obj;
-
 CCore::CCore()
 {
 	m_hDC = 0;
@@ -26,52 +23,7 @@ void CCore::update()
 {
 	CTimeManager::getInst()->update();
 	CKeyManager::getInst()->update();
-
-	fPoint objPos = obj.getPos();
-	fPoint objSize = obj.getSize();
-
-	if (KEY(VK_UP))
-	{
-		objPos.y -= 333 * DT;
-	}
-	if (KEY(VK_DOWN))
-	{
-		objPos.y += 333 * DT;
-	}
-	if (KEY(VK_LEFT))
-	{
-		objPos.x -= 333 * DT;
-	}
-	if (KEY(VK_RIGHT))
-	{
-		objPos.x += 333 * DT;
-	}
-
-	if (KEYON('A'))
-	{
-		objSize.x -= 2;
-	}
-	if (KEYON('D'))
-	{
-		objSize.x += 2;
-	}
-	if (KEYON('W'))
-	{
-		objSize.y += 2;
-	}
-	if (KEYON('S'))
-	{
-		objSize.y -= 2;
-	}
-
-	if (KEYOFF('Q'))
-	{
-		objSize.x = 36;
-		objSize.y = 36;
-	}
-
-	obj.setPos(objPos);
-	obj.setSize(objSize);
+	CSceneManager::getInst()->update();
 }
 
 // 게임 전체 그리기 진행
@@ -80,24 +32,8 @@ void CCore::render()
 	 //메모리 DC 전체를 덮어 버리기(리셋)
 	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
-	HPEN hPen = CreatePen(PS_SOLID, 6, RGB(100, 255, 100));
-	HBRUSH hBrush = CreateSolidBrush(RGB(175, 255, 150));
-
-	HPEN hOldPen = (HPEN)SelectObject(m_hMemDC, hPen);
-	HBRUSH hOldBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
-
-
-	Rectangle(m_hMemDC,
-		obj.getPos().x - obj.getSize().x / 2,
-		obj.getPos().y - obj.getSize().y / 2, 
-		obj.getPos().x + obj.getSize().x / 2, 
-		obj.getPos().y + obj.getSize().y / 2);
-
-
-	SelectObject(m_hMemDC, hOldPen);
-	SelectObject(m_hMemDC, hOldBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
+	// memDC에 그려야 한다.
+	CSceneManager::getInst()->render(m_hMemDC);
 
 	// FPS 출력하기
 	WCHAR strFPS[6];
@@ -115,6 +51,7 @@ void CCore::init()
 {
 	CTimeManager::getInst()->init();
 	CKeyManager::getInst()->init();
+	CSceneManager::getInst()->init();
 
 	m_hDC = GetDC(hWnd);		// hWnd 전역변수로 선언할 필요성;
 
@@ -125,8 +62,4 @@ void CCore::init()
 
 	HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_hMemDC, m_hBitMap);
 	DeleteObject(hOldBitMap);
-
-	// 임시 테스트용
-	obj.setPos(fPoint(640, 360));
-	obj.setSize(fPoint(36, 36));
 }

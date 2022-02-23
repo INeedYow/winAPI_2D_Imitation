@@ -148,9 +148,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h" />
+    <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CScene.h" />
+    <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CScene_Stage01.h" />
+    <ClInclude Include="CScene_Title.h" />
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
@@ -161,9 +166,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp" />
+    <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />
+    <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CScene_Stage01.cpp" />
+    <ClCompile Include="CScene_Title.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />
   </ItemGroup>
