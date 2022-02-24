@@ -147,16 +147,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBlock.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CKeyManager.h" />
-    <ClInclude Include="CMissile.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CScene_Ending.h" />
     <ClInclude Include="CScene_Stage01.h" />
     <ClInclude Include="CScene_Title.h" />
+    <ClInclude Include="CScene_Tutorial01.h" />
+    <ClInclude Include="CScene_Tutorial02.h" />
+    <ClInclude Include="CTarget.h" />
+    <ClInclude Include="CText.h" />
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
@@ -166,16 +171,21 @@
     <ClInclude Include="winAPI_2Dcopy.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBlock.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
-    <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CScene_Ending.cpp" />
     <ClCompile Include="CScene_Stage01.cpp" />
     <ClCompile Include="CScene_Title.cpp" />
+    <ClCompile Include="CScene_Tutorial01.cpp" />
+    <ClCompile Include="CScene_Tutorial02.cpp" />
+    <ClCompile Include="CTarget.cpp" />
+    <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />
   </ItemGroup>

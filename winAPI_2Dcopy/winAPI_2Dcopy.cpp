@@ -12,6 +12,9 @@ HWND        hWnd;                                     // 윈도우 핸들
 WCHAR       szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
+// 임시
+bool        isDarkMode;
+
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);

@@ -102,7 +102,22 @@
     <ClInclude Include="CScene_Stage01.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
+    <ClInclude Include="CBlock.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tutorial01.h">
+      <Filter>Scene\Scene_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Ending.h">
+      <Filter>Scene\Scene_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tutorial02.h">
+      <Filter>Scene\Scene_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CTarget.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CText.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
   </ItemGroup>
@@ -140,7 +155,22 @@
     <ClCompile Include="CScene_Stage01.cpp">
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
+    <ClCompile Include="CBlock.cpp">
+      <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tutorial01.cpp">
+      <Filter>Scene\Scene_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Ending.cpp">
+      <Filter>Scene\Scene_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tutorial02.cpp">
+      <Filter>Scene\Scene_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CTarget.cpp">
+      <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CText.cpp">
       <Filter>Object\Obj_child</Filter>
     </ClCompile>
   </ItemGroup>

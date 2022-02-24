@@ -37,6 +37,17 @@
 #define KEY_ON(key)		CKeyManager::getInst()->getKeyOn(key)
 #define KEY_OFF(key)	CKeyManager::getInst()->getKeyOff(key)
 
+	// 설정,스탯 관련
+		// obj
+#define O_SIZE		48
+		// player
+#define P_PEN		6
+#define P_SIZE		(O_SIZE - P_PEN)
+#define P_SPEED		200
+		// enemy
+#define E_SPEED		100
+
+
 
 // # enum 열거형 
 #define OBJ		GROUP_OBJECT
@@ -45,7 +56,9 @@ enum class GROUP_OBJECT
 	DEFAULT,
 	PLAYER,
 	ENEMY,
-	MISSILE,
+	TARGET,
+	BLOCK,
+	TEXT,
 
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
 };
@@ -54,32 +67,19 @@ enum class GROUP_OBJECT
 enum class GROUP_SCENE
 {
 	TITLE,
+	TUTORIAL_01,
+	TUTORIAL_02,
 	STAGE_01,
-	STAGE_02,
+	ENDING,
 	
 	SIZE
-};
-
-#define DIR		GROUP_DIRECTION
-enum GROUP_DIRECTION
-{
-	NONE,
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	LEFTUP,		// 좌상	// 아직 45도 각도로만
-	RIGHTUP,	// 우상
-	RIGHTDOWN,	// 우하
-	LEFTDOWN,	// 좌하
-
-	END
 };
 
 
 // # 전역변수
 extern HWND hWnd;
 extern HINSTANCE hInstance;
+extern bool isDarkMode;
 
 using namespace std;
 

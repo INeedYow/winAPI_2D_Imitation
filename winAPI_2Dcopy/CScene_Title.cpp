@@ -17,16 +17,27 @@ CScene_Title::~CScene_Title()
 
 void CScene_Title::update()
 {
-	if (KEY_ON(VK_SPACE))	// space bar누르면 stage씬으로 넘어가도록
+	if (KEY_ON(VK_SPACE))	// space bar 누르면 씬 넘어가도록
 	{
-		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
+		CSceneManager::getInst()->sceneChange(SCENE::TUTORIAL_01);
 	}
 }
 
 void CScene_Title::render(HDC hDC)
 {
-	TextOutW(hDC, WINSIZEX / 2 - 150, WINSIZEY / 2 - 50, L"방향키로 조작, 스페이스 키로 발사합니다", 22);
-	TextOutW(hDC, WINSIZEX / 2 - 100, WINSIZEY / 2, L"Press \'Space Bar \' to Start", 27);
+	LPCWSTR strTitle = L"AMaDo Game";
+	LPCWSTR strMessage = L"Press \'Space\' to Play";
+
+	HFONT hFont = CreateFont(200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Cascadia Code"));
+	HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
+
+	TextOutW(hDC, 200, 60, strTitle, wcslen(strTitle));
+
+	SelectObject(hDC, hOriginFont);
+	DeleteObject(hFont);
+
+	TextOutW(hDC, WINSIZEX / 2 - 100, WINSIZEY / 2 + 100, strMessage, wcslen(strMessage));
+
 }
 
 void CScene_Title::enter()
