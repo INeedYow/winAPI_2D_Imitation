@@ -21,7 +21,7 @@
 //	fSpeed = spd;
 //	startPoint = start;
 //	turnPoint = turn;
-//	fVector = fVec2(turn.x - start.x, turn.y - start.y);
+//	fVector;///////float a = (turn.y - start.y) / (turn.x - start.x);
 //	isDir = dir;
 //}
 ////////////////////////////////////////////////////////////////////////////
@@ -31,9 +31,19 @@ CEnemy::CEnemy()
 	fSpeed		= 150;
 	isDirUp		= true;
 	centerPoint = fPoint((float)(WINSIZEX - 150), WINSIZEY / 2.f);
-	fDistance	= 200.f;
+	fDistance	= 300.f;
 	setPos(centerPoint);
 	setSize(fPoint(200.f, 200.f));
+}
+
+CEnemy::CEnemy(fPoint pos, fPoint size, float spd, fPoint center, float dist, bool dir)
+{
+	setPos(pos);
+	setSize(size);
+	fSpeed = spd;
+	centerPoint = center;
+	fDistance = dist;
+	isDirUp = dir;
 }
 
 CEnemy::~CEnemy()

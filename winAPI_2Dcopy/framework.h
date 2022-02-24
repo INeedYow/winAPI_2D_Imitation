@@ -39,17 +39,19 @@
 
 
 // # enum 열거형 
-enum class OBJ
+#define OBJ		GROUP_OBJECT
+enum class GROUP_OBJECT
 {
 	DEFAULT,
 	PLAYER,
-	MONSTER,
+	ENEMY,
 	MISSILE,
 
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
 };
 
-enum class SCENE
+#define SCENE	GROUP_SCENE
+enum class GROUP_SCENE
 {
 	TITLE,
 	STAGE_01,

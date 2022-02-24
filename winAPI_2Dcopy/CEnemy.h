@@ -33,6 +33,8 @@ class CEnemy : public CObject
 
 public:
 	CEnemy();
+	CEnemy(fPoint pos, fPoint size, float spd, 
+			fPoint center, float dist, bool dir = 1);
 	~CEnemy();
 
 	virtual void update();
