@@ -102,6 +102,9 @@
     <ClInclude Include="CScene_Stage01.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="CScene_Stage01.cpp">
       <Filter>Scene\Scene_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Object\Obj_child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

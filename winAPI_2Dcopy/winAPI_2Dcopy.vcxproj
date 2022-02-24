@@ -150,6 +150,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CKeyManager.h" />
+    <ClInclude Include="CMissile.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CScene.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
+    <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />

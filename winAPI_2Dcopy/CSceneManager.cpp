@@ -2,6 +2,7 @@
 #include "CSceneManager.h"
 #include "CScene.h"
 #include "CScene_Title.h"
+#include "CScene_Stage01.h"
 
 CSceneManager::CSceneManager()
 {
@@ -40,8 +41,13 @@ void CSceneManager::render(HDC hDC)
 void CSceneManager::init()
 {
 	m_pArrScene[(int)SCENE::TITLE] = new CScene_Title;
+	m_pArrScene[(int)SCENE::STAGE_01] = new CScene_Stage01;
 
 	m_pCurScene = m_pArrScene[(int)SCENE::TITLE];
 	m_pCurScene->enter();
 }
 
+CScene* CSceneManager::getCurScene()
+{
+	return m_pCurScene;
+}

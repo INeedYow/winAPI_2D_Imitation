@@ -60,6 +60,22 @@ enum class GROUP_SCENE
 	SIZE
 };
 
+#define DIR		GROUP_DIRECTION
+enum GROUP_DIRECTION
+{
+	NONE,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	LEFTUP,		// 좌상	// 아직 45도 각도로만
+	RIGHTUP,	// 우상
+	RIGHTDOWN,	// 우하
+	LEFTDOWN,	// 좌하
+
+	END
+};
+
 
 // # 전역변수
 extern HWND hWnd;

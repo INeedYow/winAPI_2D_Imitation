@@ -16,8 +16,8 @@ public:
 
 	void addObject(CObject* pObj, OBJ objType);
 
-	void update();
-	void render(HDC hDC);
+	virtual void update();
+	virtual void render(HDC hDC);
 
 	// 화면전환할 때 작업
 	virtual void enter() = 0;
