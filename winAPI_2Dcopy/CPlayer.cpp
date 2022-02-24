@@ -18,16 +18,16 @@ void CPlayer::update()
 {
 	fPoint playerPos = getPos();
 
-	if (KEY_HOLD(VK_UP)		&& playerPos.y > 0.f)		// ∏  ≈ª√‚ πÊ¡ˆ
+	if (KEY_HOLD(VK_UP)		&& (playerPos.y - getSize().y / 2.f) > 0.f)		// ∏  ≈ª√‚ πÊ¡ˆ
 		playerPos.y -= fSpeed * DT;
 
-	if (KEY_HOLD(VK_DOWN)	&& playerPos.y < (float)WINSIZEY)
+	if (KEY_HOLD(VK_DOWN)	&& (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
 		playerPos.y += fSpeed * DT;
 
-	if (KEY_HOLD(VK_LEFT)	&& playerPos.x > 0.f)
+	if (KEY_HOLD(VK_LEFT)	&& (playerPos.x - getSize().x / 2.f) > 0.f)
 		playerPos.x -= fSpeed * DT;
 
-	if (KEY_HOLD(VK_RIGHT)	&& playerPos.x < (float)WINSIZEX)
+	if (KEY_HOLD(VK_RIGHT)	&& (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
 		playerPos.x += fSpeed * DT;
 
 	if (KEY_ON(VK_SPACE))
@@ -63,8 +63,30 @@ void CPlayer::createMissile()
 	fPoint missilePos = getPos();
 	missilePos.x += getSize().x / 2.f;
 
-	CMissile* pMissile = new CMissile(missilePos, fPoint(10.f, 10.f), 400.f, DIR::RIGHT);
+	CMissile* pMissile = new CMissile;
+	pMissile->setDir(fVec2(1, -1));
+	pMissile->setPos(missilePos);
+
+	CMissile* pMissile2 = new CMissile;
+	pMissile2->setDir(fVec2(1, 0));
+	pMissile2->setPos(missilePos);
+
+	CMissile* pMissile3 = new CMissile;
+	pMissile3->setDir(fVec2(1, -2));
+	pMissile3->setPos(missilePos);
+
+	CMissile* pMissile4 = new CMissile;
+	pMissile4->setDir(fVec2(0, -2));
+	pMissile4->setPos(missilePos);
+
+	CMissile* pMissile5 = new CMissile;
+	pMissile5->setDir(fVec2(-1, -1));
+	pMissile5->setPos(missilePos);
 
 	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 	pCurScene->addObject(pMissile, OBJ::MISSILE);
+	pCurScene->addObject(pMissile2, OBJ::MISSILE);
+	pCurScene->addObject(pMissile3, OBJ::MISSILE);
+	pCurScene->addObject(pMissile4, OBJ::MISSILE);
+	pCurScene->addObject(pMissile5, OBJ::MISSILE);
 }

@@ -4,17 +4,19 @@
 CMissile::CMissile()
 {
 	setPos(fPoint(0, 0));
-	setSize(fPoint(0, 0));
-	fSpeed = 1.f;
-	dir = DIR::NONE;
+	setSize(fPoint(25.f, 25.f));
+	m_fSpeed = 250.f;
+	setDir(fVec2(1.f, 1.f));
+	m_gravity = 0.f;
 }
 
-CMissile::CMissile(fPoint pos, fPoint size, float spd, unsigned int _dir)
+CMissile::CMissile(fPoint pos, fPoint size, float spd, fVec2 dir)
 {
 	setPos(pos);
 	setSize(size);
-	fSpeed = spd;
-	dir = _dir;
+	m_fSpeed = spd;
+	setDir(dir);
+	m_gravity = 0.f;
 }
 
 CMissile::~CMissile()
@@ -25,38 +27,10 @@ void CMissile::update()
 {
 	fPoint missilePos = getPos();
 
-	switch (dir)
-	{
-	case DIR::UP:
-		missilePos.y -= fSpeed * DT;
-		break;
-	case DIR::DOWN:
-		missilePos.y += fSpeed * DT;
-		break;
-	case DIR::LEFT:
-		missilePos.x -= fSpeed * DT;
-		break;
-	case DIR::RIGHT:
-		missilePos.x += fSpeed * DT;
-		break;
-	case DIR::LEFTUP:
-		missilePos.y -= fSpeed * DT;
-		missilePos.x -= fSpeed * DT;
-		break;
-	case DIR::RIGHTUP:
-		missilePos.y -= fSpeed * DT;
-		missilePos.x += fSpeed * DT;
-		break;
-	case DIR::RIGHTDOWN:
-		missilePos.y += fSpeed * DT;
-		missilePos.x += fSpeed * DT;
-		break;
-	case DIR::LEFTDOWN:
-		missilePos.y += fSpeed * DT;
-		missilePos.x -= fSpeed * DT;
-		break;
-	}
-
+	missilePos.x += m_fSpeed * m_fvDir.x * DT;
+	missilePos.y += m_fSpeed * m_fvDir.y * DT + m_gravity * DT;
+	if (m_gravity <= 2000)
+		m_gravity += 200 * DT;
 	setPos(missilePos);
 }
 
@@ -80,7 +54,7 @@ void CMissile::render(HDC hDC)
 	DeleteObject(hBrush);
 }
 
-void CMissile::setDir(unsigned int _dir)
+void CMissile::setDir(fVec2 vec)
 {
-	dir = _dir;
+	m_fvDir = vec.normalize();
 }

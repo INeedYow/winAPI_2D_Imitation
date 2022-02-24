@@ -1,4 +1,5 @@
 #pragma once
+#include <assert.h>
 
 struct iPoint
 {
@@ -34,8 +35,8 @@ struct fPoint
 		y = _y;
 	}
 
-	// 몬스터 왕복 조건에 쓰려고
-	bool operator==(fPoint _pos)
+	// 몬스터 왕복 조건에 쓰려고 했는데 못 씀
+	/*bool operator==(fPoint _pos)
 	{
 		return (x == _pos.x && y == _pos.y);
 	}
@@ -43,11 +44,11 @@ struct fPoint
 	{
 		return !(*this == _pos);
 	}
-	// 될 것 같아서
+
 	fPoint operator-(fPoint pos)
 	{
 		return fPoint(x - pos.x, y - pos.y);
-	}
+	}*/
 };
 
 // 방향성
@@ -65,5 +66,17 @@ struct fVec2
 	{
 		x = _x;
 		y = _y;
+	}
+
+	fVec2& normalize()
+	{	// sqrt : 제곱근 함수
+		float length = (float)sqrt(x * x + y * y);
+
+		assert(0.f != length);
+
+		x = x / length;
+		y = y / length;
+
+		return *this;
 	}
 };
