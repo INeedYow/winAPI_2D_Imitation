@@ -64,7 +64,7 @@ void CText::update()
 
 void CText::render(HDC hDC)
 {
-	SetTextColor(hDC, isMode ? BLACK : WHITE);
+	SetTextColor(hDC, ISMODE ? BLACK : WHITE);
 	
 	SetBkMode(hDC, TRANSPARENT);	// 글자 배경 투명하게
 

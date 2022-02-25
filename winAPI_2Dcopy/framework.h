@@ -41,7 +41,7 @@
 #define COLL_PR			isCollisionPointToRect
 #define COLL_RRS		isCollisionRectToRectSameSize
 
-#define isMode			CPlayer::getMode()
+#define ISMODE			CPlayer::getMode()
 #define BLACK			RGB(255, 255, 255)
 #define WHITE			RGB(0, 0, 0)
 
