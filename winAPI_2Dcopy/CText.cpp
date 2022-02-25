@@ -64,6 +64,10 @@ void CText::update()
 
 void CText::render(HDC hDC)
 {
+	SetTextColor(hDC, isMode ? BLACK : WHITE);
+	
+	SetBkMode(hDC, TRANSPARENT);	// 글자 배경 투명하게
+
 	if (0 != m_textSize)
 	{
 		HFONT hFont = CreateFont(m_textSize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Tahoma"));
@@ -78,4 +82,5 @@ void CText::render(HDC hDC)
 	{
 		TextOutW(hDC, getPos().x, getPos().y, m_text, wcslen(m_text));
 	}
+
 }

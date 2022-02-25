@@ -52,6 +52,9 @@
     <Filter Include="Object\Obj_child">
       <UniqueIdentifier>{a5287edd-4538-492b-9b81-003bbf8e5132}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Obj_baby">
+      <UniqueIdentifier>{634fbaf5-7a51-4df0-b826-82f5cbf5954a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -120,6 +123,9 @@
     <ClInclude Include="CText.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
+    <ClInclude Include="CDummyPlayer01.h">
+      <Filter>Object\Obj_baby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -172,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="CText.cpp">
       <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CDummyPlayer01.cpp">
+      <Filter>Object\Obj_baby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

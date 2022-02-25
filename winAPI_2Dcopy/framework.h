@@ -20,9 +20,7 @@
 #include <string>
 
 
-// # Util
-#include "struct.h"
-#include "SingleTon.h"
+
 
 
 // # 전처리기
@@ -37,16 +35,31 @@
 #define KEY_ON(key)		CKeyManager::getInst()->getKeyOn(key)
 #define KEY_OFF(key)	CKeyManager::getInst()->getKeyOff(key)
 
+#define COLL_PC			isCollisionPointToCircle
+#define COLL_CR			isCollisionCircleToRect
+#define COLL_CC			isCollisionCircleToCircle
+#define COLL_PR			isCollisionPointToRect
+#define COLL_RRS		isCollisionRectToRectSameSize
+
+#define isMode			CPlayer::getMode()
+#define BLACK			RGB(255, 255, 255)
+#define WHITE			RGB(0, 0, 0)
+
 	// 설정,스탯 관련
 		// obj
 #define O_SIZE		48
 		// player
 #define P_PEN		6
 #define P_SIZE		(O_SIZE - P_PEN)
+
 #define P_SPEED		200
 		// enemy
 #define E_SPEED		100
 
+
+// # Util
+#include "struct.h"
+#include "SingleTon.h"
 
 
 // # enum 열거형 
@@ -59,6 +72,7 @@ enum class GROUP_OBJECT
 	TARGET,
 	BLOCK,
 	TEXT,
+	DUMMYPLAYER,
 
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
 };
@@ -76,17 +90,21 @@ enum class GROUP_SCENE
 };
 
 
-// # 전역변수
-extern HWND hWnd;
-extern HINSTANCE hInstance;
-extern bool isDarkMode;
-
-using namespace std;
-
-
 // # Core, Manager, Class
 #include "CCore.h"
 #include "CObject.h"
 #include "CTimeManager.h"
 #include "CKeyManager.h"
 #include "CSceneManager.h"
+
+
+// #
+#include "CPlayer.h"
+
+
+// # 전역 변수
+extern HWND hWnd;
+extern HINSTANCE hInstance;
+
+using namespace std;
+

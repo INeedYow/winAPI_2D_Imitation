@@ -29,16 +29,28 @@ void CCore::update()
 // 게임 전체 그리기 진행
 void CCore::render()												
 {
-	 //메모리 DC 전체를 덮어 버리기(리셋)
-	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
+	if (CPlayer::getMode())
+	{
+		HBRUSH hBrush = CreateSolidBrush(RGB(10, 10, 10));
+		HBRUSH hOriginBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
+
+		Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
+
+		SelectObject(m_hMemDC, hOriginBrush);
+		DeleteObject(hBrush);
+	}
+	else
+		Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
 	// memDC에 그려야 한다.
 	CSceneManager::getInst()->render(m_hMemDC);
 
 	// FPS 출력하기
-	WCHAR strFPS[6];
-	swprintf_s(strFPS, L"%5d", CTimeManager::getInst()->getFPS());
-	TextOutW(m_hMemDC, WINSIZEX - 50, 20, strFPS, 5);
+	//WCHAR strFPS[6];
+	wchar_t szBuffer[255] = {};
+	swprintf_s(szBuffer, L"[MyGame] FPS : %d", CTimeManager::getInst()->getFPS());
+	SetWindowText(hWnd, szBuffer);
+	//TextOutW(m_hMemDC, WINSIZEX - 50, 20, strFPS, 5);
 
 	// 메모리 DC에서 원래 DC로 옮겨오는 함수
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);

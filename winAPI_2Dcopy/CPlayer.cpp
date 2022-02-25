@@ -59,7 +59,7 @@ void CPlayer::render(HDC hDC)
 	DeleteObject(hBrush);
 }
 
-//bool CPlayer::getIsMode()
-//{
-//	return isDarkMode;
-//}
+bool CPlayer::getMode()
+{
+	return isDarkMode;
+}
