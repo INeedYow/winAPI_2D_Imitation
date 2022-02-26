@@ -71,16 +71,17 @@ extern USHORT  g_resultKill;
 		// player
 #define P_PEN				6
 #define P_SIZE				(O_SIZE - P_PEN)
-#define P_SPEED				200
+#define P_SPEED				150
 #define P_SIGHTON			240
 #define P_SIGHTOFF			180
 		// enemy
 #define E_SPEED				50
 		// bullet
 #define B_SIZE				10
-#define B_SPEED				150
+#define B_SPEED				175
 		// item
 #define I_SIZE				34
+#define I_HSIZE				I_SIZE / 2
 			// bullet
 #define I_B_DURA			10
 #define I_B_MAXEA			9
@@ -104,10 +105,10 @@ enum class GROUP_OBJECT
 	DEFAULT,
 	DUMMYPLAYER,
 	DUMMYENEMY,
+	DROPITEM,
 	PLAYER,
 	ENEMY,
 	BULLET,
-	BLOCK,
 	TEXT,
 
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음

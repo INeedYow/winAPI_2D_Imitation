@@ -41,15 +41,9 @@ void CCore::render()
 	CSceneManager::getInst()->render(m_hMemDC);
 
 	// FPS 출력하기
-	//wchar_t szBuffer[255] = {};
-	//swprintf_s(szBuffer, L"[MyGame] FPS : %d", CTimeManager::getInst()->getFPS());
-	//SetWindowText(hWnd, szBuffer);
-
-	/*WCHAR strTime[8], strBullet[16], strKill[16];
-	swprintf_s(strTime, L"%7d", (int)surviveTime);
-	swprintf_s(strKill, L"%15d", CNT_KILL);
-	swprintf_s(strBullet, L"%15d", CNT_BULLET);
-	SetWindowText(hWnd, strBullet);*/
+	wchar_t szBuffer[255] = {};
+	swprintf_s(szBuffer, L"[MyGame] FPS : %d", CTimeManager::getInst()->getFPS());
+	SetWindowText(hWnd, szBuffer);
 
 	// 메모리 DC에서 원래 DC로 옮겨오는 함수
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);

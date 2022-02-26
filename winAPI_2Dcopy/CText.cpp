@@ -50,7 +50,7 @@ void CText::render(HDC hDC)
 
 	if (0 != m_uiTextSize)
 	{
-		HFONT hFont = CreateFont(m_uiTextSize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Tahoma"));
+		HFONT hFont = CreateFont(m_uiTextSize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
 
 		TextOutW(hDC, (int)getPos().x, (int)getPos().y, m_text, (int)wcslen(m_text));

@@ -7,7 +7,7 @@ CItem_Bullet::CItem_Bullet()
 	setSize(fPoint((float)I_SIZE, (float)I_SIZE));
 	setTimer(0.f);
 	setDuration(0);
-	setRandEA();
+	
 }
 
 CItem_Bullet::~CItem_Bullet()
@@ -16,7 +16,12 @@ CItem_Bullet::~CItem_Bullet()
 
 void CItem_Bullet::setRandEA()
 {
-	uiEA = rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
+	ucEA = rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
+}
+
+UCHAR CItem_Bullet::getEA()
+{
+	return ucEA;
 }
 
 void CItem_Bullet::update()
@@ -41,6 +46,10 @@ void CItem_Bullet::update()
 		}
 	}
 
+	// TODO (교수님 질문)
+	// 총알 아이템이 플레이어와 충돌했을 때(습득) 플레이어와 아이템이 각각 처리해야 하는 내용이 다른데 또 서로 자기 멤버에만 접근할 수 있잖아요..
+	// 지금 충돌했는지 계산을 플레이어 update()에서도 하고 있고 item_bullet의 update()에서도 하고 있는데요
+	// 각각의 후처리를 하려면 이렇게 하는 게 맞지만 같은 계산을 두 번해서 효율적이지 않은데 방법이 뭘까요?
 	RECT areaRect = { bullPos.x - I_SIZE / 2,
 					  bullPos.y - I_SIZE / 2,
 					  bullPos.x + I_SIZE / 2,

@@ -13,8 +13,8 @@ WCHAR       szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스
 WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
 // static 멤버변수 초기화
-bool CPlayer::isMode = false;
-fPoint CPlayer::fpPos = { 0.f, 0.f };
+bool    CPlayer::isMode = false;
+fPoint  CPlayer::fpPos = { 0.f, 0.f };
 
 // 전역변수 (결과창 출력)
 float   g_resultTimer = 0.f;

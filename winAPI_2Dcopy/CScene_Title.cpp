@@ -11,7 +11,9 @@ CScene_Title::CScene_Title()
 	setName(L"Title_Scene");
 	m_fCount = 0.f;
 	m_isChange = false;
-	m_uiColor = 0;
+	m_ucColorR = 0;
+	m_ucColorG = 0;
+	m_ucColorB = 0;
 }
 
 CScene_Title::~CScene_Title()
@@ -31,34 +33,51 @@ void CScene_Title::update()
 		m_isChange = !m_isChange; 
 		m_fCount -= 1.f;
 	}
-	m_uiColor++;
+	m_ucColorR++;
+	m_ucColorG++;
+	m_ucColorB++;
 }
 
+// FPS µµµÏ...
 void CScene_Title::render(HDC hDC)
 {
-	LPCWSTR strTitle = L"AMaDo Game";
+	LPCWSTR strTitle1 = L"AMaDo";
+	LPCWSTR strTitle2 = L"Game";
 
-	HFONT hFont = CreateFont(200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Cascadia Code"));
+	HFONT hFont = CreateFont(230, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
 
-	SetTextColor(hDC, RGB(m_uiColor, m_uiColor, m_uiColor));
+	SetTextColor(hDC, RGB(m_ucColorR, m_ucColorG, m_ucColorB));
 	SetBkMode(hDC, TRANSPARENT);
 
-	TextOutW(hDC, 200, 60, strTitle, wcslen(strTitle));
+	TextOutW(hDC, 150, 70, strTitle1, wcslen(strTitle1));
+	TextOutW(hDC, 700, 220, strTitle2, wcslen(strTitle2));
 
 	SelectObject(hDC, hOriginFont);
 	DeleteObject(hFont);
 
 	if (m_isChange)
 	{
+		hFont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
+		hOriginFont = (HFONT)SelectObject(hDC, hFont);
 		SetTextColor(hDC, WHITE);
+
 		LPCWSTR strMessage = L"Press \'Space\' to Play";
-		TextOutW(hDC, WINSIZEX / 2 - 100, WINSIZEY / 2 + 100, strMessage, wcslen(strMessage));
+		TextOutW(hDC, WINSIZEX / 2 - 115, WINSIZEY / 2 + 150, strMessage, wcslen(strMessage));
+
+		SelectObject(hDC, hOriginFont);
+		DeleteObject(hFont);
 	}
 }
 
 void CScene_Title::enter()
 {
+	do
+	{
+		m_ucColorR = rand() % 256;
+		m_ucColorG = rand() % 256;
+		m_ucColorB = rand() % 256;
+	} while (m_ucColorR == m_ucColorG == m_ucColorB);
 }
 
 void CScene_Title::exit()

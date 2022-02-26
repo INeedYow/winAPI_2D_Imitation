@@ -38,7 +38,7 @@ void CBullet::update()
 
 	// 씬이 가지고 있는 옵젝 배열 중 Enemy 인덱스에 있는 녀석들의 좌표를 받아서 충돌 여부 확인
 	for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
-	{	// 미쳤다.. 이게 되네;
+	{	// 이게 되네;
 		enemyPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
 		
 		if (bulletPos.COLL_PC(bulletPos, enemyPos, (int)O_SIZE))

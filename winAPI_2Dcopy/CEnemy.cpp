@@ -129,10 +129,10 @@ void CEnemy::render(HDC hDC)
 	{
 		LPCWSTR strMessage = L"!";
 
-		HFONT hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Arial Black"));
+		HFONT hFont = CreateFont(24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
 
-		SetTextColor(hDC, RGB(200,50,50));
+		SetTextColor(hDC, RGB(200,150,50));
 		TextOutW(hDC, pos.x, pos.y - 20, strMessage, wcslen(strMessage));
 
 		SelectObject(hDC, hOriginFont);

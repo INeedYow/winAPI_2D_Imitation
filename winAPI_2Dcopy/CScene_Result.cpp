@@ -6,11 +6,12 @@ CScene_Result::CScene_Result()
 	setName(L"Result_Scene");
 	uiCount = 0;
 	fTimer = 0.f;
-	szTextArr[0] = {L"G a m e O v e r"};
+	szTextArr[0] = {L"G a m e  O v e r"};
 	szTextArr[1] = {L"생존한 시간"};
 	szTextArr[2] = {L"처치한 적들"};
 	szTextArr[3] = {L"낭비한 총알"};
-	szTextArr[4] = {L"\'Q\r 키 : 다시하기 \t \'ESC\'키 : 처음으로"};
+	szTextArr[4] = {L"\'Q\r 키 : 다시하기 \t \'E\'키 : 처음으로"};
+	szTextArr[5] = {L"A"};
 }
 
 CScene_Result::~CScene_Result()
@@ -21,9 +22,9 @@ void CScene_Result::update()
 {
 	if (KEY_ON('Q'))
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
-	if (KEY_ON(VK_ESCAPE))
+	if (KEY_ON('E'))
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
-	if (uiCount < 3)
+	if (uiCount < 4)
 	fTimer += DT;
 
 	if (fTimer > 1.f)
@@ -39,10 +40,10 @@ void CScene_Result::render(HDC hDC)
 	HBRUSH	hBrush, hBrush2, hOriginalBrush;
 	HFONT	hFont, hOriginalFont;
 
-	WCHAR strTime[8], strBullet[16], strKill[16];
+	WCHAR strTime[8], strBullet[8], strKill[8];
 	swprintf_s(strTime, L"%7d", (int)g_resultTimer);
-	swprintf_s(strKill, L"%15d", g_resultKill);
-	swprintf_s(strBullet, L"%15d", g_resultBullet);
+	swprintf_s(strKill, L"%7d", g_resultKill);
+	swprintf_s(strBullet, L"%7d", g_resultBullet);
 
 	hPen = CreatePen(PS_SOLID, 10, RGB(10, 10, 10));
 	hPen2 = CreatePen(PS_SOLID, 10, RGB(150, 200, 250));
@@ -79,23 +80,14 @@ void CScene_Result::render(HDC hDC)
 	SelectObject(hDC, hOriginalFont);
 	DeleteObject(hFont);
 
-	SetTextColor(hDC, RGB(0, 0, 0));
-	hFont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
-
-	TextOutW(hDC, 460, 650, szTextArr[4], (int)wcslen(szTextArr[4]));
-
-	SelectObject(hDC, hOriginalFont);
-	DeleteObject(hFont);
-
 	if (uiCount < 1) return;
 
 	SetTextColor(hDC, RGB(50, 75, 0));
 	hFont = CreateFont(48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 
-	TextOutW(hDC, 500, 300, szTextArr[1], (int)wcslen(szTextArr[1]));
-	TextOutW(hDC, 750, 300, strTime, (int)wcslen(strTime));
+	TextOutW(hDC, 600, 330, szTextArr[1], (int)wcslen(szTextArr[1]));
+	TextOutW(hDC, 900, 330, strTime, (int)wcslen(strTime));
 
 	SelectObject(hDC, hOriginalFont);
 	DeleteObject(hFont);
@@ -106,8 +98,8 @@ void CScene_Result::render(HDC hDC)
 	hFont = CreateFont(48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 
-	TextOutW(hDC, 550, 375, szTextArr[2], (int)wcslen(szTextArr[2]));
-	TextOutW(hDC, 800, 375, strKill, (int)wcslen(strKill));
+	TextOutW(hDC, 650, 405, szTextArr[2], (int)wcslen(szTextArr[2]));
+	TextOutW(hDC, 950, 405, strKill, (int)wcslen(strKill));
 
 	SelectObject(hDC, hOriginalFont);
 	DeleteObject(hFont);
@@ -118,15 +110,43 @@ void CScene_Result::render(HDC hDC)
 	hFont = CreateFont(48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 
-	TextOutW(hDC, 600, 450, szTextArr[3], (int)wcslen(szTextArr[3]));
-	TextOutW(hDC, 850, 450, strBullet, (int)wcslen(strBullet));
+	TextOutW(hDC, 700, 480, szTextArr[3], (int)wcslen(szTextArr[3]));
+	TextOutW(hDC, 1000, 480, strBullet, (int)wcslen(strBullet));
+
+	SelectObject(hDC, hOriginalFont);
+	DeleteObject(hFont);
+
+	if (uiCount < 4) return;
+
+	SetTextColor(hDC, RGB(0, 0, 0));
+	hFont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
+	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
+
+	TextOutW(hDC, 430, 650, szTextArr[4], (int)wcslen(szTextArr[4]));
+
+	SelectObject(hDC, hOriginalFont);
+	DeleteObject(hFont);
+
+	// 등급 알파벳
+	SetTextColor(hDC, RGB(200, 50, 200));
+	hFont = CreateFont(300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
+	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
+
+	TextOutW(hDC, 160, 290, szTextArr[5], (int)wcslen(szTextArr[5]));
 
 	SelectObject(hDC, hOriginalFont);
 	DeleteObject(hFont);
 }
 
 void CScene_Result::enter()
-{
+{	// 랭크
+	uiTotalScore = g_resultBullet + g_resultKill + g_resultTimer;
+
+	if		(uiTotalScore < 60)								szTextArr[5] = L"C";
+	else if (60  <= uiTotalScore && uiTotalScore < 120)		szTextArr[5] = L"B";
+	else if (120 <= uiTotalScore && uiTotalScore < 180)		szTextArr[5] = L"A";
+	else if (180 <= uiTotalScore && uiTotalScore < 240)		szTextArr[5] = L"S";
+	else													szTextArr[5] = L"SS";
 }
 
 void CScene_Result::exit()

@@ -2,6 +2,7 @@
 #include "CPlayer.h"
 #include "CScene.h"
 #include "CBullet.h"
+#include "CItem_Bullet.h"
 
 CPlayer::CPlayer()
 {
@@ -58,6 +59,8 @@ void CPlayer::update()
 	fPoint chkPos;
 	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 	vector<CObject*>* pVecArr = pCurScene->getVecArr();
+	
+	//vector<CObject*>::iterator tmpIter;
 
 	for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
 	{	
@@ -66,6 +69,28 @@ void CPlayer::update()
 		// enemy와 충돌
 		if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)O_HSIZE))
 				death();
+	}
+
+	// 지우는 작업 고민
+	// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
+	/*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
+		iter != pVecArr[(int)OBJ::DROPITEM].end(); iter++)*/
+	for (int i = 0; i < pVecArr[(int)OBJ::DROPITEM].size(); i++)
+	{
+		chkPos = pVecArr[(int)OBJ::DROPITEM][i]->getPos();
+
+		RECT chkRt = { chkPos.x - (int)I_HSIZE , chkPos.y - (int)I_HSIZE,
+					   chkPos.x + (int)I_HSIZE , chkPos.y + (int)I_HSIZE };
+		// item 습득
+		// pVecArr로 접근하면 CObject* 로 접근해서 getEA()함수를 호출할 수 없음
+		// TODO : 일단 임의로 rand함수로 돌려놓음
+		if (playerPos.COLL_CR(playerPos, (int)O_HSIZE, chkRt))
+		{
+			m_uiBullet += rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
+			if (m_uiBullet > 24) 
+				m_uiBullet = 24;
+		}
+		//tmpIter = ;
 	}
 
 	if (KEY_ON('A') && m_uiBullet)
@@ -182,5 +207,6 @@ void CPlayer::setBullet(UINT ea)
 
 void CPlayer::death()
 {
+	// TODO 죽었을 때 처리 추가 예정
 	CSceneManager::getInst()->sceneChange(SCENE::RESULT);
 }
