@@ -71,7 +71,7 @@ void CPlayer::update()
 				death();
 	}
 
-	// 지우는 작업 고민
+	// 지우는 작업 필요...
 	// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
 	/*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
 		iter != pVecArr[(int)OBJ::DROPITEM].end(); iter++)*/
@@ -79,8 +79,8 @@ void CPlayer::update()
 	{
 		chkPos = pVecArr[(int)OBJ::DROPITEM][i]->getPos();
 
-		RECT chkRt = { chkPos.x - (int)I_HSIZE , chkPos.y - (int)I_HSIZE,
-					   chkPos.x + (int)I_HSIZE , chkPos.y + (int)I_HSIZE };
+		RECT chkRt = { (int)chkPos.x - (int)I_HSIZE , (int)chkPos.y - (int)I_HSIZE,
+					   (int)chkPos.x + (int)I_HSIZE , (int)chkPos.y + (int)I_HSIZE };
 		// item 습득
 		// pVecArr로 접근하면 CObject* 로 접근해서 getEA()함수를 호출할 수 없음
 		// TODO : 일단 임의로 rand함수로 돌려놓음
@@ -90,7 +90,6 @@ void CPlayer::update()
 			if (m_uiBullet > 24) 
 				m_uiBullet = 24;
 		}
-		//tmpIter = ;
 	}
 
 	if (KEY_ON('A') && m_uiBullet)

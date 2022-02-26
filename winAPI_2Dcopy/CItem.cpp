@@ -40,9 +40,9 @@ void CItem::setRandPos()
 
 	do
 	{
-		x = rand() % (WINSIZEX - 100) + 50;
-		y = rand() % (WINSIZEY - 100) + 50;
-	} while (playerPos.COLL_PC(fPoint(x,y),playerPos,O_SIZE + 20));
+		x = rand() % (WINSIZEX - 120) + 60;
+		y = rand() % (WINSIZEY - 70) + 40;
+	} while (playerPos.COLL_PC(fPoint((float)x, (float)y), playerPos, (int)O_SIZE));
 	
 	// 플레이어 위치에 너무 가까이 생성되지 않도록
 

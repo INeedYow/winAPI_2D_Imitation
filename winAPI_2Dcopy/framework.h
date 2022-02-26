@@ -54,6 +54,8 @@ extern USHORT  g_resultKill;
 #define BLACK				RGB(0, 0, 0)
 #define WHITE				RGB(255, 255, 255)
 
+#define SCORE_RANK			(UINT)75
+
 // 비트연산 실패
 //#define BIT_LOW(key)		(UINT)(key | 0xffff)
 //#define BIT_HIGH(key)		(UINT)((key >> 16) | 0xffff)
@@ -83,7 +85,7 @@ extern USHORT  g_resultKill;
 #define I_SIZE				34
 #define I_HSIZE				I_SIZE / 2
 			// bullet
-#define I_B_DURA			10
+#define I_B_DURA			12
 #define I_B_MAXEA			9
 #define I_B_MINEA			4
 
@@ -98,16 +100,17 @@ extern USHORT  g_resultKill;
 #include "SingleTon.h"
 
 
-// # enum 열거형 
+// # enum 열거형
+	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
 #define OBJ		GROUP_OBJECT
 enum class GROUP_OBJECT
 {
 	DEFAULT,
 	DUMMYPLAYER,
 	DUMMYENEMY,
-	DROPITEM,
 	PLAYER,
 	ENEMY,
+	DROPITEM,
 	BULLET,
 	TEXT,
 

@@ -28,7 +28,7 @@ void CScene_Stage01::enter()
 	CEnemy* pEnemy5 = new CEnemy();
 	pEnemy5->setPos(fPoint(1100.f, 400.f));
 	CItem_Bullet* pBullet1 = new CItem_Bullet();
-	pBullet1->setPos(fPoint(640.f, 400.f));
+	pBullet1->setPos(fPoint(640.f, 440.f));
 
 	addObject(pPlayer, OBJ::PLAYER);
 	addObject(pEnemy1, OBJ::ENEMY);
@@ -36,7 +36,7 @@ void CScene_Stage01::enter()
 	addObject(pEnemy3, OBJ::ENEMY);
 	addObject(pEnemy4, OBJ::ENEMY);
 	addObject(pEnemy5, OBJ::ENEMY);
-	addObject(pBullet1, OBJ::BULLET);
+	addObject(pBullet1, OBJ::DROPITEM);
 
 }
 

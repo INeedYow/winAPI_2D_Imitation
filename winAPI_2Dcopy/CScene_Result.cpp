@@ -142,11 +142,11 @@ void CScene_Result::enter()
 {	// ·©Å©
 	uiTotalScore = g_resultBullet + g_resultKill + g_resultTimer;
 
-	if		(uiTotalScore < 60)								szTextArr[5] = L"C";
-	else if (60  <= uiTotalScore && uiTotalScore < 120)		szTextArr[5] = L"B";
-	else if (120 <= uiTotalScore && uiTotalScore < 180)		szTextArr[5] = L"A";
-	else if (180 <= uiTotalScore && uiTotalScore < 240)		szTextArr[5] = L"S";
-	else													szTextArr[5] = L"SS";
+	if		(uiTotalScore < SCORE_RANK)												szTextArr[5] = L"C";
+	else if (SCORE_RANK		<= uiTotalScore && uiTotalScore < SCORE_RANK * 2)		szTextArr[5] = L"B";
+	else if (SCORE_RANK * 2 <= uiTotalScore && uiTotalScore < SCORE_RANK * 3)		szTextArr[5] = L"A";
+	else if (SCORE_RANK * 3	<= uiTotalScore && uiTotalScore < SCORE_RANK * 4)		szTextArr[5] = L"S";
+	else																			szTextArr[5] = L"SS";
 }
 
 void CScene_Result::exit()

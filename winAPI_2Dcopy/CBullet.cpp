@@ -41,7 +41,7 @@ void CBullet::update()
 	{	// 이게 되네;
 		enemyPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
 		
-		if (bulletPos.COLL_PC(bulletPos, enemyPos, (int)O_SIZE))
+		if (bulletPos.COLL_PC(bulletPos, enemyPos, (int)O_HSIZE))
 		{
 			if(!isColl) g_resultKill++; // 임시로 총알 맞추기만 해도 kill count 증가하도록
 			isColl = true;
@@ -57,7 +57,7 @@ void CBullet::update()
 
 void CBullet::render(HDC hDC)
 {
-	// TODO 임시 테스트용 나중에 지울 것 (충돌하면 안 그려지게)
+	// TODO 임시 테스트용 나중에 지울 것 (충돌하면 안 그려지게 해놨음)
 	if (isColl) return;
 
 	int sight = ISMODE ? (int)P_SIGHTON : (int)P_SIGHTOFF;
