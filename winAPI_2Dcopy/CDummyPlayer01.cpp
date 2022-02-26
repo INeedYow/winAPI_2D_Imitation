@@ -17,11 +17,8 @@ void CDummyPlayer01::update()
 	if (KEY_OFF(VK_SPACE))
 		isMode = false;
 
-	if (KEY_ON('A'))
-		CSceneManager::getInst()->sceneChange(SCENE::TUTORIAL_02);
 	if (KEY_ON('D'))
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
-
 }
 
 void CDummyPlayer01::render(HDC hDC)

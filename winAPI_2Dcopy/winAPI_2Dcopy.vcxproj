@@ -154,6 +154,7 @@
     <ClInclude Include="CBlock.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCore.h" />
+    <ClInclude Include="CDummyEnemy01.h" />
     <ClInclude Include="CDummyPlayer01.h" />
     <ClInclude Include="CDummyPlayer02.h" />
     <ClInclude Include="CEnemy.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="CBlock.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCore.cpp" />
+    <ClCompile Include="CDummyEnemy01.cpp" />
     <ClCompile Include="CDummyPlayer01.cpp" />
     <ClCompile Include="CDummyPlayer02.cpp" />
     <ClCompile Include="CEnemy.cpp" />

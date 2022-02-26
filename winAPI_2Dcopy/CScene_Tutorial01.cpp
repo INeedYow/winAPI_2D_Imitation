@@ -2,7 +2,7 @@
 #include "CScene_Tutorial01.h"
 #include "CPlayer.h"
 #include "CDummyPlayer01.h"
-#include "CEnemy.h"
+#include "CDummyEnemy01.h"
 #include "CText.h"
 
 CScene_Tutorial01::CScene_Tutorial01()
@@ -22,26 +22,26 @@ void CScene_Tutorial01::enter()
 	CDummyPlayer01* pDumPlayer = new CDummyPlayer01();
 	CText* pText1 = new CText(fPoint(590.f, 230.f), L"튜토리얼 1 / 3", 22);
 	CText* pText2 = new CText(fPoint(540.f, 270.f), L"\'Space bar\'를 눌러보세요", 24);
-	CText* pText3 = new CText(fPoint(540.f, 550.f), L"계속하려면 \'A\'를 누르세요", 20);
-	CText* pText4 = new CText(fPoint(540.f, 150.f), L"스킵하려면 \'D\'를 누르세요", 20);
-	CEnemy* pEnemy = new CEnemy(fPoint(420.f, 360.f), 
-								fPoint((float)O_SIZE, (float)O_SIZE), (float)E_SPEED);
+	CText* pText3 = new CText(fPoint(570.f, 150.f), L"스킵하려면 \'D\'를 누르세요", 20);
+	CDummyEnemy01* pDumEnemy = new CDummyEnemy01();
 
 	addObject(pDumPlayer, OBJ::DUMMYPLAYER);
 	addObject(pText1, OBJ::TEXT);
 	addObject(pText2, OBJ::TEXT);
 	addObject(pText3, OBJ::TEXT);
-	addObject(pText4, OBJ::TEXT);
-	addObject(pEnemy, OBJ::ENEMY);
+	addObject(pDumEnemy, OBJ::DUMMYENEMY);
 }
 
-
+// TODO dummyEnemy는 지우지 않도록 바꾸기
+	// continue하긴 했는데 이러면 포인터 주소는 누가 받고 2씬에서 어떻게 쓰지
 void CScene_Tutorial01::exit()
 {
 	vector<CObject*>* pVec = getVecArr();
 
 	for (int i = 0; i < (int)OBJ::SIZE; i++)
 	{
+		if (i == (int)OBJ::DUMMYENEMY) continue;
+
 		for (int j = 0; j < pVec[i].size(); j++)
 			delete pVec[i][j];
 
