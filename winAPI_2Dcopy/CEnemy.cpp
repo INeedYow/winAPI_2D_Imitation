@@ -56,7 +56,7 @@ void CEnemy::update()
 	if (enemyPos.COLL_PC(enemyPos, playerPos, sight))
 	{
 		if (fAttention <= 3.f)
-			fAttention += DT;
+			fAttention += ISMODE ? 2 * DT : DT;
 		if (fAttention >= 2.f && !isFever)
 		{
 			isFever = true;

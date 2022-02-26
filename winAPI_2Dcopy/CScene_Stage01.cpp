@@ -3,6 +3,7 @@
 
 #include "CEnemy.h"
 #include "CPlayer.h"
+#include "CItem_Bullet.h"
 
 CScene_Stage01::CScene_Stage01()
 {
@@ -16,10 +17,27 @@ CScene_Stage01::~CScene_Stage01()
 void CScene_Stage01::enter()
 {
 	CPlayer* pPlayer = new CPlayer();
-	CEnemy* pEnemy = new CEnemy();
+
+	CEnemy* pEnemy1 = new CEnemy();
+	CEnemy* pEnemy2 = new CEnemy();
+	pEnemy2->setPos(fPoint(200.f,250.f));
+	CEnemy* pEnemy3 = new CEnemy();
+	pEnemy3->setPos(fPoint(150.f, 400.f));
+	CEnemy* pEnemy4 = new CEnemy();
+	pEnemy4->setPos(fPoint(200.f, 550.f));
+	CEnemy* pEnemy5 = new CEnemy();
+	pEnemy5->setPos(fPoint(1100.f, 400.f));
+	CItem_Bullet* pBullet1 = new CItem_Bullet();
+	pBullet1->setPos(fPoint(640.f, 400.f));
 
 	addObject(pPlayer, OBJ::PLAYER);
-	addObject(pEnemy, OBJ::ENEMY);
+	addObject(pEnemy1, OBJ::ENEMY);
+	addObject(pEnemy2, OBJ::ENEMY);
+	addObject(pEnemy3, OBJ::ENEMY);
+	addObject(pEnemy4, OBJ::ENEMY);
+	addObject(pEnemy5, OBJ::ENEMY);
+	addObject(pBullet1, OBJ::BULLET);
+
 }
 
 void CScene_Stage01::exit()

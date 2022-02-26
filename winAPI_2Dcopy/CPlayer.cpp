@@ -17,10 +17,13 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+	isMode = false;
 }
 
 void CPlayer::update()
 {
+	g_resultTimer += DT;
+
 	fPoint playerPos = getPlayerPos();
 	if (KEY_OFF(VK_ESCAPE))
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
@@ -49,6 +52,20 @@ void CPlayer::update()
 		m_fvDir.x = playerPos.x - m_fpPrevPos.x;
 		m_fvDir.y = playerPos.y - m_fpPrevPos.y;
 		setDir(m_fvDir);
+	}
+
+	// 몬스터, 아이템 충돌처리(아이템 충돌은 아이템에서 했는데 플레이어 총알 증가시키려면 플레이어 업데이트 함수에서 해야하니까 여기서 해야하나)
+	fPoint chkPos;
+	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
+	vector<CObject*>* pVecArr = pCurScene->getVecArr();
+
+	for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
+	{	
+		chkPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
+
+		// enemy와 충돌
+		if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)O_HSIZE))
+				death();
 	}
 
 	if (KEY_ON('A') && m_uiBullet)
@@ -155,4 +172,15 @@ void CPlayer::createBullet()
 	pCurScene->addObject(pBullet, OBJ::BULLET);
 
 	m_uiBullet--;
+	g_resultBullet++;
+}
+
+void CPlayer::setBullet(UINT ea)
+{
+	m_uiBullet = ea;
+}
+
+void CPlayer::death()
+{
+	CSceneManager::getInst()->sceneChange(SCENE::RESULT);
 }

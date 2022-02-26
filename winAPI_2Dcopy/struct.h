@@ -16,6 +16,17 @@ struct iPoint
 		x = _x;
 		y = _y;
 	}
+	
+	void setRandPos(int minX, int maxX, int minY, int maxY)
+	{
+		if (maxX < minX || maxY < minY) return;
+
+		int iX = rand() % (maxX - minX + 1) + minX;
+		int iY = rand() % (maxY - minY + 1) + minY;
+		
+		x = iX;
+		y = iY;
+	}
 };
 
 // ÁÂÇ¥

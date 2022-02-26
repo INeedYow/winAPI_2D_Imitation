@@ -16,6 +16,12 @@ WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 �
 bool CPlayer::isMode = false;
 fPoint CPlayer::fpPos = { 0.f, 0.f };
 
+// 전역변수 (결과창 출력)
+float   g_resultTimer = 0.f;
+USHORT  g_resultBullet = 0;
+USHORT  g_resultKill = 0;
+
+
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);

@@ -25,6 +25,9 @@ public:
 	static void setPlayerPos(fPoint pos);
 
 	void createBullet();
+
+	void setBullet(UINT ea);
+	void death();
 };
 
 // 하나 걸리는 게

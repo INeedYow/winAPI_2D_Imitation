@@ -1,10 +1,14 @@
 #pragma once
-#include "CObject.h"
-class CITEM_BULLET : public CObject
+#include "CItem.h"
+class CItem_Bullet : public CItem
 {
+	UINT uiEA;		// 지급할 총알 개수 (또한 랜덤)
+
 public:
-	CITEM_BULLET();
-	virtual ~CITEM_BULLET();
+	CItem_Bullet();
+	virtual ~CItem_Bullet();
+
+	void setRandEA();
 
 	virtual void update();
 	virtual void render(HDC hDC);

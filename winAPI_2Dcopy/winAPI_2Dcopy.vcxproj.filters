@@ -55,6 +55,12 @@
     <Filter Include="Object\Obj_dummy">
       <UniqueIdentifier>{634fbaf5-7a51-4df0-b826-82f5cbf5954a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\CITem">
+      <UniqueIdentifier>{7fba2ce4-6960-4801-b6d6-9ea570c5ec03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\CITem\CItem_child">
+      <UniqueIdentifier>{430bd294-e415-47f8-b54d-8e6a677930ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -89,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>Scene\Scene_parent</Filter>
-    </ClInclude>
-    <ClInclude Include="CObject.h">
-      <Filter>Object\Obj_parent</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>Object\Obj_child</Filter>
@@ -129,11 +132,20 @@
     <ClInclude Include="CBullet.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
-    <ClInclude Include="CITEM_BULLET.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
     <ClInclude Include="CDummyEnemy01.h">
       <Filter>Object\Obj_dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>Object\CITem</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Bullet.h">
+      <Filter>Object\CITem\CItem_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Result.h">
+      <Filter>Scene\Scene_child</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,9 +166,6 @@
     </ClCompile>
     <ClCompile Include="CScene.cpp">
       <Filter>Scene\Scene_parent</Filter>
-    </ClCompile>
-    <ClCompile Include="CObject.cpp">
-      <Filter>Object\Obj_parent</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>Object\Obj_child</Filter>
@@ -194,11 +203,20 @@
     <ClCompile Include="CBullet.cpp">
       <Filter>Object\Obj_child</Filter>
     </ClCompile>
-    <ClCompile Include="CITEM_BULLET.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
     <ClCompile Include="CDummyEnemy01.cpp">
       <Filter>Object\Obj_dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>Object\CITem</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Bullet.cpp">
+      <Filter>Object\CITem\CItem_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Result.cpp">
+      <Filter>Scene\Scene_child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

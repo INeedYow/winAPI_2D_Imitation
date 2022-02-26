@@ -22,7 +22,7 @@ void CScene_Tutorial01::enter()
 	CDummyPlayer01* pDumPlayer = new CDummyPlayer01();
 	CText* pText1 = new CText(fPoint(590.f, 230.f), L"튜토리얼 1 / 3", 22);
 	CText* pText2 = new CText(fPoint(540.f, 270.f), L"\'Space bar\'를 눌러보세요", 24);
-	CText* pText3 = new CText(fPoint(570.f, 150.f), L"스킵하려면 \'D\'를 누르세요", 20);
+	CText* pText3 = new CText(fPoint(560.f, 145.f), L"스킵하려면 \'D\'를 누르세요", 20);
 	CDummyEnemy01* pDumEnemy = new CDummyEnemy01();
 
 	addObject(pDumPlayer, OBJ::DUMMYPLAYER);
@@ -32,8 +32,7 @@ void CScene_Tutorial01::enter()
 	addObject(pDumEnemy, OBJ::DUMMYENEMY);
 }
 
-// TODO dummyEnemy는 지우지 않도록 바꾸기
-	// continue하긴 했는데 이러면 포인터 주소는 누가 받고 2씬에서 어떻게 쓰지
+
 void CScene_Tutorial01::exit()
 {
 	vector<CObject*>* pVec = getVecArr();
