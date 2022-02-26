@@ -12,8 +12,9 @@ HWND        hWnd;                                     // 윈도우 핸들
 WCHAR       szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-// 둘 곳이 없네
-bool CPlayer::isDarkMode = false;
+// static 멤버변수 초기화
+bool CPlayer::isMode = false;
+fPoint CPlayer::fpPos = { 0.f, 0.f };
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -36,7 +37,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: 여기에 코드를 입력합니다.
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+   // _CrtSetBreakAlloc(296);         // flag 키값을 인자로 
+
+    srand((unsigned int)time(NULL));
 
     // 전역 문자열을 초기화합니다.
     // 위에 선언된 WCHAR 전역 문자열 변수들 리소스로 초기화

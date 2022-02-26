@@ -16,4 +16,5 @@ void CScene_Ending::enter()
 
 void CScene_Ending::exit()
 {
+
 }

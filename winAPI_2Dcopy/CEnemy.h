@@ -1,21 +1,23 @@
 #pragma once
 #include "CObject.h"
 
-// 좌우 혹은 상하로만 움직이며 벽에 부딪히면 방향전환
 class CEnemy : public CObject
 {	
-	bool	isPattern;	// 상하 패턴, 좌우 패턴
-	bool	isDir;		// 가는 중인지 오는 중인지
-	float	fSpeed;
+	float	fAttention;		// 플레이어 시야에 일정시간 노출되면 플레이어 향해 오도록 할 생각
+	float	fMoveCycle;		// 일정시간마다 움직임 랜덤 재설정
+	float	fSpeed;	
+	fVec2	fvDir;
+	bool	isFever;		// attention 누적 시 플레이어 향해 다가오게, '!' 출력
+	float	fFeverCount;	// '!' 출력 시간
 
 public:
 	CEnemy();
-	CEnemy(bool pattern, bool dir, float spd);
+	CEnemy(fPoint pos, fPoint size, float spd, fVec2 dir = fVec2(0.f,0.f));
 	~CEnemy();
+
+	void setDir(fVec2 vec);
+	void setRandDir();
 
 	virtual void update();
 	virtual void render(HDC hDC);
 };
-
-// 입사각 반사각 튀기는 공처럼 가능?
-	// 아직 적을 어떻게 구현할 건지 못 정함

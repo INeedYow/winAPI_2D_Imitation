@@ -22,4 +22,8 @@ public:
 	// 화면전환할 때 작업
 	virtual void enter() = 0;
 	virtual void exit() = 0;
+
+protected:
+	vector<CObject*>* getVecArr();	
+	// 그냥 될 것 같아서 시도하다가 오류만 안 나게 하다보니 되기는 한데 되는 이유는 모르겠음
 };

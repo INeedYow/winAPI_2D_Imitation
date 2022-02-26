@@ -8,17 +8,15 @@ CText::CText()
 	setPos(fPoint(0, 0));
 	setSize(fPoint(0, 0));
 	m_text = L"";
-	m_textSize = 0;
-	m_isMove = false;
+	m_uiTextSize = 0;
 }
 
-CText::CText(fPoint pos, LPCWSTR text, unsigned int size, bool isMove)
+CText::CText(fPoint pos, LPCWSTR text, UINT size)
 {
 	setPos(pos);
 	setSize(fPoint(0, 0));
 	m_text = text;
-	m_textSize = size;
-	m_isMove = isMove;
+	m_uiTextSize = size;
 }
 
 CText::~CText()
@@ -30,9 +28,9 @@ void CText::setText(LPCWSTR text)
 	m_text = text;
 }
 
-void CText::setTextSize(unsigned int size)
+void CText::setTextSize(UINT size)
 {
-	m_textSize = size;
+	m_uiTextSize = size;
 }
 
 LPCWSTR CText::getText()
@@ -42,45 +40,27 @@ LPCWSTR CText::getText()
 
 void CText::update()
 {
-	if (m_isMove)
-	{
-		fPoint textPos = getPos();
-
-		if (KEY_HOLD(VK_UP)		&& textPos.y > -26)
-			textPos.y -= P_SPEED * DT;
-
-		if (KEY_HOLD(VK_DOWN)		&& textPos.y < WINSIZEY - 74)
-			textPos.y += P_SPEED * DT;
-
-		if (KEY_HOLD(VK_LEFT)		&& textPos.x > -76)
-			textPos.x -= P_SPEED * DT;
-
-		if (KEY_HOLD(VK_RIGHT)	&& textPos.x < WINSIZEX - 124)
-			textPos.x += P_SPEED * DT;
-
-		setPos(textPos);
-	}
 }
 
 void CText::render(HDC hDC)
 {
-	SetTextColor(hDC, ISMODE ? BLACK : WHITE);
+	SetTextColor(hDC, ISMODE ? RGB(30, 30, 30) : RGB(15, 15, 15));
 	
 	SetBkMode(hDC, TRANSPARENT);	// 글자 배경 투명하게
 
-	if (0 != m_textSize)
+	if (0 != m_uiTextSize)
 	{
-		HFONT hFont = CreateFont(m_textSize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Tahoma"));
+		HFONT hFont = CreateFont(m_uiTextSize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Tahoma"));
 		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
 
-		TextOutW(hDC, getPos().x, getPos().y, m_text, wcslen(m_text));
+		TextOutW(hDC, (int)getPos().x, (int)getPos().y, m_text, (int)wcslen(m_text));
 
 		SelectObject(hDC, hOriginFont);
 		DeleteObject(hFont);
 	}
 	else
 	{
-		TextOutW(hDC, getPos().x, getPos().y, m_text, wcslen(m_text));
+		TextOutW(hDC, (int)getPos().x, (int)getPos().y, m_text, (int)wcslen(m_text));
 	}
 
 }

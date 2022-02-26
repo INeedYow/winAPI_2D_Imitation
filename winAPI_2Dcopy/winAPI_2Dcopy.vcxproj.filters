@@ -117,14 +117,20 @@
     <ClInclude Include="CScene_Tutorial02.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
-    <ClInclude Include="CTarget.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
     <ClInclude Include="CText.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
     <ClInclude Include="CDummyPlayer01.h">
       <Filter>Object\Obj_baby</Filter>
+    </ClInclude>
+    <ClInclude Include="CDummyPlayer02.h">
+      <Filter>Object\Obj_baby</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CITEM_BULLET.h">
+      <Filter>Object\Obj_child</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,14 +179,20 @@
     <ClCompile Include="CScene_Tutorial02.cpp">
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
-    <ClCompile Include="CTarget.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
     <ClCompile Include="CText.cpp">
       <Filter>Object\Obj_child</Filter>
     </ClCompile>
     <ClCompile Include="CDummyPlayer01.cpp">
       <Filter>Object\Obj_baby</Filter>
+    </ClCompile>
+    <ClCompile Include="CDummyPlayer02.cpp">
+      <Filter>Object\Obj_baby</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CITEM_BULLET.cpp">
+      <Filter>Object\Obj_child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 #include "CScene_Tutorial01.h"
 #include "CPlayer.h"
 #include "CDummyPlayer01.h"
-#include "CTarget.h"
+#include "CEnemy.h"
 #include "CText.h"
 
 CScene_Tutorial01::CScene_Tutorial01()
@@ -14,31 +14,38 @@ CScene_Tutorial01::~CScene_Tutorial01()
 {
 }
 
-
-// 튜토리얼용 더미 오브젝트를 만들어서 쓰기?
-
-
+// TODO : enemy도 더미로 생성하고 바꿔줄 것
+	// 추가 예정 : 더미가 플레이어까지 오지않도록 하고
+		// 튜토 2페이지에서 캐릭터 이동해서 총알 줍고 더미한테 쏘도록 유도할 생각
 void CScene_Tutorial01::enter()
 {
 	CDummyPlayer01* pDumPlayer = new CDummyPlayer01();
-	CTarget* pTargetL = new CTarget(fPoint(150.f, 360.f));
-	CTarget* pTargetR = new CTarget(fPoint(1130.f, 360.f));
-	CText* pText1 = new CText(fPoint(510, 130), L"방향키(↑ ↓ ← →)로 움직여요", 28, false);
-	CText* pText2 = new CText(fPoint(130, 420), L"목표", 20, false);
-	CText* pText3 = new CText(fPoint(1110, 420), L"목표", 20, false);
-	CText* pText4 = new CText(fPoint(540, 310), L"목표 중 하나로 이동해야 해요", 22, true);
-	CText* pText5 = new CText(fPoint(640, 660), L"1 / 3", 13, false);
+	CText* pText1 = new CText(fPoint(590.f, 230.f), L"튜토리얼 1 / 3", 22);
+	CText* pText2 = new CText(fPoint(540.f, 270.f), L"\'Space bar\'를 눌러보세요", 24);
+	CText* pText3 = new CText(fPoint(540.f, 550.f), L"계속하려면 \'A\'를 누르세요", 20);
+	CText* pText4 = new CText(fPoint(540.f, 150.f), L"스킵하려면 \'D\'를 누르세요", 20);
+	CEnemy* pEnemy = new CEnemy(fPoint(420.f, 360.f), 
+								fPoint((float)O_SIZE, (float)O_SIZE), (float)E_SPEED);
 
 	addObject(pDumPlayer, OBJ::DUMMYPLAYER);
-	addObject(pTargetL, OBJ::TARGET);
-	addObject(pTargetR, OBJ::TARGET);
 	addObject(pText1, OBJ::TEXT);
 	addObject(pText2, OBJ::TEXT);
 	addObject(pText3, OBJ::TEXT);
 	addObject(pText4, OBJ::TEXT);
-	addObject(pText5, OBJ::TEXT);
+	addObject(pEnemy, OBJ::ENEMY);
 }
+
 
 void CScene_Tutorial01::exit()
 {
+	vector<CObject*>* pVec = getVecArr();
+
+	for (int i = 0; i < (int)OBJ::SIZE; i++)
+	{
+		for (int j = 0; j < pVec[i].size(); j++)
+			delete pVec[i][j];
+
+		while (pVec[i].size() > 0)
+			pVec[i].pop_back();
+	}
 }

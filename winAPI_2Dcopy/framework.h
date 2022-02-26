@@ -14,13 +14,11 @@
 #include <memory.h>
 #include <tchar.h>
 
+#include <time.h>
 
 // # STL
 #include <vector>
 #include <string>
-
-
-
 
 
 // # 전처리기
@@ -42,19 +40,30 @@
 #define COLL_RRS		isCollisionRectToRectSameSize
 
 #define ISMODE			CPlayer::getMode()
-#define BLACK			RGB(255, 255, 255)
-#define WHITE			RGB(0, 0, 0)
+#define GETPOS			CPlayer::getPlayerPos()
+#define BLACK			RGB(0, 0, 0)
+#define WHITE			RGB(255, 255, 255)
 
 	// 설정,스탯 관련
 		// obj
-#define O_SIZE		48
+#define O_SIZE				48
+#define O_HSIZE				(O_SIZE / 2)
 		// player
-#define P_PEN		6
-#define P_SIZE		(O_SIZE - P_PEN)
-
-#define P_SPEED		200
+#define P_PEN				6
+#define P_SIZE				(O_SIZE - P_PEN)
+#define P_SPEED				200
+#define P_SIGHTON			240
+#define P_SIGHTOFF			180
+		// bullet
+#define B_SIZE				10
+#define B_SPEED				150
 		// enemy
-#define E_SPEED		100
+#define E_SPEED				50
+
+// TODO : (교수님 질문)
+// 중심 좌표(pos)에 대해서 scale / 2만큼 이동한 좌표로 그리는 작업이 많은데요
+// 정수 나눗셈의 경우 처리 시간이나 작업량이 적어서 무시해도 되는 정도인가요?
+// scale / 2가 자주 쓰일 값이라면 #define으로 결과값을 미리 정해놓고 계산시키면 유의미하게 차이가 날까요?
 
 
 // # Util
@@ -68,11 +77,11 @@ enum class GROUP_OBJECT
 {
 	DEFAULT,
 	PLAYER,
+	DUMMYPLAYER,
 	ENEMY,
-	TARGET,
+	BULLET,
 	BLOCK,
 	TEXT,
-	DUMMYPLAYER,
 
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
 };
@@ -98,7 +107,7 @@ enum class GROUP_SCENE
 #include "CSceneManager.h"
 
 
-// #
+// # winAPI_2Dcopy.cpp에 static 멤버변수 초기화할 때 필요
 #include "CPlayer.h"
 
 

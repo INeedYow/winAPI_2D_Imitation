@@ -29,18 +29,13 @@ void CCore::update()
 // 게임 전체 그리기 진행
 void CCore::render()												
 {
-	if (CPlayer::getMode())
-	{
-		HBRUSH hBrush = CreateSolidBrush(RGB(10, 10, 10));
-		HBRUSH hOriginBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
+	HBRUSH hBrush = CreateSolidBrush(ISMODE ? RGB(30,30,30) : RGB(15, 15, 15));
+	HBRUSH hOriginBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
+	
+	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
-		Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
-
-		SelectObject(m_hMemDC, hOriginBrush);
-		DeleteObject(hBrush);
-	}
-	else
-		Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
+	SelectObject(m_hMemDC, hOriginBrush);
+	DeleteObject(hBrush);
 
 	// memDC에 그려야 한다.
 	CSceneManager::getInst()->render(m_hMemDC);

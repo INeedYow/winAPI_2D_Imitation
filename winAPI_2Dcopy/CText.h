@@ -2,18 +2,18 @@
 #include "CObject.h"
 class CText : public CObject
 {
-	LPCWSTR			m_text;
-	unsigned int	m_textSize;
-	bool			m_isMove;
+	LPCWSTR		m_text;
+	UINT		m_uiTextSize;
+	//UINT 		m_uiRGB;				// 시간 남으면 비트연산으로 색상 도전
 
 public:
 	CText();
-	CText(fPoint pos, LPCWSTR text, unsigned int size, bool isMove);
+	CText(fPoint pos, LPCWSTR text, UINT size);
 	virtual ~CText();
 	
 	// 필요하려나
 	void setText(LPCWSTR text);
-	void setTextSize(unsigned int size);
+	void setTextSize(UINT size);
 
 	LPCWSTR getText();
 
