@@ -6,7 +6,9 @@ CItem::CItem()
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint((float)I_SIZE,(float)I_SIZE));
 	fTimer = 0;
-	uiDuration = 10;
+	uiDuration = 12;
+	isFlick = false;
+	ucKey = (UCHAR)IKEY::NONE;
 }
 
 CItem::~CItem()
@@ -23,6 +25,16 @@ void CItem::setDuration(UINT dura)
 	uiDuration = dura;
 }
 
+void CItem::setIsFlick(bool flick)
+{
+	isFlick = flick;
+}
+
+void CItem::setKey(UCHAR key)
+{
+	ucKey = key;
+}
+
 float CItem::getTimer()
 {
 	return fTimer;
@@ -31,6 +43,16 @@ float CItem::getTimer()
 UINT CItem::getDuration()
 {
 	return uiDuration;
+}
+
+UCHAR CItem::getKey()
+{
+	return ucKey;
+}
+
+bool CItem::getIsFlick()
+{
+	return isFlick;
 }
 
 void CItem::setRandPos()
@@ -46,5 +68,6 @@ void CItem::setRandPos()
 	
 	// 플레이어 위치에 너무 가까이 생성되지 않도록
 
+	setIsFlick(false);
 	setPos(fPoint((float)x, (float)y));
 }

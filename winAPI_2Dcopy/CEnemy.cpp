@@ -146,11 +146,22 @@ void CEnemy::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	// 덜 정확한 대신 속도나 계산 줄이려는 목적으로 COLL_PC함수
-	if (!pos.COLL_PC(pos, playerPos, sight)) return;
-
 	HPEN hPen, hOriginalPen;
 	HBRUSH hBrush, hOriginalBrush;
+
+	// 덜 정확한 대신 계산 줄이려는 목적으로 COLL_PC함수
+	if (!pos.COLL_PC(pos, playerPos, sight))
+	{
+		if (ISSCAN)
+		{	// 스캐너
+			hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
+			hOriginalPen = (HPEN)SelectObject(hDC, hPen);
+			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			SelectObject(hDC, hOriginalPen);
+			DeleteObject(hPen);
+		}
+		return;
+	}
 
 	hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
 	hBrush = CreateSolidBrush(RGB(45, 45, 45));

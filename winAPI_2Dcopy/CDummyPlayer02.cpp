@@ -37,7 +37,7 @@ void CDummyPlayer02::update()
 		setDir(m_fvDir);
 	}
 
-	if (KEY_ON('A') && m_uiBullet)
+	if (KEY_ON('A') && uiBullet)
 		createBullet();
 
 	if (KEY_ON(VK_SPACE))
@@ -90,23 +90,23 @@ void CDummyPlayer02::render(HDC hDC)
 	DeleteObject(hBrush);
 
 	// 보유한 총알 그림
-	if (0 < m_uiBullet)
+	if (0 < uiBullet)
 	{
 		SetTextColor(hDC, RGB(52, 0, 0));
 		LPCWSTR strMessage = L"........";
 
-		if (m_uiBullet <= 8)
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, m_uiBullet);
-		else if (8 < m_uiBullet && m_uiBullet <= 16)
+		if (uiBullet <= 8)
+			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, uiBullet);
+		else if (8 < uiBullet && uiBullet <= 16)
 		{
 			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, (m_uiBullet - 8));
+			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, (uiBullet - 8));
 		}
 		else
 		{
 			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
 			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (m_uiBullet - 16));
+			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (uiBullet - 16));
 		}
 	}
 }

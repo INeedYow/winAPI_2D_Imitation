@@ -15,6 +15,8 @@
 #include <tchar.h>
 
 #include <time.h>
+#include <math.h>
+
 
 // # STL
 #include <vector>
@@ -50,9 +52,15 @@ extern USHORT  g_resultKill;
 #define COLL_RRS			isCollisionRectToRectSameSize
 
 #define ISMODE				CPlayer::getMode()
-#define ISSCAN				CItem_Scanner::getMode()
+#define ISSCAN				CPlayer::getScan()
 #define GETPOS				CPlayer::getPlayerPos()
 #define SETMODE(mode)		CPlayer::setMode(mode)
+#define SETBULLET(v)		CPlayer::setBullet(v)
+#define GETBULLET			CPlayer::getBullet()
+#define SETSCAN(v)			CPlayer::setScan(v)
+#define ADDTIMER(v)			CPlayer::addScanTimer(v)
+
+
 #define BLACK				RGB(0, 0, 0)
 #define WHITE				RGB(255, 255, 255)
 
@@ -68,7 +76,7 @@ extern USHORT  g_resultKill;
 //#define ADD_BULLET		resultCnt++
 //#define ADD_KILL			resultCnt += (0x01 <<16)
 
-	// 설정,스탯 관련
+	// 오브젝트 설정 관련
 		// obj
 #define O_SIZE				48
 #define O_HSIZE				(O_SIZE / 2)
@@ -137,6 +145,15 @@ enum class GROUP_SCENE
 	SIZE
 };
 
+#define IKEY	KEY_ITEM
+enum class KEY_ITEM
+{
+	NONE,
+	BULLET,
+	SCANNER,
+
+	SIZE
+};
 
 // # Core, Manager, Class
 #include "CCore.h"

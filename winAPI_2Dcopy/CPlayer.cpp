@@ -9,7 +9,7 @@ CPlayer::CPlayer()
 	setPos(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	setSize(fPoint(P_SIZE, P_SIZE));
 	m_fSpeed = P_SPEED;
-	m_uiBullet = 0;
+	uiBullet = 0;
 	m_fpPrevPos = fPoint(1.f, 1.f);
 	m_fvDir = fVec2(1.f, 1.f);
 	fpPos.x = WINSIZEX / 2.f;
@@ -24,6 +24,13 @@ CPlayer::~CPlayer()
 void CPlayer::update()
 {
 	g_resultTimer += DT;
+
+	if (isScan && scanTimer > 0.f)				// 스캐너
+	{
+		scanTimer -= DT;
+		if (0.f > scanTimer)
+			isScan = false;
+	}
 
 	fPoint playerPos = getPlayerPos();
 	if (KEY_OFF(VK_ESCAPE))
@@ -41,12 +48,19 @@ void CPlayer::update()
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
 		playerPos.x += m_fSpeed * DT;
 
-	if (KEY_ON('R')) m_uiBullet = 24;		// dont cheat
+	if (KEY_ON('R')) uiBullet = 24;		// dont cheat
+	if (KEY_ON('T'))
+	{
+		isScan = true;
+		scanTimer += 3.f;		// dont cheat
+	}
 		
-
+	
 	// 내 이전 좌표와 현재 좌표로 현재 방향벡터 구함
 		// 좌표 이동이 없다면 갱신하지 않음(이전 방향대로 쏘도록) <- 의도대로 안 됨
 	// TODO : 좌표 이동 없으면 최근 방향대로 쏘도록 하고 싶은데 상하좌우로만 쏨
+		// 대각선으로 움직이다가 두 키를 정확히 동시에 떼는 경우가 없어서 그런가 -> 맞네;
+		// -> 복수 입력에 대한 처리를 다르게 하던가 다른 방법은?..
 
 	if ((playerPos.x != m_fpPrevPos.x) || (playerPos.y != m_fpPrevPos.y))
 	{
@@ -71,28 +85,29 @@ void CPlayer::update()
 				death();
 	}
 
-	// 지우는 작업 필요...
+	// 일단 아이템쪽에서 충돌 계산하고 처리하도록 했음 (덕분에 static변수 엄청 만듦)
+	// TODO : 지우는 작업 필요...
 	// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
 	/*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
 		iter != pVecArr[(int)OBJ::DROPITEM].end(); iter++)*/
-	for (int i = 0; i < pVecArr[(int)OBJ::DROPITEM].size(); i++)
-	{
-		chkPos = pVecArr[(int)OBJ::DROPITEM][i]->getPos();
+	//for (int i = 0; i < pVecArr[(int)OBJ::DROPITEM].size(); i++)
+	//{
+	//	chkPos = pVecArr[(int)OBJ::DROPITEM][i]->getPos();
 
-		RECT chkRt = { (int)chkPos.x - (int)I_HSIZE , (int)chkPos.y - (int)I_HSIZE,
-					   (int)chkPos.x + (int)I_HSIZE , (int)chkPos.y + (int)I_HSIZE };
-		// item 습득
-		// pVecArr로 접근하면 CObject* 로 접근해서 getEA()함수를 호출할 수 없음
-		// TODO : 일단 임의로 rand함수로 돌려놓음
-		if (playerPos.COLL_CR(playerPos, (int)O_HSIZE, chkRt))
-		{
-			m_uiBullet += rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
-			if (m_uiBullet > 24) 
-				m_uiBullet = 24;
-		}
-	}
+	//	RECT chkRt = { (int)chkPos.x - (int)I_HSIZE , (int)chkPos.y - (int)I_HSIZE,
+	//				   (int)chkPos.x + (int)I_HSIZE , (int)chkPos.y + (int)I_HSIZE };
+	//	// item 습득
+	//	// pVecArr로 접근하면 CObject* 로 접근해서 getEA()함수를 호출할 수 없음
+	//	// TODO : 일단 임의로 rand함수로 돌려놓음
+	//	if (playerPos.COLL_CR(playerPos, (int)O_HSIZE, chkRt))
+	//	{	// 먹은 아이템 key값으로 분류할랬는데 불가능?
+	//		uiBullet += rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
+	//		if (uiBullet > 24)
+	//			uiBullet = 24;
+	//	}
+	//}
 
-	if (KEY_ON('A') && m_uiBullet)
+	if (KEY_ON('A') && uiBullet)
 		createBullet();
 
 	
@@ -158,23 +173,23 @@ void CPlayer::render(HDC hDC)
 	DeleteObject(hBrush);
 
 	// 보유한 총알 그림
-	if (0 < m_uiBullet)
+	if (0 < uiBullet)
 	{
 		SetTextColor(hDC, RGB(52, 0, 0));
 		LPCWSTR strMessage = L"........";
 
-		if (m_uiBullet <= 8)
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, m_uiBullet);
-		else if (8 < m_uiBullet && m_uiBullet <= 16)
+		if (uiBullet <= 8)
+			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, uiBullet);
+		else if (8 < uiBullet && uiBullet <= 16)
 		{
 			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, (m_uiBullet - 8));
+			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, (uiBullet - 8));
 		}
 		else
 		{
 			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
 			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (m_uiBullet - 16));
+			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (uiBullet - 16));
 		}
 	}
 	//m_battery.render(hDC);
@@ -195,6 +210,11 @@ bool CPlayer::getScan()
 	return isScan;
 }
 
+void CPlayer::addScanTimer(float time)
+{
+	scanTimer += time;
+}
+
 void CPlayer::setMode(bool mode)
 {
 	isMode = mode;
@@ -210,6 +230,11 @@ fPoint CPlayer::getPlayerPos()
 	return fpPos;
 }
 
+UINT CPlayer::getBullet()
+{
+	return uiBullet;
+}
+
 void CPlayer::setPlayerPos(fPoint pos)
 {
 	fpPos = pos;
@@ -222,17 +247,18 @@ void CPlayer::createBullet()
 	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 	pCurScene->addObject(pBullet, OBJ::BULLET);
 
-	m_uiBullet--;
+	uiBullet--;
 	g_resultBullet++;
 }
 
-void CPlayer::setBullet(UINT ea)
+void CPlayer::setBullet(UINT bullet)
 {
-	m_uiBullet = ea;
+	uiBullet = bullet;
+	if (uiBullet > 24)
+		uiBullet = 24;
 }
 
 void CPlayer::death()
 {
-	// TODO 죽었을 때 처리 추가 예정
 	CSceneManager::getInst()->sceneChange(SCENE::RESULT);
 }
