@@ -76,7 +76,7 @@ void CItem_Bullet::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	// 덜 정확한 대신 속도나 계산 줄이려는 목적으로 COLL_PC함수
+	// 덜 정확한 대신 계산 줄이려는 목적으로 COLL_PC함수
 	if (!pos.COLL_PC(pos, playerPos, sight)) return;
 
 	HPEN hPen, hOriginalPen;

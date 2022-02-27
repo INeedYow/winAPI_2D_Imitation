@@ -113,6 +113,10 @@ void CPlayer::update()
 	m_fpPrevPos.y = playerPos.y;
 
 	setPlayerPos(playerPos);
+	
+	// 소유 관계니까 Scene에서 업데이트 시키는 게 아니라 플레이어 업뎃할 때 배터리 업뎃 호출해주는 게 맞는듯해서 이렇게 바꾸려했는데
+	// TODO (질문) 왜 심각한 오류.라고 에러 뜨는데 이유를 모르겠어요
+	// m_battery.update();
 }
 
 void CPlayer::render(HDC hDC)
@@ -173,6 +177,7 @@ void CPlayer::render(HDC hDC)
 			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (m_uiBullet - 16));
 		}
 	}
+	//m_battery.render(hDC);
 }
 
 void CPlayer::setDir(fVec2 vec)
@@ -185,9 +190,19 @@ bool CPlayer::getMode()
 	return isMode;
 }
 
+bool CPlayer::getScan()
+{
+	return isScan;
+}
+
 void CPlayer::setMode(bool mode)
 {
 	isMode = mode;
+}
+
+void CPlayer::setScan(bool scan)
+{
+	isScan = scan;
 }
 
 fPoint CPlayer::getPlayerPos()

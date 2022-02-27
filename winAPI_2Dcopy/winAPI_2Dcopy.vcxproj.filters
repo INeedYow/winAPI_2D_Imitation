@@ -108,13 +108,7 @@
     <ClInclude Include="CScene_Stage01.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
-    <ClInclude Include="CBlock.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
     <ClInclude Include="CScene_Tutorial01.h">
-      <Filter>Scene\Scene_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Ending.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
     <ClInclude Include="CScene_Tutorial02.h">
@@ -150,6 +144,9 @@
     <ClInclude Include="CBattery.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
+    <ClInclude Include="CItem_Scanner.h">
+      <Filter>Object\CITem\CItem_child</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -182,13 +179,7 @@
     <ClCompile Include="CScene_Stage01.cpp">
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
-    <ClCompile Include="CBlock.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
     <ClCompile Include="CScene_Tutorial01.cpp">
-      <Filter>Scene\Scene_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Ending.cpp">
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
     <ClCompile Include="CScene_Tutorial02.cpp">
@@ -223,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="CBattery.cpp">
       <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Scanner.cpp">
+      <Filter>Object\CITem\CItem_child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

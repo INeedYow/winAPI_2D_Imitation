@@ -14,6 +14,7 @@ WCHAR       szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 �
 
 // static 멤버변수 초기화
 bool    CPlayer::isMode = false;
+bool    CPlayer::isScan = false;
 fPoint  CPlayer::fpPos = { 0.f, 0.f };
 
 // 전역변수 (결과창 출력)

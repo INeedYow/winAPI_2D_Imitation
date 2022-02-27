@@ -50,6 +50,7 @@ extern USHORT  g_resultKill;
 #define COLL_RRS			isCollisionRectToRectSameSize
 
 #define ISMODE				CPlayer::getMode()
+#define ISSCAN				CItem_Scanner::getMode()
 #define GETPOS				CPlayer::getPlayerPos()
 #define SETMODE(mode)		CPlayer::setMode(mode)
 #define BLACK				RGB(0, 0, 0)
@@ -115,7 +116,7 @@ enum class GROUP_OBJECT
 	DUMMYPLAYER,
 	DUMMYENEMY,
 	PLAYER,
-	BATTERY,			// 그리지는 않지만 적어줘야 업데이트 돌아갈 듯
+	BATTERY,		
 	ENEMY,
 	TEXT,
 	DROPITEM,
@@ -131,7 +132,6 @@ enum class GROUP_SCENE
 	TUTORIAL_01,
 	TUTORIAL_02,
 	STAGE_01,
-	ENDING,
 	RESULT,
 	
 	SIZE

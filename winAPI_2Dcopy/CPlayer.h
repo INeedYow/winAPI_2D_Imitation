@@ -5,15 +5,16 @@
 class CPlayer : public CObject
 {
 protected:
-	static bool isMode;			// 시야 모드
-	static fPoint fpPos;		// 현재 좌표
+	static bool		isMode;			// 시야 모드
+	static bool		isScan;			// 스캔 모드
+	static fPoint	fpPos;			// 현재 좌표
 
-	fPoint	m_fpPrevPos;		// 이전 좌표
-	fVec2	m_fvDir;			// 총알 방향
-	UINT	m_uiBullet;			// 총알 개수
-	float	m_fSpeed;			// 이동 속도
+	fPoint		m_fpPrevPos;		// 이전 좌표
+	fVec2		m_fvDir;			// 총알 방향
+	UINT		m_uiBullet;			// 총알 개수
+	float		m_fSpeed;			// 이동 속도
 
-	CBattery m_battery;			// 배터리 (스페이스바)
+	CBattery	m_battery;			// 배터리 (스페이스바)
 	
 public:
 	CPlayer();
@@ -25,9 +26,13 @@ public:
 	void setDir(fVec2 vec);
 
 	static bool getMode();
-	static void setMode(bool mode);
+	static bool getScan();
 	static fPoint getPlayerPos();
+
+	static void setMode(bool mode);
+	static void setScan(bool scan);
 	static void setPlayerPos(fPoint pos);
+
 
 	void createBullet();
 
@@ -35,6 +40,6 @@ public:
 	void death();
 };
 
-// 하나 걸리는 게
 // 다른 오브젝트들에서 플레이어 좌표로 렌더를 결정하기 때문에 부모의 pos를 안 쓰고
 // static 멤버변수 pos를 새로 만들어서 씀
+// 좋은 방법은 아닌 것 같음

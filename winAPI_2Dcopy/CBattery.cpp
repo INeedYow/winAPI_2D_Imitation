@@ -3,10 +3,10 @@
 
 CBattery::CBattery()
 {
-	m_fBattery = BAT_MAX;
+	m_fBattery = (float)BAT_MAX;
 	m_fAccel = 0.f;
 	m_fDecel = 0.f;
-	m_fBar = 0.f;
+	m_fBar = (float)BATBAR_MAX;
 }
 
 CBattery::~CBattery()

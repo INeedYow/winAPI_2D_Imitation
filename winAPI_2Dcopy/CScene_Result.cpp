@@ -20,9 +20,9 @@ CScene_Result::~CScene_Result()
 
 void CScene_Result::update()
 {
-	if (KEY_ON('Q'))
+	if (KEY_ON('Q') && uiCount > 3)
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
-	if (KEY_ON('E'))
+	if (KEY_ON('E') && uiCount > 3)
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
 	if (uiCount < 4)
 	fTimer += DT;
