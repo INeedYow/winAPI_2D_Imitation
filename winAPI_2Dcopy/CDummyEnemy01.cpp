@@ -4,12 +4,12 @@
 CDummyEnemy01::CDummyEnemy01()
 {
 	fAttention = 0;
-	fSpeed = E_SPEEDMIN + 15;
+	fSpeed = EZ_SPEEDMAX;
 	fvDir = fVec2(0.f, 0.f);
 	setPos(fPoint(440.f, 360.f));
 	setSize(fPoint(O_SIZE, O_SIZE));
 	fTimer = 0.f;
-	isFever = false;
+	isNotice = false;
 	fFeverCount = 0.f;
 	isComing = false;
 }
@@ -34,19 +34,19 @@ void CDummyEnemy01::update()
 		{
 			if (fAttention <= 2.f)
 				fAttention += DT;
-			if (fAttention >= 1.f && !isFever)
+			if (fAttention >= 1.f && !isNotice)
 			{
-				isFever = true;
+				isNotice = true;
 				fFeverCount += 1.f;
 			}
-			if (isFever)
+			if (isNotice)
 			{
 				enemyPos.x += fSpeed * DT;
 			}
 		}
 		else
 		{
-			if (isFever) isFever = false;
+			if (isNotice) isNotice = false;
 
 			if (fAttention > 0.f)
 			{
@@ -90,7 +90,7 @@ void CDummyEnemy01::render(HDC hDC)
 	DeleteObject(hPen);
 	DeleteObject(hBrush);
 
-	if (isFever)
+	if (isNotice)
 	{
 		LPCWSTR strMessage = L"!";
 		HFONT hFont = CreateFont(24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));

@@ -2,25 +2,21 @@
 #include "CObject.h"
 
 class CEnemy : public CObject
-{	
+{
 protected:
-	float	fAttention;		// 플레이어 시야에 일정시간 노출되면 플레이어 향해 오도록 할 생각
-	bool	isFever;		// attention 누적 시 플레이어 향해 다가오게, '!' 출력
-	float	fFeverCount;	// '!' 출력 시간
-	float	fSpeed;
-	float	fTimer;			// 일정시간마다 움직임 랜덤 재설정
-	bool	isMove;
+	float	fSpeed;			
 	fVec2	fvDir;
+	float	fTimer;				// 특수 기능 타이머
 
 public:
 	CEnemy();
-	CEnemy(fPoint pos, fPoint size, float spd, fVec2 dir = fVec2(0.f,0.f));
 	virtual ~CEnemy();
 
-	void setDir(fVec2 vec);
-	void setRandSpeed();
-	void setRandDir();
+	void setRandPos(int size);	// zombie는 현재 맵 밖에서 생성하면 안 돼서 자식마다 다르게 쓰려고
 
-	virtual void update();
-	virtual void render(HDC hDC);
+	void setDir(fVec2 vec);
+	void chaseMe();				// Dir을 내게 오게 설정
+	
+	virtual void update() = 0;
+	virtual void render(HDC hDC) = 0;
 };

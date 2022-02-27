@@ -1,6 +1,7 @@
 #pragma once
-#include "CEnemy.h"
-class CDummyEnemy01 : public CEnemy
+#include "CEnemy_Zombie.h"
+
+class CDummyEnemy01 : public CEnemy_Zombie
 {
 	bool isComing;
 public:

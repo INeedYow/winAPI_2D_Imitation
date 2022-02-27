@@ -83,15 +83,24 @@ extern USHORT  g_resultKill;
 		// player
 #define P_PEN				6
 #define P_SIZE				(O_SIZE - P_PEN)
-#define P_SPEED				150
-#define P_SIGHTON			240
-#define P_SIGHTOFF			180
+#define P_SPEED				140
+#define P_SIGHTON			250
+#define P_SIGHTOFF			190
 		// enemy
-#define E_SPEEDMAX			50
-#define E_SPEEDMIN			30
+			// zombie
+#define EZ_SPEEDMAX			50
+#define EZ_SPEEDMIN			30
+#define EZ_SIZE				48
+			// zombieDog
+#define EZD_SIZE			30
+#define EZD_SPEED			75
+			// crawler
+#define EC_SIZE				40
+#define EC_SPEEDMAX			420
+#define EC_SPEEDMIN			20
 		// bullet
 #define B_SIZE				10
-#define B_SPEED				175
+#define B_SPEED				200
 		// item
 #define I_SIZE				34
 #define I_HSIZE				(I_SIZE / 2)
@@ -100,10 +109,10 @@ extern USHORT  g_resultKill;
 #define I_B_MAXEA			9
 #define I_B_MINEA			4
 		// battery
-#define BAT_MAX				35
+#define BAT_MAX				40
 #define BAT_ACCELMAX		7
-#define BAT_DECELMAX		3
-#define BAT_RECOVER			0
+#define BAT_DECELMAX		4
+#define BAT_RECOVER			1
 #define BAT_CONSUME			9
 #define	BAT_INITCONSUME		4
 #define BATBAR_MAX			25
@@ -119,7 +128,7 @@ extern USHORT  g_resultKill;
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
 #define OBJ		GROUP_OBJECT
 enum class GROUP_OBJECT
-{
+{	// 현재 시야 원을 플레이어가 render하고 있어서 플레이어 뒤에 뭘 놓을 수가 없음 -> 배경obj등으로 따로 만들어서 관리해야 할듯
 	DEFAULT,
 	PLAYER,
 	DUMMYPLAYER,

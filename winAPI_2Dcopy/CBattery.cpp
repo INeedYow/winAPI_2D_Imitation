@@ -49,7 +49,7 @@ void CBattery::update()
 			m_fAccel = 0.f;
 			m_fBattery -= ((float)BAT_CONSUME * DT - m_fDecel * DT);				// 오래 켤수록 소모량 작아지게
 
-      		if (m_fDecel < (float)BAT_DECELMAX)	m_fDecel += 1.f * DT;				// 연비 상승
+      		if (m_fDecel < (float)BAT_DECELMAX)	m_fDecel += 2.f * DT;				// 연비 상승
 			if (m_fDecel > (float)BAT_DECELMAX)	m_fDecel = (float)BAT_DECELMAX;		// 최대치
 		}
 	}

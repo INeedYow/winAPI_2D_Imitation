@@ -71,6 +71,7 @@ void CPlayer::update()
 
 	// 阁胶磐 面倒贸府
 	fPoint chkPos;
+	fPoint chkSize;
 	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 	vector<CObject*>* pVecArr = pCurScene->getVecArr();
 	
@@ -79,9 +80,10 @@ void CPlayer::update()
 	for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
 	{	
 		chkPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
+		chkSize = pVecArr[(int)OBJ::ENEMY][i]->getSize();
 
 		// enemy客 面倒
-		if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)O_HSIZE))
+		if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)chkSize.x / 2))
 				death();
 	}
 

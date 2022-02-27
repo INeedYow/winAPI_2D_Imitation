@@ -50,6 +50,7 @@ struct fPoint
 	// 가로 세로 크기가 다른 사각형이라면 가로 기준, 세로 기준 두 번 비교해야 할 듯
 			// (가로 또는 세로가) 작은 사각형 기준으로 각 꼭지점이 큰 사각형에 포함되는지 확인
 	// -> 현재 구상 중인 게임의 경우 두 사각형 크기가 같으므로 한 사각형의 꼭지점이 다른 사각형에 포함되는지 확인하는 방식으로 작성
+	// 추가하다보니 사이즈가 달라졌지만 아직 네모가 없으므로 보류
 	bool isCollisionRectToRectSameSize(const RECT& rt1, const RECT& rt2)					// == COLL_RRS
 	{								// 사각형1		// 사각형2
 		if (COLL_PR(fPoint((float)rt1.left,  (float)rt1.top),		rt2)) return true;

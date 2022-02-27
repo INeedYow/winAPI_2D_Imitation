@@ -2,7 +2,7 @@
 #include "CItem.h"
 class CItem_Bullet : public CItem
 {
-	UCHAR ucEA;		// 지급할 총알 개수 (또한 랜덤)
+	UCHAR ucEA;		// 지급할 총알 개수
 
 public:
 	CItem_Bullet();
