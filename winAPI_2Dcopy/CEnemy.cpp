@@ -4,7 +4,7 @@
 CEnemy::CEnemy()
 {
 	fAttention = 0;
-	fSpeed	= E_SPEED;
+	setRandSpeed();
 	fvDir = fVec2(0.f, 0.f);
 	setPos(fPoint(470.f, 220.f));
 	setSize(fPoint(O_SIZE, O_SIZE));
@@ -19,7 +19,7 @@ CEnemy::CEnemy(fPoint pos, fPoint size, float spd, fVec2 dir)
 	setPos(pos);
 	setSize(size);
 	fAttention = 0.f;
-	fSpeed = spd;
+	setRandSpeed();
 	fTimer = 4.f;
 	fvDir = dir;
 	isFever = false;
@@ -38,11 +38,19 @@ void CEnemy::setDir(fVec2 vec)
 	fvDir = vec.normalize();
 }
 
-void CEnemy::setRandDir()
+void CEnemy::setRandSpeed()
 {
+	int spdMax = (int)E_SPEEDMAX + (int)g_resultTimer;
+	int spdMin = (int)E_SPEEDMIN + (int)g_resultTimer;
+	fSpeed = rand() % (spdMax - spdMin + 1) + spdMin;
 }
 
-// 움직이긴하는데 속도 자기 멋대로임
+void CEnemy::setRandDir()
+{
+	fvDir.x = rand() % 9 - 4;
+	fvDir.y = rand() % 9 - 4;
+}
+
 
 void CEnemy::update()
 {
@@ -83,43 +91,38 @@ void CEnemy::update()
 			if (fAttention < 0.f)
 				fAttention = 0.f;
 		}
-		// TODO : 일정 시간마다 랜덤 움직임
-		if (!isMove)							// 움직임이 없는 상태면
+
+		if (!isMove)							// 움직임 패턴 없으면
 		{
-			fTimer += DT;						// 타이머 누적
-			if (fTimer >= 4.f)					//
+			fTimer += DT;						
+			if (fTimer >= 4.f)
 			{
-				fTimer = 0;
-				while (true)					// 방향성 새로 뽑기
+				
+				setRandDir();						// 방향성 재설정
+				if (0 == fvDir.x && 0 == fvDir.y)		// 방향성 없으면
+					fTimer = 0;								// 다시 대기
+				else									
 				{
-					int x = rand() % 9 - 4;
-					int y = rand() % 9 - 4;
-					if (0 == x && 0 == y)	break;								// 방향성 0, 0나오면 4초 동안 또 가만히 있도록
-					if (0 > enemyPos.x + x || enemyPos.x + x > WINSIZEX ||		// 맵 탈출하지 않도록
-						0 > enemyPos.y + y || enemyPos.y + y > WINSIZEY) continue;
-					fvDir.x = x;
-					fvDir.y = y;
-					isMove = true;				// 무사히 뽑았으면 다음 업데이트부터 움직임 수행하면 됨
-					fTimer = rand() % 3 + 3;				// 움직일 시간 설정
-					break;
+					setDir(fvDir);
+					isMove = true;					
+					fTimer = rand() % 3 + 3;		
 				}
 			}
 		}
-		else
+		else									// 움직임 패턴 있으면
 		{
-			if (fTimer > 0.f)
-				fTimer -= DT;
+			if (fTimer > 0.f)	fTimer -= DT;
 
-			if (0.f > fTimer) isMove = false;	// 움직임 패턴 종료
+			if (0.f > fTimer) isMove = false;	
 
-			if (0 != fvDir.x && 0 != fvDir.y)	setDir(fvDir);
-			enemyPos.x += E_MINSPEED * fvDir.x * DT;
-			enemyPos.y += E_MINSPEED * fvDir.y * DT;
-			if (O_HSIZE > enemyPos.x || enemyPos.x > WINSIZEX - O_HSIZE ||
-				O_HSIZE > enemyPos.y || enemyPos.y > WINSIZEY - O_HSIZE)
-			{
-				isMove = false;
-			}
+			enemyPos.x += E_SPEEDMIN * fvDir.x * DT; 
+			enemyPos.y += E_SPEEDMIN * fvDir.y * DT;
+			
+			// 맵 벗어나려하면 해당 방향성만 반대로 뒤집어줌
+			if (O_HSIZE > enemyPos.x || enemyPos.x > WINSIZEX - O_HSIZE)
+				fvDir.x *= -1;
+			if (O_HSIZE > enemyPos.y || enemyPos.y > WINSIZEY - O_HSIZE)
+				fvDir.y *= -1;
 		}
 	}
 

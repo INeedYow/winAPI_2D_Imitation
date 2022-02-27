@@ -27,7 +27,7 @@ void CSceneManager::sceneChange(SCENE scene)
 {
 	m_pCurScene->exit();
 	m_pCurScene = m_pArrScene[(int)scene];
-	m_pCurScene->enter();	// TODO ¿¡·¯ nullptr
+	m_pCurScene->enter();
 }
 
 

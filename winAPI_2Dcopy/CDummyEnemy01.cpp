@@ -4,7 +4,7 @@
 CDummyEnemy01::CDummyEnemy01()
 {
 	fAttention = 0;
-	fSpeed = E_SPEED;
+	fSpeed = E_SPEEDMIN;
 	fvDir = fVec2(0.f, 0.f);
 	setPos(fPoint(420.f, 360.f));
 	setSize(fPoint(O_SIZE, O_SIZE));

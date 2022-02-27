@@ -150,9 +150,6 @@
     <ClInclude Include="CBattery.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
-    <ClInclude Include="CBatteryBar.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -225,9 +222,6 @@
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
     <ClCompile Include="CBattery.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CBatteryBar.cpp">
       <Filter>Object\Obj_child</Filter>
     </ClCompile>
   </ItemGroup>

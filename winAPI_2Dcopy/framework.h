@@ -78,8 +78,8 @@ extern USHORT  g_resultKill;
 #define P_SIGHTON			240
 #define P_SIGHTOFF			180
 		// enemy
-#define E_SPEED				50
-#define E_MINSPEED			30
+#define E_SPEEDMAX			50
+#define E_SPEEDMIN			30
 		// bullet
 #define B_SIZE				10
 #define B_SPEED				175
@@ -99,10 +99,6 @@ extern USHORT  g_resultKill;
 #define	BAT_INITCONSUME		4
 #define BATBAR_MAX			25
 
-// TODO : (교수님 질문)
-// 중심 좌표(pos)에 대해서 scale / 2만큼 이동한 좌표로 그리는 작업이 많은데요
-// 정수 나눗셈의 경우 처리 시간이나 작업량이 적어서 무시해도 되는 정도인가요?
-// 자주 쓰일 값이라면 #define으로 결과값을 미리 정해놓고 계산시키면 유의미하게 차이가 날까요?
 
 
 // # Util
