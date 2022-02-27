@@ -4,7 +4,7 @@
 #include "CEnemy.h"
 #include "CPlayer.h"
 #include "CItem_Bullet.h"
-#include "CBatteryBar.h"
+#include "CBattery.h"
 
 CScene_Stage01::CScene_Stage01()
 {
@@ -18,7 +18,7 @@ CScene_Stage01::~CScene_Stage01()
 void CScene_Stage01::enter()
 {
 	CPlayer* pPlayer = new CPlayer();
-	CBatteryBar* pBatteryBar = new CBatteryBar();
+	CBattery* pBattery = new CBattery();
 
 	CEnemy* pEnemy1 = new CEnemy();
 	CEnemy* pEnemy2 = new CEnemy();
@@ -39,7 +39,7 @@ void CScene_Stage01::enter()
 	addObject(pEnemy4, OBJ::ENEMY);
 	addObject(pEnemy5, OBJ::ENEMY);
 	addObject(pBullet1, OBJ::DROPITEM);
-	addObject(pBatteryBar, OBJ::BATTERYBAR);
+	addObject(pBattery, OBJ::BATTERY);
 }
 
 void CScene_Stage01::exit()

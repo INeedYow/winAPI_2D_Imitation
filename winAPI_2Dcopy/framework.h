@@ -51,6 +51,7 @@ extern USHORT  g_resultKill;
 
 #define ISMODE				CPlayer::getMode()
 #define GETPOS				CPlayer::getPlayerPos()
+#define SETMODE(mode)		CPlayer::setMode(mode)
 #define BLACK				RGB(0, 0, 0)
 #define WHITE				RGB(255, 255, 255)
 
@@ -78,6 +79,7 @@ extern USHORT  g_resultKill;
 #define P_SIGHTOFF			180
 		// enemy
 #define E_SPEED				50
+#define E_MINSPEED			30
 		// bullet
 #define B_SIZE				10
 #define B_SPEED				175
@@ -89,15 +91,13 @@ extern USHORT  g_resultKill;
 #define I_B_MAXEA			9
 #define I_B_MINEA			4
 		// battery
-#define BAT_MAX				30
-#define BAT_ACCELMAX		5
-#define BAT_DECELMAX		2
+#define BAT_MAX				35
+#define BAT_ACCELMAX		7
+#define BAT_DECELMAX		3
 #define BAT_RECOVER			0
-#define BAT_CONSUME			8
-#define	BAT_INITNEED		5
-
-		// battery bar
-#define BATBAR_MAX			30
+#define BAT_CONSUME			9
+#define	BAT_INITCONSUME		4
+#define BATBAR_MAX			25
 
 // TODO : (교수님 질문)
 // 중심 좌표(pos)에 대해서 scale / 2만큼 이동한 좌표로 그리는 작업이 많은데요
@@ -120,7 +120,6 @@ enum class GROUP_OBJECT
 	DUMMYENEMY,
 	PLAYER,
 	BATTERY,			// 그리지는 않지만 적어줘야 업데이트 돌아갈 듯
-	BATTERYBAR,
 	ENEMY,
 	TEXT,
 	DROPITEM,

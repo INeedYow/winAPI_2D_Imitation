@@ -25,6 +25,7 @@ public:
 	void setDir(fVec2 vec);
 
 	static bool getMode();
+	static void setMode(bool mode);
 	static fPoint getPlayerPos();
 	static void setPlayerPos(fPoint pos);
 

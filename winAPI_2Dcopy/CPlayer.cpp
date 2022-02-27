@@ -95,12 +95,19 @@ void CPlayer::update()
 	if (KEY_ON('A') && m_uiBullet)
 		createBullet();
 
-	// space 누르는 동안만 시야모드 전환
-	if (KEY_ON(VK_SPACE) && !isMode)
-		isMode = true;
-	if (KEY_OFF(VK_SPACE))
-		isMode = false;
 	
+	//// 시야 ON OFF
+	//// 왜 이렇게 하면 ON OFF 조건 제대로 작동 안 함?
+	//if (KEY_ON(VK_SPACE) && m_battery.isEnough())
+	//{
+	//	SETMODE(true);
+	//	float fBatt = m_battery.getBattery();
+	//	fBatt -= BAT_INITCONSUME;
+	//	m_battery.setBattery(fBatt);
+	//}
+	//else if (KEY_HOLD(VK_SPACE) && isMode && m_battery.getBattery() > 0)	SETMODE(true);
+	//else																	SETMODE(false);
+
 	// 이전좌표 갱신
 	m_fpPrevPos.x = playerPos.x;
 	m_fpPrevPos.y = playerPos.y;
@@ -176,6 +183,11 @@ void CPlayer::setDir(fVec2 vec)
 bool CPlayer::getMode()
 {
 	return isMode;
+}
+
+void CPlayer::setMode(bool mode)
+{
+	isMode = mode;
 }
 
 fPoint CPlayer::getPlayerPos()
