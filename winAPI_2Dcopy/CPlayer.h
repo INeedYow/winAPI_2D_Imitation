@@ -1,5 +1,7 @@
 #pragma once
 #include "CObject.h"
+#include "CBattery.h"
+
 class CPlayer : public CObject
 {
 protected:
@@ -11,6 +13,8 @@ protected:
 	UINT	m_uiBullet;			// 총알 개수
 	float	m_fSpeed;			// 이동 속도
 
+	CBattery m_battery;			// 배터리 (스페이스바)
+	
 public:
 	CPlayer();
 	virtual ~CPlayer();

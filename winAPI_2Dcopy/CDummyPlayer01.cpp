@@ -66,10 +66,10 @@ void CDummyPlayer01::render(HDC hDC)
 		hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 
 		SetTextColor(hDC, BLACK);
-		LPCWSTR strMessage1 = L"시야가 넓어지는 대신";
-		LPCWSTR strMessage2 = L"적이 나를 더 빨리 찾게 됩니다";
-		TextOutW(hDC, pos.x - 80, pos.y + 30, strMessage1, wcslen(strMessage1));
-		TextOutW(hDC, pos.x - 110, pos.y + 60, strMessage2, wcslen(strMessage2));
+		LPCWSTR strMessage1 = L"시야가 넓어지는 대신 적이 나를 더 빨리 찾게 됩니다";
+		LPCWSTR strMessage2 = L"노란색 막대는 배터리입니다";
+		TextOutW(hDC, pos.x - 200, pos.y + 70, strMessage1, wcslen(strMessage1));
+		TextOutW(hDC, pos.x - 90, pos.y + 40, strMessage2, wcslen(strMessage2));
 
 		SelectObject(hDC, hOriginalFont);
 		DeleteObject(hFont);

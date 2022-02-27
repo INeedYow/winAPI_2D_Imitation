@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBattery.h" />
+    <ClInclude Include="CBatteryBar.h" />
     <ClInclude Include="CBlock.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCore.h" />
@@ -181,6 +183,8 @@
     <ClInclude Include="winAPI_2Dcopy.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBattery.cpp" />
+    <ClCompile Include="CBatteryBar.cpp" />
     <ClCompile Include="CBlock.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCore.cpp" />

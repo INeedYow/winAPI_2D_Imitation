@@ -17,6 +17,6 @@ public:
 	fPoint getSize();
 
 	virtual void update() = 0;
-	virtual void render(HDC hDC) = 0;
+	virtual void render(HDC hDC);
 };
 

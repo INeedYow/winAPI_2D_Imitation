@@ -38,3 +38,7 @@ fPoint CObject::getSize()
 {
 	return m_fptSize;
 }
+
+void CObject::render(HDC hDC)
+{
+}

@@ -4,6 +4,8 @@
 #include "CDummyPlayer01.h"
 #include "CDummyEnemy01.h"
 #include "CText.h"
+#include "CBatteryBar.h"
+#include "CBattery.h"
 
 CScene_Tutorial01::CScene_Tutorial01()
 {
@@ -21,12 +23,16 @@ void CScene_Tutorial01::enter()
 	CText* pText1 = new CText(fPoint(590.f, 230.f), L"튜토리얼 1 / 2", 22);
 	CText* pText2 = new CText(fPoint(540.f, 270.f), L"\'Space bar\'를 눌러보세요", 24);
 	CText* pText3 = new CText(fPoint(560.f, 145.f), L"스킵하려면 \'D\'를 누르세요", 20);
+	CBattery* pBattery = new CBattery();
+	CBatteryBar* pBatteryBar = new CBatteryBar();
 
 	addObject(pDumPlayer, OBJ::DUMMYPLAYER);
 	addObject(pDumEnemy, OBJ::DUMMYENEMY);
 	addObject(pText1, OBJ::TEXT);
 	addObject(pText2, OBJ::TEXT);
 	addObject(pText3, OBJ::TEXT);
+	addObject(pBattery, OBJ::BATTERY);
+	addObject(pBatteryBar, OBJ::BATTERYBAR);
 }
 
 

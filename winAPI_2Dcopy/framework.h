@@ -83,16 +83,26 @@ extern USHORT  g_resultKill;
 #define B_SPEED				175
 		// item
 #define I_SIZE				34
-#define I_HSIZE				I_SIZE / 2
+#define I_HSIZE				(I_SIZE / 2)
 			// bullet
 #define I_B_DURA			12
 #define I_B_MAXEA			9
 #define I_B_MINEA			4
+		// battery
+#define BAT_MAX				30
+#define BAT_ACCELMAX		5
+#define BAT_DECELMAX		2
+#define BAT_RECOVER			0
+#define BAT_CONSUME			8
+#define	BAT_INITNEED		5
+
+		// battery bar
+#define BATBAR_MAX			30
 
 // TODO : (교수님 질문)
 // 중심 좌표(pos)에 대해서 scale / 2만큼 이동한 좌표로 그리는 작업이 많은데요
 // 정수 나눗셈의 경우 처리 시간이나 작업량이 적어서 무시해도 되는 정도인가요?
-// scale / 2가 자주 쓰일 값이라면 #define으로 결과값을 미리 정해놓고 계산시키면 유의미하게 차이가 날까요?
+// 자주 쓰일 값이라면 #define으로 결과값을 미리 정해놓고 계산시키면 유의미하게 차이가 날까요?
 
 
 // # Util
@@ -109,10 +119,12 @@ enum class GROUP_OBJECT
 	DUMMYPLAYER,
 	DUMMYENEMY,
 	PLAYER,
+	BATTERY,			// 그리지는 않지만 적어줘야 업데이트 돌아갈 듯
+	BATTERYBAR,
 	ENEMY,
+	TEXT,
 	DROPITEM,
 	BULLET,
-	TEXT,
 
 	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
 };

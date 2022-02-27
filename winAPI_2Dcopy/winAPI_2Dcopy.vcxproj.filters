@@ -147,6 +147,12 @@
     <ClInclude Include="CScene_Result.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
+    <ClInclude Include="CBattery.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
+    <ClInclude Include="CBatteryBar.h">
+      <Filter>Object\Obj_child</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -217,6 +223,12 @@
     </ClCompile>
     <ClCompile Include="CScene_Result.cpp">
       <Filter>Scene\Scene_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CBattery.cpp">
+      <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CBatteryBar.cpp">
+      <Filter>Object\Obj_child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

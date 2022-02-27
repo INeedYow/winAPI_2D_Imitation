@@ -41,8 +41,8 @@ void CPlayer::update()
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
 		playerPos.x += m_fSpeed * DT;
 
-	if (KEY_ON('R') && m_uiBullet < 24)			// 치트키
-		m_uiBullet++;
+	if (KEY_ON('R')) m_uiBullet = 24;		// dont cheat
+		
 
 	// 내 이전 좌표와 현재 좌표로 현재 방향벡터 구함
 		// 좌표 이동이 없다면 갱신하지 않음(이전 방향대로 쏘도록) <- 의도대로 안 됨
@@ -96,7 +96,7 @@ void CPlayer::update()
 		createBullet();
 
 	// space 누르는 동안만 시야모드 전환
-	if (KEY_ON(VK_SPACE))
+	if (KEY_ON(VK_SPACE) && !isMode)
 		isMode = true;
 	if (KEY_OFF(VK_SPACE))
 		isMode = false;

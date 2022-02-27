@@ -11,7 +11,7 @@ CDummyPlayer02::~CDummyPlayer02()
 
 void CDummyPlayer02::update()
 {
-	if (KEY_OFF('E'))
+	if (KEY_OFF('D'))
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
 	
 	fPoint playerPos = getPlayerPos();
