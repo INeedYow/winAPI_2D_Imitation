@@ -1,8 +1,13 @@
 #include "framework.h"
 #include "CDummyPlayer02.h"
+#include "CItem_Scanner.h"
+#include "CScene.h"
 
 CDummyPlayer02::CDummyPlayer02()
 {
+	uiPrevBullet = GETBULLET;
+	szText = L"방향키( ↑ ↓ ← → )로 움직여요";
+	uiCheck = 0;
 }
 
 CDummyPlayer02::~CDummyPlayer02()
@@ -13,12 +18,36 @@ void CDummyPlayer02::update()
 {
 	if (KEY_OFF('D'))
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
-	
-	fPoint playerPos = getPlayerPos();
 	if (KEY_OFF(VK_ESCAPE))
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
 
-	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)	
+	UINT bulletCnt = GETBULLET;
+
+	if (isScan && scanTimer > 0.f)				// 스캐너
+	{
+		if (1 == uiCheck )
+		{
+			szText = L"스캐너는 안개 속 위치를 드러내요";
+			uiCheck++;
+		}
+		scanTimer -= DT;
+		if (0.f > scanTimer)
+			isScan = false;
+	}
+	if (bulletCnt > uiPrevBullet && 0 == uiCheck)
+	{
+		szText = L"\'A\'키로 총알을 발사할 수 있어요";
+		createNext();
+		uiCheck++;
+	}
+	if (2 <= uiCheck)
+		g_resultTimer += DT;
+	if (g_resultTimer > 4.f)
+		szText = L"이제 \'D\'키를 눌러 시작해요";
+
+	fPoint playerPos = getPlayerPos();
+
+	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)		// 맵 탈출 방지
 		playerPos.y -= m_fSpeed * DT;
 
 	if (KEY_HOLD(VK_DOWN) && (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
@@ -40,14 +69,10 @@ void CDummyPlayer02::update()
 	if (KEY_ON('A') && uiBullet)
 		createBullet();
 
-	if (KEY_ON(VK_SPACE))
-		isMode = true;
-	if (KEY_OFF(VK_SPACE))
-		isMode = false;
-
 	m_fpPrevPos.x = playerPos.x;
 	m_fpPrevPos.y = playerPos.y;
-
+	
+	uiPrevBullet = bulletCnt;
 	setPlayerPos(playerPos);
 }
 
@@ -59,6 +84,7 @@ void CDummyPlayer02::render(HDC hDC)
 
 	HPEN hPen, hOriginalPen;
 	HBRUSH hBrush, hOriginalBrush;
+	HFONT hFont, hOriginalFont;
 
 	hBrush = CreateSolidBrush(RGB(200, 200, 200));
 	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
@@ -109,4 +135,27 @@ void CDummyPlayer02::render(HDC hDC)
 			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (uiBullet - 16));
 		}
 	}
+
+	
+	hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
+	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
+
+	SetTextColor(hDC, RGB(102, 51, 255));
+	TextOutW(hDC, pos.x - 100, pos.y - 40, szText, wcslen(szText));
+
+	SelectObject(hDC, hOriginalFont);
+	DeleteObject(hFont);
+
+}
+
+void CDummyPlayer02::createNext()
+{
+	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
+
+	CItem_Scanner* pItemScanner1 = new CItem_Scanner;
+	CItem_Scanner* pItemScanner2 = new CItem_Scanner;
+	pItemScanner1->setPos(fPoint(640.f, 300.f));
+	pItemScanner2->setPos(fPoint(640.f, 360.f));
+	pCurScene->addObject(pItemScanner1, OBJ::DROPITEM);
+	pCurScene->addObject(pItemScanner2, OBJ::DROPITEM);
 }

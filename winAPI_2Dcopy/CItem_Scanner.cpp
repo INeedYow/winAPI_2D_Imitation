@@ -87,7 +87,7 @@ void CItem_Scanner::render(HDC hDC)
 	}
 
 	hPen = CreatePen(PS_SOLID, 1, RGB(102, 153, 255));
-	hBrush = CreateSolidBrush(getIsFlick() ? RGB(102, 255, 255) : RGB(0, 255, 255));
+	hBrush = CreateSolidBrush(getIsFlick() ? RGB(102, 255, 255) : RGB(25, 200, 200));
 
 	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
 	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);

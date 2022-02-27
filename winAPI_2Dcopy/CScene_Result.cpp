@@ -48,7 +48,7 @@ void CScene_Result::render(HDC hDC)
 	hPen = CreatePen(PS_SOLID, 10, RGB(10, 10, 10));
 	hPen2 = CreatePen(PS_SOLID, 10, RGB(150, 200, 250));
 	hBrush = CreateSolidBrush(RGB(30, 30, 30));
-	hBrush2 = CreateSolidBrush(RGB(150, 200, 250));
+	hBrush2 = CreateSolidBrush(RGB(150, 200, 150));
 
 	hOriginalPen = (HPEN)SelectObject(hDC,hPen);
 	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
@@ -82,7 +82,7 @@ void CScene_Result::render(HDC hDC)
 
 	if (uiCount < 1) return;
 
-	SetTextColor(hDC, RGB(50, 75, 0));
+	SetTextColor(hDC, RGB(50, 0, 75));
 	hFont = CreateFont(48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 
@@ -94,7 +94,7 @@ void CScene_Result::render(HDC hDC)
 
 	if (uiCount < 2) return;
 
-	SetTextColor(hDC, RGB(75, 100, 25));
+	SetTextColor(hDC, RGB(75, 25, 100));
 	hFont = CreateFont(48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 
@@ -106,7 +106,7 @@ void CScene_Result::render(HDC hDC)
 
 	if (uiCount < 3) return;
 
-	SetTextColor(hDC, RGB(100, 125, 50));
+	SetTextColor(hDC, RGB(100, 50, 125));
 	hFont = CreateFont(48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
 

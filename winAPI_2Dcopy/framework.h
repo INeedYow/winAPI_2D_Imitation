@@ -121,9 +121,9 @@ extern USHORT  g_resultKill;
 enum class GROUP_OBJECT
 {
 	DEFAULT,
+	PLAYER,
 	DUMMYPLAYER,
 	DUMMYENEMY,
-	PLAYER,
 	BATTERY,		
 	ENEMY,
 	TEXT,

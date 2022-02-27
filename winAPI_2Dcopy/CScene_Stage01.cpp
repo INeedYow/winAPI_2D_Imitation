@@ -18,6 +18,11 @@ CScene_Stage01::~CScene_Stage01()
 
 void CScene_Stage01::enter()
 {
+	// 스코어 초기화
+	g_resultTimer = 0.f;
+	g_resultBullet = 0;
+	g_resultKill = 0;
+
 	CPlayer* pPlayer = new CPlayer();
 	CBattery* pBattery = new CBattery();
 

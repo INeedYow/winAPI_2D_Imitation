@@ -48,11 +48,11 @@ void CPlayer::update()
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
 		playerPos.x += m_fSpeed * DT;
 
-	if (KEY_ON('R')) uiBullet = 24;		// dont cheat
-	if (KEY_ON('T'))
+	if (KEY_ON('O')) uiBullet = 24;		// dont cheat
+	if (KEY_ON('I'))
 	{
 		isScan = true;
-		scanTimer += 3.f;		// dont cheat
+		scanTimer += 3.f;				// dont cheat
 	}
 		
 	
@@ -69,7 +69,7 @@ void CPlayer::update()
 		setDir(m_fvDir);
 	}
 
-	// 몬스터, 아이템 충돌처리(아이템 충돌은 아이템에서 했는데 플레이어 총알 증가시키려면 플레이어 업데이트 함수에서 해야하니까 여기서 해야하나)
+	// 몬스터 충돌처리
 	fPoint chkPos;
 	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 	vector<CObject*>* pVecArr = pCurScene->getVecArr();
@@ -85,7 +85,7 @@ void CPlayer::update()
 				death();
 	}
 
-	// 일단 아이템쪽에서 충돌 계산하고 처리하도록 했음 (덕분에 static변수 엄청 만듦)
+	// 아이템 충돌처리 (아이템은 아이템쪽에서 하도록 했음)
 	// TODO : 지우는 작업 필요...
 	// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
 	/*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
