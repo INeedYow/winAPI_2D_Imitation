@@ -42,6 +42,26 @@ void CEnemy::setRandPos(int hSize)
 	setPos(fPoint(x, y));
 }
 
+void CEnemy::setRandDir()
+{
+	fPoint pos = getPos();
+	fPoint size = getSize();
+
+	if ((int)pos.x <= (int)size.x / 2)							// 위치 : 좌 -> xDir : 우
+		fvDir.x = rand() % 5;
+	else if ((int)pos.x >= (int)WINSIZEX - (int)size.x / 2)		// 위치 : 우 -> xDir : 좌
+		fvDir.x = rand() % 5 - 4;
+	else
+		fvDir.x = rand() % 9 - 4;
+
+	if ((int)pos.y <= (int)size.x / 2)							// 위치 : 상 -> yDir : 하
+		fvDir.y = rand() % 5;
+	else if ((int)pos.y >= (int)WINSIZEY - (int)size.x / 2)		// 위치 : 하 -> yDir : 상
+		fvDir.y = rand() % 5 - 4;
+	else
+		fvDir.y = rand() % 9 - 4;
+}
+
 void CEnemy::setDir(fVec2 vec)
 {
 	fvDir = vec.normalize();

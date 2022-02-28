@@ -31,12 +31,6 @@ CEnemy_Zombie::~CEnemy_Zombie()
 {
 }
 
-void CEnemy_Zombie::setRandDir()
-{
-	fvDir.x = rand() % 9 - 4;
-	fvDir.y = rand() % 9 - 4;
-}
-
 void CEnemy_Zombie::setRandSpeed()
 {
 	int a = (int)g_resultTimer * 2;

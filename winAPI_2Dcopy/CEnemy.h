@@ -14,6 +14,7 @@ public:
 
 	void setRandPos(int size);	// zombie는 현재 맵 밖에서 생성하면 안 돼서 자식마다 다르게 쓰려고
 
+	void setRandDir();			// 맵 탈출 예외처리 + 방향 랜덤설정
 	void setDir(fVec2 vec);
 	void chaseMe();				// Dir을 내게 오게 설정
 	

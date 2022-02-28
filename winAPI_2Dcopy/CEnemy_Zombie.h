@@ -14,7 +14,7 @@ public:
 	CEnemy_Zombie(fPoint pos, fVec2 dir = fVec2(0.f, 0.f));
 	virtual ~CEnemy_Zombie();
 
-	void setRandDir();
+	
 	void setRandSpeed();
 
 	virtual void update();
