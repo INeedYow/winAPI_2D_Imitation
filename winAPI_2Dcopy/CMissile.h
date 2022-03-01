@@ -1,5 +1,6 @@
 #pragma once
 #include "CObject.h"
+#include <stdlib.h>
 class CMissile : public CObject
 {
 	float m_fSpeed;
@@ -15,6 +16,7 @@ public:
 	virtual void render(HDC hDC);
 
 	void setDir(fVec2 vec);
+	void setDir(float theta);
 };
 
 // TODO 미사일 지우는 것 필요

@@ -58,3 +58,9 @@ void CMissile::setDir(fVec2 vec)
 {
 	m_fvDir = vec.normalize();
 }
+
+void CMissile::setDir(float theta)
+{
+	m_fvDir.x = (float)cos(theta);
+	m_fvDir.y = (float)sin(theta);
+}

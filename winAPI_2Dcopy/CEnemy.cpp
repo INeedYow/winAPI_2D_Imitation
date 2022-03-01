@@ -1,30 +1,5 @@
 #include "framework.h"
 #include "CEnemy.h"
-///////////////////////////////////////////////////////////////////////////
-//CEnemy::CEnemy()
-//{
-//	setPos(fPoint(0, 0));
-//	setSize(fPoint(1, 1));
-//	isDir = true;
-//	fSpeed = 150;
-//	startPoint = fPoint(1, 1);
-//	turnPoint = fPoint(1, 2);
-//	fVector = fVec2(0, 0);
-//}
-
-
-//CEnemy::CEnemy(fPoint pos, fPoint size, float spd, /*fVec2 fVec,*/
-//	fPoint start, fPoint turn, bool dir = true)
-//{
-//	setPos(pos);
-//	setSize(size);
-//	fSpeed = spd;
-//	startPoint = start;
-//	turnPoint = turn;
-//	fVector;///////float a = (turn.y - start.y) / (turn.x - start.x);
-//	isDir = dir;
-//}
-////////////////////////////////////////////////////////////////////////////
 
 CEnemy::CEnemy()
 {
@@ -49,28 +24,6 @@ CEnemy::CEnemy(fPoint pos, fPoint size, float spd, fPoint center, float dist, bo
 CEnemy::~CEnemy()
 {
 }
-
-////////////////////////////////////////////////////////////////////////////
-//void CEnemy::update()
-//{
-//	fPoint enemyPos = getPos();
-//
-//	// 시작점, 끝점을 닿기만하고 돌아오게 하려면 움직이는 방향에 따라 해당 변의 좌표를 비교해야 할 것
-//		// -> 중심(Pos) 기준으로 왕복하도록 했음
-//
-//	if (isDir)
-//	{
-//		if (enemyPos == turnPoint)
-//			isDir = false;
-//		else
-//			enemyPos.
-//	}
-//	else
-//	{
-//
-//	}
-//}
-////////////////////////////////////////////////////////////////////////////
 
 void CEnemy::update()
 {

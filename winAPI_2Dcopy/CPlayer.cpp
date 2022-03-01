@@ -2,16 +2,27 @@
 #include "CPlayer.h"
 #include "CMissile.h"
 #include "CScene.h"
+#include "CTexture.h"
 
 CPlayer::CPlayer()
-{
+{	// 텍스쳐 입히는 내용 추가
+	m_pTex = new CTexture;
+	// 패스매니저 통해서 경로 받아와서
+	wstring strFilepath = CPathManager::getInst()->getContentPath();
+	// 해당 옵젝 경로 추가하고
+	strFilepath += L"texture\\Player.bmp";
+	// 경로로 Load()실행
+	m_pTex->load(strFilepath);
+
 	setPos(fPoint(100.f, WINSIZEY / 2.f));
 	setSize(fPoint(75.f, 75.f));
 	fSpeed = 200;
 }
 
 CPlayer::~CPlayer()
-{
+{	// 텍스쳐 있다면 해제
+	if (nullptr != m_pTex)
+		delete m_pTex;
 }
 
 void CPlayer::update()
@@ -38,7 +49,23 @@ void CPlayer::update()
 
 void CPlayer::render(HDC hDC)
 {
-	HPEN hPen = CreatePen(PS_SOLID, 1, RGB(100, 150, 100));
+	// texture 적용
+	int width = (int)(m_pTex->getBmpWidth());
+	int height = (int)(m_pTex->getBmpHeight());
+
+	fPoint pos = getPos();
+
+	// hdc, 출력할 좌표x,y, 원본 넓이, 높이, 이미지 hdc, 가져올 이미지 시작 좌표x,y, 기타 기능/방법)
+	BitBlt(hDC, 
+		(int)(pos.x - (float)(width / 2)),
+		(int)(pos.y - (float)(height / 2)),
+		width, height,
+		m_pTex->getDC(),
+		0, 0, SRCCOPY);
+
+
+	// texture 입히기 전
+	/*HPEN hPen = CreatePen(PS_SOLID, 1, RGB(100, 150, 100));
 	HBRUSH hBrush = CreateSolidBrush(RGB(150, 200, 150));
 
 	HPEN hOriginalPen = (HPEN)SelectObject(hDC, hPen);
@@ -53,7 +80,7 @@ void CPlayer::render(HDC hDC)
 	SelectObject(hDC, hOriginalPen);
 	SelectObject(hDC, hOriginalBrush);
 	DeleteObject(hPen);
-	DeleteObject(hBrush);
+	DeleteObject(hBrush);*/
 }
 
 // 모든 오브젝트를 벡터 배열로 관리하는 씬에 미사일을 동적할당해서 추가해주면 될 것이고

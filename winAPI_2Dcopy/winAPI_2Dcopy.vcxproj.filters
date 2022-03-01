@@ -52,6 +52,18 @@
     <Filter Include="Object\Obj_child">
       <UniqueIdentifier>{a5287edd-4538-492b-9b81-003bbf8e5132}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{23f157de-8361-407f-8fdc-5b67b44d1ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Sound">
+      <UniqueIdentifier>{dfbd6597-cb48-4a5d-9f78-dcd38a3bcb75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{3c091132-cdf4-427f-b6b1-1d510483b6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\CPathManager">
+      <UniqueIdentifier>{e75d58aa-b25a-487f-b119-85d09c951194}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -105,6 +117,21 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
+    <ClInclude Include="CResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>Resource\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathManager.h">
+      <Filter>Engine\Manager\CPathManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -142,6 +169,18 @@
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Obj_child</Filter>
+    </ClCompile>
+    <ClCompile Include="CResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>Resource\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathManager.cpp">
+      <Filter>Engine\Manager\CPathManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

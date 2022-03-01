@@ -10,7 +10,7 @@ CCore::CCore()
 
 // DC들 해제해야 함
 CCore::~CCore()
-{// 둘을 반납하는 함수가 다름	// 해제 함수 미흡..
+{// 둘을 반납하는 함수가 다름
 	// 해당 윈도우 DC 핸들 반납
 	ReleaseDC(hWnd, m_hDC);
 	// 메모리 DC, 비트맵 반납
@@ -44,11 +44,9 @@ void CCore::render()
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);
 }
 
-// render() 위해서 DC받아와야
-// 더블 버퍼링 위해서 bitmap 생성과 해당 메모리 DC필요
-	// 더블 버퍼링 구현 미흡
 void CCore::init()
 {
+	CPathManager::getInst()->init();	// scene에서 obj들이 texture 쓰기전에 init 해야 함 (SceneMgr보다 위에)
 	CTimeManager::getInst()->init();
 	CKeyManager::getInst()->init();
 	CSceneManager::getInst()->init();
@@ -62,4 +60,9 @@ void CCore::init()
 
 	HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_hMemDC, m_hBitMap);
 	DeleteObject(hOldBitMap);
+}
+
+HDC CCore::getMainDC()
+{
+	return m_hMemDC;
 }

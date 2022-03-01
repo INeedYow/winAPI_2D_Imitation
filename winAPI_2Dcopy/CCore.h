@@ -13,5 +13,7 @@ public:
 	void update();
 	void render();
 	void init();
+
+	HDC getMainDC();
 };
 

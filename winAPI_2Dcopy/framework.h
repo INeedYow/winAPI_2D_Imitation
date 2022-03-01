@@ -13,7 +13,8 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
-
+#include <assert.h>
+#include <math.h>
 
 // # STL
 #include <vector>
@@ -23,7 +24,7 @@
 // # Util
 #include "struct.h"
 #include "SingleTon.h"
-
+#include "Logger.h"
 
 // # 전처리기
 #define WINSTYLE		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
@@ -68,12 +69,22 @@ enum GROUP_DIRECTION
 	DOWN,
 	LEFT,
 	RIGHT,
-	LEFTUP,		// 좌상	// 아직 45도 각도로만
+	LEFTUP,		// 좌상	// 45도 각도
 	RIGHTUP,	// 우상
 	RIGHTDOWN,	// 우하
 	LEFTDOWN,	// 좌하
 
 	END
+};
+
+
+#define TEXTURE		KEY_TEXTURE
+enum class KEY_TEXTURE
+{
+	DEFAULT,
+	PLAYER,
+
+	SIZE
 };
 
 
@@ -86,7 +97,9 @@ using namespace std;
 
 // # Core, Manager, Class
 #include "CCore.h"
-#include "CObject.h"
+#include "CPathManager.h"
 #include "CTimeManager.h"
 #include "CKeyManager.h"
 #include "CSceneManager.h"
+
+#include "CObject.h"
