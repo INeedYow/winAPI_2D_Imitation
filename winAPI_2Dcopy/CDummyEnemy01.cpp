@@ -10,7 +10,6 @@ CDummyEnemy01::CDummyEnemy01()
 	setSize(fPoint(O_SIZE, O_SIZE));
 	fTimer = 0.f;
 	isNotice = false;
-	fFeverCount = 0.f;
 	isComing = false;
 }
 
@@ -37,7 +36,6 @@ void CDummyEnemy01::update()
 			if (fAttention >= 1.f && !isNotice)
 			{
 				isNotice = true;
-				fFeverCount += 1.f;
 			}
 			if (isNotice)
 			{

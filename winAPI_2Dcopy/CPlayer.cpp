@@ -4,6 +4,8 @@
 #include "CBullet.h"
 #include "CItem_Bullet.h"
 
+#include "SelectGDI.h"
+
 CPlayer::CPlayer()
 {
 	setPlayerPos(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
@@ -15,6 +17,7 @@ CPlayer::CPlayer()
 	isScan = false;
 	scanTimer = 0.f;
 	isMode = false;
+	strMsg = L"........";
 }
 
 CPlayer::~CPlayer()
@@ -139,16 +142,18 @@ void CPlayer::update()
 
 void CPlayer::render(HDC hDC)
 {
-	int sight = isMode ? P_SIGHTON : P_SIGHTOFF;
 	fPoint pos = getPlayerPos();
 	fPoint size = getSize();
 
+	int sight = isMode ? P_SIGHTON : P_SIGHTOFF;
+	
 	HPEN hPen, hOriginalPen;
 	HBRUSH hBrush, hOriginalBrush;
 
 	hBrush = CreateSolidBrush(RGB(200, 200, 200));
 	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
 
+	// 시야 원 분리할 필요
 	Ellipse(hDC,
 		(int)(pos.x - sight),
 		(int)(pos.y - sight),
@@ -158,11 +163,9 @@ void CPlayer::render(HDC hDC)
 	SelectObject(hDC, hOriginalBrush);
 	DeleteObject(hBrush);
 
-	hPen = CreatePen(PS_SOLID, P_PEN, isMode ? RGB(125,150,100) : RGB(75, 100, 50));
-	hBrush = CreateSolidBrush(isMode ? RGB(150, 200, 100) : RGB(100, 125, 75));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	// mode에 따라 구분하기 good
+	SelectGDI pen(hDC, PEN::P_EDGEON, PEN::P_EDGEOFF, isMode);
+	SelectGDI brush(hDC, BRUSH::P_BRUON, BRUSH::P_BRUOFF, isMode);
 
 	Ellipse(hDC,
 		(int)(pos.x - size.x / 2),
@@ -170,29 +173,23 @@ void CPlayer::render(HDC hDC)
 		(int)(pos.x + size.x / 2),
 		(int)(pos.y + size.y / 2) );
 
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-
 	// 보유한 총알 그림
 	if (0 < uiBullet)
 	{
 		SetTextColor(hDC, RGB(52, 0, 0));
-		LPCWSTR strMessage = L"........";
 
 		if (uiBullet <= 8)
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, uiBullet);
+			TextOutW(hDC, pos.x - 15, pos.y + 20, strMsg, uiBullet);
 		else if (8 < uiBullet && uiBullet <= 16)
 		{
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, (uiBullet - 8));
+			TextOutW(hDC, pos.x - 15, pos.y + 20, strMsg, 8);
+			TextOutW(hDC, pos.x - 15, pos.y + 24, strMsg, (uiBullet - 8));
 		}
 		else
 		{
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (uiBullet - 16));
+			TextOutW(hDC, pos.x - 15, pos.y + 20, strMsg, 8);
+			TextOutW(hDC, pos.x - 15, pos.y + 24, strMsg, 8);
+			TextOutW(hDC, pos.x - 15, pos.y + 28, strMsg, (uiBullet - 16));
 		}
 	}
 	//m_battery.render(hDC);

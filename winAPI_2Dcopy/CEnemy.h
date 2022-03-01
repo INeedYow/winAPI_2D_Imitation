@@ -4,9 +4,11 @@
 class CEnemy : public CObject
 {
 protected:
-	float	fSpeed;			
-	fVec2	fvDir;
-	float	fTimer;				// 특수 기능 타이머
+	float		fSpeed;			
+	fVec2		fvDir;
+	float		fTimer;			// 특수 기능 타이머
+	
+	LPCWSTR		strMsg;		// '!' 출력하려고(대부분)
 
 public:
 	CEnemy();

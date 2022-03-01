@@ -3,8 +3,6 @@
 
 class CEnemy_ZombieDog :public CEnemy
 {
-	LPCWSTR		wcGrrr;
-
 public:
 	CEnemy_ZombieDog();
 	virtual ~CEnemy_ZombieDog();

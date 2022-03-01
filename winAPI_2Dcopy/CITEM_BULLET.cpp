@@ -1,14 +1,17 @@
 #include "framework.h"
 #include "CItem_Bullet.h"
 
+#include "SelectGDI.h"
+
 CItem_Bullet::CItem_Bullet()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint((float)I_SIZE, (float)I_SIZE));
 	setTimer(0.f);
-	setDuration(I_B_DURA);
+	setDuration(IB_DURA);
 	setRandEA();
 	setKey((UCHAR)IKEY::BULLET);
+	setName(L"총알");
 }
 
 CItem_Bullet::~CItem_Bullet()
@@ -17,7 +20,7 @@ CItem_Bullet::~CItem_Bullet()
 
 void CItem_Bullet::setRandEA()
 {
-	ucEA = rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
+	ucEA = rand() % (IB_MAXEA - IB_MINEA + 1) + IB_MINEA;
 }
 
 UCHAR CItem_Bullet::getEA()
@@ -44,7 +47,7 @@ void CItem_Bullet::update()
 		{
 			setRandPos();		// 위치 변경
 			setRandEA();
-			duraCnt = I_B_DURA;
+			duraCnt = IB_DURA;
 		}
 		if (6 >= duraCnt)
 			isFlick = !isFlick;
@@ -65,7 +68,7 @@ void CItem_Bullet::update()
 		SETBULLET(a + ucEA);
 		setRandPos();
 		setRandEA();		// 총알 몇발짜리 아이템인지 변수로 가지고 있다가 그만큼 플레이어 총알 증가시키고 싶은데 못하는 중
-		duraCnt = I_B_DURA;
+		duraCnt = IB_DURA;
 	}
 
 	// setPos(itemPos);		// setRandPos()로 위치 바꿔놓고는 다시 itemPos로 돌려놓으니까 위치가 안 바뀌지
@@ -81,53 +84,30 @@ void CItem_Bullet::render(HDC hDC)
 	fPoint	playerPos = GETPOS;
 	UINT	duraCnt = getDuration();
 
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
-
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	// 덜 정확한 대신 계산 줄이려는 목적으로 COLL_PC함수
 	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
 		{	// 스캐너
-			hPen = CreatePen(PS_SOLID, 1, RGB(200, 200, 50));
-			hOriginalPen = (HPEN)SelectObject(hDC, hPen);
+			SelectGDI pen(hDC, PEN::I_SCAN);
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
-			SelectObject(hDC, hOriginalPen);
-			DeleteObject(hPen);
 		}
 		return;
 	}
 
-	// 아이템 유지시간 얼마 안 남았으면 깜빡이게 해보고 싶음
-	hPen = CreatePen(PS_SOLID, 1, RGB(51, 51, 0));
-	hBrush = CreateSolidBrush(getIsFlick() ? RGB(051,102,0): RGB(153, 204, 0));
-	
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	SelectGDI pen(hDC, PEN::I_EDGE);
+	SelectGDI brush(hDC, BRUSH::I_BRUFLICK, BRUSH::I_BRUNORMAL, getIsFlick());
+	SelectGDI font(hDC, FONT::COMIC18);
 
 	Rectangle(hDC,
 		(int)(pos.x - I_HSIZE),
 		(int)(pos.y - I_HSIZE),
 		(int)(pos.x + I_HSIZE),
 		(int)(pos.y + I_HSIZE));
-
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-
-	HFONT hFont, hOriginalFont;
-	hFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
-
-	SetTextColor(hDC, BLACK);
-	LPCWSTR strMessage1 = L"총알";
-	TextOutW(hDC, pos.x - 12, pos.y, strMessage1, wcslen(strMessage1));
-
-	SelectObject(hDC, hOriginalFont);
-	DeleteObject(hFont);
+	//
+	SetTextColor(hDC, RGB(0,0,0));
+	TextOutW(hDC, pos.x - 12, pos.y, getName(), wcslen(getName()));
 
 	// 드랍아이템 지속시간 표시하는 코드
 	/*WCHAR szBuffer[255] = {};

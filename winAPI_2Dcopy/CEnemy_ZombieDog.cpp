@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "CEnemy_ZombieDog.h"
 
+#include "SelectGDI.h"
+
 CEnemy_ZombieDog::CEnemy_ZombieDog()
 {
 	fSpeed = (float)EZD_SPEED;
@@ -8,7 +10,7 @@ CEnemy_ZombieDog::CEnemy_ZombieDog()
 	setRandPos((int)EZD_SIZE / 2);
 	setSize(fPoint(EZD_SIZE, EZD_SIZE));
 	fTimer = 0.f;
-	wcGrrr = L"Grrr";
+	strMsg = L"Grrr";
 }
 
 CEnemy_ZombieDog::~CEnemy_ZombieDog()
@@ -43,27 +45,15 @@ void CEnemy_ZombieDog::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
+	SelectGDI pen(hDC, PEN::E_EDGE);
+	SelectGDI brush(hDC, BRUSH::EZD_BRU);
 
 	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
-		{	// ½ºÄ³³Ê
-			hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-			hOriginalPen = (HPEN)SelectObject(hDC, hPen);
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
-			SelectObject(hDC, hOriginalPen);
-			DeleteObject(hPen);
-		}
 		return;
 	}
-
-	hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-	hBrush = CreateSolidBrush(RGB(70, 10, 20));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
 
 	Ellipse(hDC,
 		(int)(getPos().x - getSize().x / 2),
@@ -71,20 +61,11 @@ void CEnemy_ZombieDog::render(HDC hDC)
 		(int)(getPos().x + getSize().x / 2),
 		(int)(getPos().y + getSize().y / 2));
 
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-
 	if ((int)fTimer % 60 < 20)
-	{ // Grrr
-		HFONT hFont = CreateFont(14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
+	{	 // Grrr
+		SelectGDI font(hDC, FONT::COMIC18);
 
 		SetTextColor(hDC, RGB(125, 25, 25));
-		TextOutW(hDC, pos.x + 23, pos.y - 23, wcGrrr, wcslen(wcGrrr));
-
-		SelectObject(hDC, hOriginFont);
-		DeleteObject(hFont);
+		TextOutW(hDC, pos.x + 23, pos.y - 23, strMsg, wcslen(strMsg));
 	}
 }

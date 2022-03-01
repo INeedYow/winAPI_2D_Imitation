@@ -64,6 +64,9 @@
     <Filter Include="Object\Obj_enemy">
       <UniqueIdentifier>{5771d4be-4512-4dc9-8f1b-f8cfbd566c3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Obj_UI">
+      <UniqueIdentifier>{311aed8b-5026-4964-a8b7-287d8bb68af1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -159,6 +162,12 @@
     <ClInclude Include="CEnemy_Crawler.h">
       <Filter>Object\Obj_enemy</Filter>
     </ClInclude>
+    <ClInclude Include="SelectGDI.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CSightCircle.h">
+      <Filter>Object\Obj_UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -238,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="CEnemy_Crawler.cpp">
       <Filter>Object\Obj_enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CSightCircle.cpp">
+      <Filter>Object\Obj_UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

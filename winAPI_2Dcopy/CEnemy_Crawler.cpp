@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "CEnemy_Crawler.h"
 
+#include "SelectGDI.h"
+
 CEnemy_Crawler::CEnemy_Crawler()
 {
 	fSpeed = 10.f;
@@ -14,6 +16,7 @@ CEnemy_Crawler::CEnemy_Crawler()
 	fAttention = 0;
 	fAccel = 0;
 	fDecel = 0;
+	strMsg = L"!";
 }
 
 CEnemy_Crawler::~CEnemy_Crawler()
@@ -101,27 +104,15 @@ void CEnemy_Crawler::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
+	SelectGDI pen(hDC, PEN::E_EDGE);
+	SelectGDI brush(hDC, BRUSH::EC_BRU);
 
 	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
-		{	// ½ºÄ³³Ê
-			hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-			hOriginalPen = (HPEN)SelectObject(hDC, hPen);
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
-			SelectObject(hDC, hOriginalPen);
-			DeleteObject(hPen);
-		}
 		return;
 	}
-
-	hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-	hBrush = CreateSolidBrush(RGB(75, 25, 50));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
 
 	Ellipse(hDC,
 		(int)(getPos().x - getSize().x / 2),
@@ -129,22 +120,11 @@ void CEnemy_Crawler::render(HDC hDC)
 		(int)(getPos().x + getSize().x / 2),
 		(int)(getPos().y + getSize().y / 2));
 
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-
 	if (isNotice)
 	{
-		LPCWSTR strMessage = L"!";
-
-		HFONT hFont = CreateFont(24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
+		SelectGDI font(hDC, FONT::COMIC24);
 
 		SetTextColor(hDC, RGB(200, 150, 50));
-		TextOutW(hDC, pos.x, pos.y - 20, strMessage, wcslen(strMessage));
-
-		SelectObject(hDC, hOriginFont);
-		DeleteObject(hFont);
+		TextOutW(hDC, pos.x, pos.y - 20, strMsg, wcslen(strMsg));
 	}
 }

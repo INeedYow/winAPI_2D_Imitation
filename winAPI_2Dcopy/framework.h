@@ -61,8 +61,8 @@ extern USHORT  g_resultKill;
 #define SETSCANTIMER(v)		CPlayer::setScanTimer(v)
 
 
-#define BLACK				RGB(0, 0, 0)
-#define WHITE				RGB(255, 255, 255)
+#define C_BLACK				RGB(0, 0, 0)
+#define C_WHITE				RGB(255, 255, 255)
 
 #define SCORE_RANK			(UINT)75
 
@@ -83,7 +83,7 @@ extern USHORT  g_resultKill;
 		// player
 #define P_PEN				6
 #define P_SIZE				(O_SIZE - P_PEN)
-#define P_SPEED				140
+#define P_SPEED				130
 #define P_SIGHTON			250
 #define P_SIGHTOFF			190
 		// enemy
@@ -105,9 +105,9 @@ extern USHORT  g_resultKill;
 #define I_SIZE				34
 #define I_HSIZE				(I_SIZE / 2)
 			// bullet
-#define I_B_DURA			12
-#define I_B_MAXEA			9
-#define I_B_MINEA			4
+#define IB_DURA			12
+#define IB_MAXEA			9
+#define IB_MINEA			4
 		// battery
 #define BAT_MAX				40
 #define BAT_ACCELMAX		7
@@ -118,18 +118,13 @@ extern USHORT  g_resultKill;
 #define BATBAR_MAX			25
 
 
-
-// # Util
-#include "struct.h"
-#include "SingleTon.h"
-
-
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
 #define OBJ		GROUP_OBJECT
 enum class GROUP_OBJECT
 {	// 현재 시야 원을 플레이어가 render하고 있어서 플레이어 뒤에 뭘 놓을 수가 없음 -> 배경obj등으로 따로 만들어서 관리해야 할듯
 	DEFAULT,
+	SIGHTCIRCLE,
 	PLAYER,
 	DUMMYPLAYER,
 	DUMMYENEMY,
@@ -163,6 +158,67 @@ enum class KEY_ITEM
 
 	SIZE
 };
+
+
+// GDI
+#define BRUSH	TYPE_BRUSH
+enum class TYPE_BRUSH
+{
+	HOLLOW,
+
+	BLACK30,
+	BLACK15,
+	WHITE200,
+
+	// 적
+	EZ_BRU,
+	EZD_BRU,
+	EC_BRU,
+	// 플레이어
+	P_BRUON,
+	P_BRUOFF,
+	// 아이템
+	I_BRUFLICK,
+	I_BRUNORMAL,
+
+	SIZE
+};
+
+#define PEN		TYPE_PEN
+enum class TYPE_PEN
+{
+	RED,
+	GREEN,
+	BLUE,
+
+	// 적
+	E_EDGE,
+	// 플레이어
+	P_EDGEON,
+	P_EDGEOFF,
+	// 아이템
+	I_EDGE,
+	I_SCAN,
+
+	SIZE
+};
+
+#define FONT	TYPE_FONT
+enum class TYPE_FONT
+{
+	COMIC24,
+	COMIC18,
+
+	
+	SIZE
+};
+
+
+// # Util
+#include "struct.h"
+#include "SingleTon.h"
+//#include "SelectGDI.h"		// 사용하는 cpp 파일에서 참조하는 식으로
+
 
 // # Core, Manager, Class
 #include "CCore.h"

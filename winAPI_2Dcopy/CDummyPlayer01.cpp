@@ -1,8 +1,12 @@
 #include "framework.h"
 #include "CDummyPlayer01.h"
 
+#include "SelectGDI.h"
+
 CDummyPlayer01::CDummyPlayer01()
 {
+	strMsg1 = L"시야가 넓어지는 대신 적이 나를 더 빨리 찾게 됩니다";
+	strMsg2 = L"노란색 막대는 배터리입니다";
 }
 
 CDummyPlayer01::~CDummyPlayer01()
@@ -61,17 +65,11 @@ void CDummyPlayer01::render(HDC hDC)
 
 	if (isMode)
 	{
-		HFONT hFont, hOriginalFont;
-		hFont = CreateFont(24, 0,0,0,0,0,0,0,0,0,0,0,0, _T("Comic Sans MS"));
-		hOriginalFont = (HFONT)SelectObject(hDC, hFont);
+		SelectGDI font(hDC, FONT::COMIC24);
 
-		SetTextColor(hDC, BLACK);
-		LPCWSTR strMessage1 = L"시야가 넓어지는 대신 적이 나를 더 빨리 찾게 됩니다";
-		LPCWSTR strMessage2 = L"노란색 막대는 배터리입니다";
-		TextOutW(hDC, pos.x - 200, pos.y + 70, strMessage1, wcslen(strMessage1));
-		TextOutW(hDC, pos.x - 90, pos.y + 40, strMessage2, wcslen(strMessage2));
-
-		SelectObject(hDC, hOriginalFont);
-		DeleteObject(hFont);
+		SetTextColor(hDC, RGB(0,0,0));
+		
+		TextOutW(hDC, pos.x - 200, pos.y + 70, strMsg1, wcslen(strMsg1));
+		TextOutW(hDC, pos.x - 90, pos.y + 40, strMsg2, wcslen(strMsg2));
 	}
 }

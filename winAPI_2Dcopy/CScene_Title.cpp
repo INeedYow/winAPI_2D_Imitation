@@ -60,7 +60,7 @@ void CScene_Title::render(HDC hDC)
 	{
 		hFont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 		hOriginFont = (HFONT)SelectObject(hDC, hFont);
-		SetTextColor(hDC, WHITE);
+		SetTextColor(hDC, RGB(255,255,255));
 
 		LPCWSTR strMessage = L"Press \'Space\' to Play";
 		TextOutW(hDC, WINSIZEX / 2 - 115, WINSIZEY / 2 + 150, strMessage, wcslen(strMessage));

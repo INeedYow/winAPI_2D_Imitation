@@ -1,17 +1,19 @@
 #include "framework.h"
 #include "CEnemy_Zombie.h"
 
+#include "SelectGDI.h"
+
 CEnemy_Zombie::CEnemy_Zombie()
 {
 	setPos(fPoint(0.f, 0.f));
 	fvDir = fVec2(0.f, 0.f);
 	fSpeed = EZ_SPEEDMAX;
 	fAttention = 0;
-	fTimer = 4.f;
+	fTimer = 0.f;
 	isNotice = false;
-	fFeverCount = 0.f;
 	setSize(fPoint(EZ_SIZE, EZ_SIZE));
 	isMove = false;
+	strMsg = L"!";
 }
 
 CEnemy_Zombie::CEnemy_Zombie(fPoint pos, fVec2 dir)
@@ -20,11 +22,11 @@ CEnemy_Zombie::CEnemy_Zombie(fPoint pos, fVec2 dir)
 	fvDir = dir;
 	setRandSpeed();
 	fAttention = 0.f;
-	fTimer = 4.f;
+	fTimer = 0.f;
 	isNotice = false;
-	fFeverCount = 0.f;
 	setSize(fPoint(EZ_SIZE, EZ_SIZE));
 	isMove = false;
+	strMsg = L"!";
 }
 
 CEnemy_Zombie::~CEnemy_Zombie()
@@ -111,27 +113,15 @@ void CEnemy_Zombie::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
+	SelectGDI pen(hDC, PEN::E_EDGE);
+	SelectGDI brush(hDC, BRUSH::EZ_BRU);
 
 	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
-		if (ISSCAN)
-		{	// 스캐너
-			hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-			hOriginalPen = (HPEN)SelectObject(hDC, hPen);
+		if (ISSCAN)			// 스캐너
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
-			SelectObject(hDC, hOriginalPen);
-			DeleteObject(hPen);
-		}
 		return;
 	}
-
-	hPen = CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-	hBrush = CreateSolidBrush(RGB(45, 45, 45));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
 
 	Ellipse(hDC,
 		(int)(getPos().x - getSize().x / 2),
@@ -139,22 +129,11 @@ void CEnemy_Zombie::render(HDC hDC)
 		(int)(getPos().x + getSize().x / 2),
 		(int)(getPos().y + getSize().y / 2));
 
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-
 	if (isNotice)
 	{
-		LPCWSTR strMessage = L"!";
-
-		HFONT hFont = CreateFont(24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
+		SelectGDI font(hDC, FONT::COMIC24);
 
 		SetTextColor(hDC, RGB(200, 150, 50));
-		TextOutW(hDC, pos.x, pos.y - 20, strMessage, wcslen(strMessage));
-
-		SelectObject(hDC, hOriginFont);
-		DeleteObject(hFont);
+		TextOutW(hDC, pos.x, pos.y - 20, strMsg, wcslen(strMsg));
 	}
 }

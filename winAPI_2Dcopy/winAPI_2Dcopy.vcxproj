@@ -174,8 +174,10 @@
     <ClInclude Include="CScene_Title.h" />
     <ClInclude Include="CScene_Tutorial01.h" />
     <ClInclude Include="CScene_Tutorial02.h" />
+    <ClInclude Include="CSightCircle.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTimeManager.h" />
+    <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="CScene_Title.cpp" />
     <ClCompile Include="CScene_Tutorial01.cpp" />
     <ClCompile Include="CScene_Tutorial02.cpp" />
+    <ClCompile Include="CSightCircle.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />

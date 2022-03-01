@@ -9,6 +9,7 @@ CItem::CItem()
 	uiDuration = 12;
 	isFlick = false;
 	ucKey = (UCHAR)IKEY::NONE;
+	strName = L"";
 }
 
 CItem::~CItem()
@@ -35,6 +36,11 @@ void CItem::setKey(UCHAR key)
 	ucKey = key;
 }
 
+void CItem::setName(LPCWSTR name)
+{
+	strName = name;
+}
+
 float CItem::getTimer()
 {
 	return fTimer;
@@ -48,6 +54,11 @@ UINT CItem::getDuration()
 UCHAR CItem::getKey()
 {
 	return ucKey;
+}
+
+LPCWSTR CItem::getName()
+{
+	return strName;
 }
 
 bool CItem::getIsFlick()

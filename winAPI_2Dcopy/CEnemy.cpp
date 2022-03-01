@@ -8,6 +8,7 @@ CEnemy::CEnemy()
 	setPos(fPoint(470.f, 220.f));
 	setSize(fPoint(O_SIZE, O_SIZE));
 	fTimer = 0.f;
+	strMsg = L"!";
 }
 
 CEnemy::~CEnemy()

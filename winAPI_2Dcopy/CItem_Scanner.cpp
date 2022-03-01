@@ -1,13 +1,16 @@
 #include "framework.h"
 #include "CItem_Scanner.h"
 
+#include "SelectGDI.h"
+
 CItem_Scanner::CItem_Scanner()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint((float)I_SIZE, (float)I_SIZE));
 	setTimer(0.f);
-	setDuration(I_B_DURA);
+	setDuration(IB_DURA);
 	setKey((UCHAR)IKEY::SCANNER);
+	setName(L"스캐너");
 }
 
 CItem_Scanner::~CItem_Scanner()
@@ -32,7 +35,7 @@ void CItem_Scanner::update()
 		if (0 == duraCnt)		// 지속시간 0이면
 		{
 			setRandPos();		// 위치 변경
-			duraCnt = I_B_DURA;
+			duraCnt = IB_DURA;
 		}
 
 		if (duraCnt <= 6)
@@ -52,7 +55,7 @@ void CItem_Scanner::update()
 	{	// 습득하면 위치 이동
 		SETSCANTIMER(3.f);
 		setRandPos();
-		duraCnt = I_B_DURA;
+		duraCnt = IB_DURA;
 	}
 
 	setTimer(timeCnt);
@@ -66,51 +69,28 @@ void CItem_Scanner::render(HDC hDC)
 	fPoint	playerPos = GETPOS;
 	UINT	duraCnt = getDuration();
 
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
-
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	// 덜 정확한 대신 계산 줄이려는 목적으로 COLL_PC함수
 	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
 		{	// 스캐너
-			hPen = CreatePen(PS_SOLID, 1, RGB(200, 200, 50));
-			hOriginalPen = (HPEN)SelectObject(hDC, hPen);
+			SelectGDI pen(hDC, PEN::I_SCAN);
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
-			SelectObject(hDC, hOriginalPen);
-			DeleteObject(hPen);
 		}
 		return;
 	}
 
-	hPen = CreatePen(PS_SOLID, 1, RGB(102, 153, 255));
-	hBrush = CreateSolidBrush(getIsFlick() ? RGB(102, 255, 255) : RGB(25, 200, 200));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	SelectGDI pen(hDC, PEN::I_EDGE);
+	SelectGDI brush(hDC, BRUSH::I_BRUFLICK, BRUSH::I_BRUNORMAL, getIsFlick());
+	SelectGDI font(hDC, FONT::COMIC18);
 
 	Rectangle(hDC,
 		(int)(pos.x - I_HSIZE),
 		(int)(pos.y - I_HSIZE),
 		(int)(pos.x + I_HSIZE),
 		(int)(pos.y + I_HSIZE));
-
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-
-	// 현재 죄다 네모라서 구분하려면 아이템 이름정돈 적어야할듯해서
-	HFONT hFont, hOriginalFont;
-	hFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
-
-	SetTextColor(hDC, BLACK);
-	LPCWSTR strMessage1 = L"스캐너";
-	TextOutW(hDC, pos.x - 18, pos.y, strMessage1, wcslen(strMessage1));
-
-	SelectObject(hDC, hOriginalFont);
-	DeleteObject(hFont);
+	//
+	SetTextColor(hDC, RGB(0,0,0));
+	TextOutW(hDC, pos.x - 18, pos.y, getName(), wcslen(getName()));
 }

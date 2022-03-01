@@ -5,17 +5,18 @@
 class CPlayer : public CObject
 {
 protected:
-	static bool		isMode;			// 시야 모드
-	static bool		isScan;			// 스캐너 모드
-	static float	scanTimer;		// 스캐너 지속시간
-	static fPoint	fpPos;			// 현재 좌표
-	static UINT		uiBullet;		// 총알 개수
+	static bool		isMode;				// 시야 모드
+	static bool		isScan;				// 스캐너 모드
+	static float	scanTimer;			// 스캐너 지속시간
+	static fPoint	fpPos;				// 현재 좌표
+	static UINT		uiBullet;			// 총알 개수
 
-	fPoint		m_fpPrevPos;		// 이전 좌표
-	fVec2		m_fvDir;			// 총알 방향
-	float		m_fSpeed;			// 이동 속도
+	fPoint			m_fpPrevPos;		// 이전 좌표
+	fVec2			m_fvDir;			// 총알 방향
+	float			m_fSpeed;			// 이동 속도
+	LPCWSTR			strMsg;				// 총알 출력
 
-	CBattery	m_battery;			// 배터리 (스페이스바)
+	CBattery		m_battery;			// 배터리 (스페이스바)
 	
 public:
 	CPlayer();
