@@ -55,13 +55,25 @@ void CPlayer::render(HDC hDC)
 
 	fPoint pos = getPos();
 
-	// hdc, 출력할 좌표x,y, 원본 넓이, 높이, 이미지 hdc, 가져올 이미지 시작 좌표x,y, 기타 기능/방법)
-	BitBlt(hDC, 
+	// TransparentBlt(hdc, 출력할 x,y, 넓이, 높이, 이미지의 hdc, 가져올 x,y, 가져올 넓이, 높이, 투명화할 색상RGB값)
+		// transparent가 투명한 이라는 뜻
+		// RGB(255, 0, 255)  마젠타색상, 자주 씀
+	TransparentBlt(hDC, 
 		(int)(pos.x - (float)(width / 2)),
 		(int)(pos.y - (float)(height / 2)),
 		width, height,
 		m_pTex->getDC(),
-		0, 0, SRCCOPY);
+		0, 0, width, height,
+		RGB(255, 0, 255));
+
+
+	//// hdc, 출력할 좌표x,y, 원본 넓이, 높이, 이미지 hdc, 가져올 이미지 시작 좌표x,y, 기타 기능/방법)
+	//BitBlt(hDC, 
+	//	(int)(pos.x - (float)(width / 2)),
+	//	(int)(pos.y - (float)(height / 2)),
+	//	width, height,
+	//	m_pTex->getDC(),
+	//	0, 0, SRCCOPY);
 
 
 	// texture 입히기 전
