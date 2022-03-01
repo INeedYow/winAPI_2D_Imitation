@@ -6,14 +6,15 @@
 
 CPlayer::CPlayer()
 {
-	setPos(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	setPlayerPos(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	setSize(fPoint(P_SIZE, P_SIZE));
 	m_fSpeed = P_SPEED;
-	uiBullet = 0;
 	m_fpPrevPos = fPoint(1.f, 1.f);
 	m_fvDir = fVec2(1.f, 1.f);
-	fpPos.x = WINSIZEX / 2.f;
-	fpPos.y = WINSIZEY / 2.f;
+	uiBullet = 0;
+	isScan = false;
+	scanTimer = 0.f;
+	isMode = false;
 }
 
 CPlayer::~CPlayer()
@@ -212,19 +213,21 @@ bool CPlayer::getScan()
 	return isScan;
 }
 
-void CPlayer::addScanTimer(float time)
+float CPlayer::getScanTimer()
 {
-	scanTimer += time;
+	return scanTimer;
+}
+
+void CPlayer::setScanTimer(float time)
+{
+	scanTimer = time;
+
+	isScan = time <= 0.f ? false : true;
 }
 
 void CPlayer::setMode(bool mode)
 {
 	isMode = mode;
-}
-
-void CPlayer::setScan(bool scan)
-{
-	isScan = scan;
 }
 
 fPoint CPlayer::getPlayerPos()

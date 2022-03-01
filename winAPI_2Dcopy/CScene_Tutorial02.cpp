@@ -49,4 +49,6 @@ void CScene_Tutorial02::exit()
 		while (pVec[i].size() > 0)
 			pVec[i].pop_back();
 	}
+	SETSCANTIMER(0.f);
+
 }

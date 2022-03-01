@@ -50,8 +50,7 @@ void CItem_Scanner::update()
 
 	if (itemPos.COLL_CR(playerPos, (int)O_HSIZE, areaRect))
 	{	// 습득하면 위치 이동
-		SETSCAN(true);
-		ADDTIMER(3.f);
+		SETSCANTIMER(3.f);
 		setRandPos();
 		duraCnt = I_B_DURA;
 	}

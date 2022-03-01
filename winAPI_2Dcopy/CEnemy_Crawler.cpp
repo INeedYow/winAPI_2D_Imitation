@@ -28,41 +28,42 @@ void CEnemy_Crawler::update()
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 	
-	if (pos.COLL_PC(pos, playerPos, sight))	// 시야 안에 있으면
+	if (pos.COLL_PC(pos, playerPos, sight))		// 시야 안에 있으면
 	{
-		if (fAttention <= 3.f)					// 어그로 증가
-			fAttention += ISMODE ? 2 * DT : DT;
+		if (fAttention <= 3.f)					
+			fAttention += ISMODE ? 2 * DT : DT;		// 어그로 관리
 		if (fAttention >= 2.f)
 			isNotice = true;
 	}
-	else									// 시야 안에 없으면
+	else										// 시야 안에 없으면
 	{
 		if (fAttention > 0.f)
-			fAttention -= DT;					// 어그로 감소
-		isNotice = false;
+			fAttention -= DT;						// 어그로 관리
+		if (fAttention <= 1.f)
+			isNotice = false;	
 	}
 
-	if (fTimer > 0.f)						// 위치 중요 (멈칫할 때도 어그로 관리는 해주고 return)
+	if (fTimer > 0.f)							// 위치 중요 (멈칫할 때도 어그로 관리는 해주고 return)
 	{
 		fTimer -= DT;
 		return;
 	}
 
-	if (isNotice)							// 어그로 끌렸을 때 방향설정
+	if (isNotice)								// 어그로 끌렸을 때 방향설정
 	{
 		fvDir.x = playerPos.x - pos.x;
 		fvDir.y = playerPos.y - pos.y;
 	}
-	else									// 어그로 안 끌렸을 때 방향설정
+	else										// 어그로 안 끌렸을 때 방향설정
 	{
-		if(0 == (int)g_resultTimer % 4)			// 재설정 주기
+		if(0 == (int)g_resultTimer % 4)				// 재설정 주기
 			setRandDir();
 	}
 
-	if (0 != fvDir.x || 0 != fvDir.y)		// 대각이동 보정
+	if (0 != fvDir.x || 0 != fvDir.y)
 		setDir(fvDir);
 
-	if (isBoosting)							// 속도 변화
+	if (isBoosting)								// 속도 변화
 	{
 		fDecel += 10000 * DT;
 		fSpeed -= (5000 + fDecel) * DT;
@@ -71,7 +72,7 @@ void CEnemy_Crawler::update()
 			fSpeed = (float)EC_SPEEDMIN;
 			isBoosting = false;
 			fAccel = 0.f;
-			fTimer += 0.9f;						// 멈칫하는 시간
+			fTimer += 0.9f;							// 멈칫하는 시간
 		}
 	}
 	else
@@ -83,7 +84,7 @@ void CEnemy_Crawler::update()
 			fSpeed = (float)EC_SPEEDMAX;
 			isBoosting = true;
 			fDecel = 0.f;
-			fTimer += 0.1f;						// 멈칫하는 시간
+			fTimer += 0.1f;							// 멈칫하는 시간
 		}
 	}
 

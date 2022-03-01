@@ -44,89 +44,64 @@ void CEnemy_Zombie::setRandSpeed()
 
 void CEnemy_Zombie::update()
 {
-	fPoint enemyPos = getPos();
+	fPoint pos = getPos();
 	fPoint playerPos = GETPOS;
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	// 적이 시야 안에 있을 경우
-	if (enemyPos.COLL_PC(enemyPos, playerPos, sight))
+	if (pos.COLL_PC(pos, playerPos, sight))		// 시야 안에 있으면
 	{
-		isMove = false;
-		fvDir.x = playerPos.x - enemyPos.x;
-		fvDir.y = playerPos.y - enemyPos.y;
-
-		if (fAttention <= 3.f)
-			fAttention += ISMODE ? 2 * DT : DT;
-		if (fAttention >= 2.f && !isNotice)
-		{
+		if (fAttention <= 3.f)						
+			fAttention += ISMODE ? 2 * DT : DT;		// 어그로 관리
+		if (fAttention >= 2.f)
 			isNotice = true;
-			fFeverCount += 1.f;
-		}
-		if (isNotice)
-		{
-			setDir(fvDir);
-			enemyPos.x += fSpeed * fvDir.x * DT;
-			enemyPos.y += fSpeed * fvDir.y * DT;
-		}
 	}
-	else
+	else										// 시야 안에 없으면
 	{
-		if (isNotice) isNotice = false;
-
 		if (fAttention > 0.f)
-		{
-			fAttention -= DT;
-
-			if (fAttention < 0.f)
-				fAttention = 0.f;
-		}
-
-		if (!isMove)							// 움직임 패턴 없으면
-		{
-			fTimer += DT;
-			if (fTimer >= 4.f)
-			{
-
-				setRandDir();						// 방향성 재설정
-				if (0 == fvDir.x && 0 == fvDir.y)		// 방향성 없으면
-					fTimer = 0;								// 다시 대기
-				else
-				{
-					setDir(fvDir);
-					isMove = true;
-					fTimer = rand() % 3 + 3;
-				}
-			}
-		}
-		else									// 움직임 패턴 있으면
-		{
-			if (fTimer > 0.f)	fTimer -= DT;
-
-			if (0.f > fTimer) isMove = false;
-
-			enemyPos.x += EZ_SPEEDMIN * fvDir.x * DT;
-			enemyPos.y += EZ_SPEEDMIN * fvDir.y * DT;
-
-			// 맵 벗어나려하면 해당 방향성만 반대로 뒤집어줌
-			if (O_HSIZE > enemyPos.x || enemyPos.x > WINSIZEX - O_HSIZE)
-				fvDir.x *= -1;
-			if (O_HSIZE > enemyPos.y || enemyPos.y > WINSIZEY - O_HSIZE)
-				fvDir.y *= -1;
-		}
-	}
-
-	if (fFeverCount > 0.f)
-	{
-		fFeverCount -= DT;
-
-		if (fFeverCount <= 0.f && isNotice)
-		{
-			fFeverCount = 0.f;
+			fAttention -= DT;						// 어그로 관리
+		if (fAttention <= 1.f)
 			isNotice = false;
+	}
+
+	if (isNotice)								// 어그로 끌렸을 때 방향설정
+	{
+		fvDir.x = playerPos.x - pos.x;
+		fvDir.y = playerPos.y - pos.y;
+	}
+	else										// 어그로 안 끌렸을 때 방향설정
+	{
+		fTimer -= DT;
+
+		if (0.f > fTimer )							// 타이머 0되면 
+		{
+			if (isMove)									// 잠시 멈췄다가 또 움직이게
+			{
+				isMove = false;
+				fTimer = rand() % 4 + 1;
+				return;
+			}
+
+			setRandDir();								// 방향, 타이머 재설정
+			fTimer = rand() % 3 + 2;
+
+			if (0 == fvDir.x && 0 == fvDir.y)
+				isMove = false;
+			else		
+				isMove = true;
+		}
+		else										// 타이머 남아있고
+		{
+			if (!isMove)	return;						// 움직임 없으면 return;
 		}
 	}
-	setPos(enemyPos);
+
+	if (0 != fvDir.x || 0 != fvDir.y)
+		setDir(fvDir);
+	pos.x += EZ_SPEEDMIN * fvDir.x * DT;
+	pos.y += EZ_SPEEDMIN * fvDir.y * DT;
+
+	setPos(pos);
 }
 
 void CEnemy_Zombie::render(HDC hDC)
@@ -139,7 +114,6 @@ void CEnemy_Zombie::render(HDC hDC)
 	HPEN hPen, hOriginalPen;
 	HBRUSH hBrush, hOriginalBrush;
 
-	// 덜 정확한 대신 계산 줄이려는 목적으로 COLL_PC함수
 	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
 		if (ISSCAN)

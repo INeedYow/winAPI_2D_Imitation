@@ -28,12 +28,12 @@ public:
 
 	static bool getMode();
 	static bool getScan();
+	static float getScanTimer();
 	static fPoint getPlayerPos();
 	static UINT getBullet();
 
-	static void addScanTimer(float time);
+	static void setScanTimer(float time);
 	static void setMode(bool mode);
-	static void setScan(bool scan);
 	static void setPlayerPos(fPoint pos);
 	static void setBullet(UINT bullet);
 

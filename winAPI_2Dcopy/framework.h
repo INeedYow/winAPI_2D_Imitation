@@ -55,10 +55,10 @@ extern USHORT  g_resultKill;
 #define ISSCAN				CPlayer::getScan()
 #define GETPOS				CPlayer::getPlayerPos()
 #define SETMODE(mode)		CPlayer::setMode(mode)
-#define SETBULLET(v)		CPlayer::setBullet(v)
 #define GETBULLET			CPlayer::getBullet()
-#define SETSCAN(v)			CPlayer::setScan(v)
-#define ADDTIMER(v)			CPlayer::addScanTimer(v)
+#define SETBULLET(v)		CPlayer::setBullet(v)
+#define GETSCANTIMER()		CPlayer::getScanTimer()
+#define SETSCANTIMER(v)		CPlayer::setScanTimer(v)
 
 
 #define BLACK				RGB(0, 0, 0)
