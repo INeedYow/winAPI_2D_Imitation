@@ -64,6 +64,9 @@
     <Filter Include="Engine\Manager\CPathManager">
       <UniqueIdentifier>{e75d58aa-b25a-487f-b119-85d09c951194}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Manager\CResourceManager">
+      <UniqueIdentifier>{45853c24-c6eb-4a16-bd2a-fb4c03d431c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -132,6 +135,9 @@
     <ClInclude Include="Logger.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="CResourceManager.h">
+      <Filter>Engine\Manager\CResourceManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -181,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="CPathManager.cpp">
       <Filter>Engine\Manager\CPathManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CResourceManager.cpp">
+      <Filter>Engine\Manager\CResourceManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

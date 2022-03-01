@@ -1,17 +1,17 @@
 #pragma once
 class CResource
 {
-	UINT		m_uiKey;
+	KEYTEX		m_eKey;				// enum class·Î 
 	wstring		m_strRelativePath;
 
 public:
 	CResource();
 	virtual ~CResource();
 
-	void setKey(const UINT& key);
+	void setKey(const KEYTEX key);
 	void setRelativePath(const wstring strPath);
 
-	const UINT& getKey();
+	KEYTEX getKey();
 	const wstring& getRelativePath();
 
 };

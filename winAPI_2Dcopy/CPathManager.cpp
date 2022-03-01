@@ -24,7 +24,7 @@ void CPathManager::init()
 	Logger::info(m_strContentPath);
 
 	// 문자열 길이(배열 사이즈)반환 함수 wcslen();
-	int size = wcslen(m_strContentPath);
+	int size = (int)wcslen(m_strContentPath);
 
 	// 뒤에서부터 확인하면 되니까
 	for (int i = size - 1; i >= 0; i--)

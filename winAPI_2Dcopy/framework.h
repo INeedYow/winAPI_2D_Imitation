@@ -17,11 +17,11 @@
 #include <tchar.h>
 #include <assert.h>
 #include <math.h>
+#include <string>
 
 // # STL
 #include <vector>
-#include <string>
-
+#include <map>
 
 // # Util
 #include "struct.h"
@@ -80,7 +80,7 @@ enum GROUP_DIRECTION
 };
 
 
-#define TEXTURE		KEY_TEXTURE
+#define KEYTEX	KEY_TEXTURE
 enum class KEY_TEXTURE
 {
 	DEFAULT,

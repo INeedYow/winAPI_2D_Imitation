@@ -3,16 +3,18 @@
 #include "CMissile.h"
 #include "CScene.h"
 #include "CTexture.h"
+#include "CResourceManager.h"
 
 CPlayer::CPlayer()
-{	// 텍스쳐 입히는 내용 추가
-	m_pTex = new CTexture;
-	// 패스매니저 통해서 경로 받아와서
-	wstring strFilepath = CPathManager::getInst()->getContentPath();
-	// 해당 옵젝 경로 추가하고
-	strFilepath += L"texture\\Player.bmp";
-	// 경로로 Load()실행
-	m_pTex->load(strFilepath);
+{	
+	m_pTex = CResourceManager::getInst()->loadTexture(KEYTEX::PLAYER, L"texture\\Player.bmp");
+
+	// 패스 매니저 전
+	//m_pTex = new CTexture;												// 텍스쳐 입히는 내용 추가
+	//
+	//wstring strFilepath = CPathManager::getInst()->getContentPath();	// 패스매니저 통해서 경로 받아와서
+	//strFilepath += L"texture\\Player.bmp";								// 해당 옵젝 경로 추가하고
+	//m_pTex->load(strFilepath);											// 경로로 Load()실행
 
 	setPos(fPoint(100.f, WINSIZEY / 2.f));
 	setSize(fPoint(75.f, 75.f));
@@ -20,7 +22,7 @@ CPlayer::CPlayer()
 }
 
 CPlayer::~CPlayer()
-{	// 텍스쳐 있다면 해제
+{
 	if (nullptr != m_pTex)
 		delete m_pTex;
 }
