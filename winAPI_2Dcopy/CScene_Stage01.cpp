@@ -8,6 +8,8 @@
 #include "CEnemy_Zombie.h"
 #include "CEnemy_ZombieDog.h"
 #include "CEnemy_Crawler.h"
+#include "CEnemy_Worms.h"
+#include "CSightCircle.h"
 
 CScene_Stage01::CScene_Stage01()
 {
@@ -24,9 +26,12 @@ void CScene_Stage01::enter()
 	g_resultTimer = 0.f;
 	g_resultBullet = 0;
 	g_resultKill = 0;
+	SETSCANTIMER(0.f);
+	SETBULLET(8);
 
 	CPlayer* pPlayer = new CPlayer();
 	CBattery* pBattery = new CBattery();
+	CSightCircle* pSight = new CSightCircle();
 
 	CEnemy_Zombie* pEnemy1 = new CEnemy_Zombie();
 	pEnemy1->setPos(fPoint(400.f, 300.f));
@@ -45,14 +50,16 @@ void CScene_Stage01::enter()
 	CEnemy_ZombieDog* pDog2 = new CEnemy_ZombieDog();
 
 	CEnemy_Crawler* pCrawler1 = new CEnemy_Crawler();
-	pCrawler1->setPos(fPoint(640.f,150.f));
+	pCrawler1->setPos(fPoint(300.f,150.f));
 	CEnemy_Crawler* pCrawler2 = new CEnemy_Crawler();
-	pCrawler2->setPos(fPoint(640.f,600.f));
+	pCrawler2->setPos(fPoint(900.f,600.f));
+
+	CEnemy_Worms* pWorms1 = new CEnemy_Worms();
+	pWorms1->setPos(fPoint(640.f, 600.f));
 
 	CItem_Bullet* pItemBull1 = new CItem_Bullet();
 	CItem_Bullet* pItemBull2 = new CItem_Bullet();
 	CItem_Scanner* pItemScan1 = new CItem_Scanner();
-
 
 	addObject(pPlayer, OBJ::PLAYER);
 	addObject(pEnemy1, OBJ::ENEMY);
@@ -65,10 +72,13 @@ void CScene_Stage01::enter()
 	addObject(pDog2, OBJ::ENEMY);
 	addObject(pCrawler1, OBJ::ENEMY);
 	addObject(pCrawler2, OBJ::ENEMY);
+	addObject(pWorms1, OBJ::ENEMY);
+
 	addObject(pItemBull1, OBJ::DROPITEM);
 	addObject(pItemBull2, OBJ::DROPITEM);
 	addObject(pItemScan1, OBJ::DROPITEM);
 	addObject(pBattery, OBJ::BATTERY);
+	addObject(pSight, OBJ::SIGHTCIRCLE);
 }
 
 void CScene_Stage01::exit()

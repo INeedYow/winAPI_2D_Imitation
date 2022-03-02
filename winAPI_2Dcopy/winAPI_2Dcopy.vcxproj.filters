@@ -67,6 +67,9 @@
     <Filter Include="Object\Obj_UI">
       <UniqueIdentifier>{311aed8b-5026-4964-a8b7-287d8bb68af1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{73a63cbb-1c83-42a5-8b64-900ce4496095}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,6 +171,12 @@
     <ClInclude Include="CSightCircle.h">
       <Filter>Object\Obj_UI</Filter>
     </ClInclude>
+    <ClInclude Include="CEnemy_Worms.h">
+      <Filter>Object\Obj_enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -250,6 +259,12 @@
     </ClCompile>
     <ClCompile Include="CSightCircle.cpp">
       <Filter>Object\Obj_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy_Worms.cpp">
+      <Filter>Object\Obj_enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

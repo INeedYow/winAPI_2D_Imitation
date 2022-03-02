@@ -6,6 +6,7 @@ class CEnemy_Zombie :public CEnemy
 protected:
 	float	fAttention;		// 플레이어 시야에 일정시간 노출되면 플레이어 향해 오도록 할 생각
 	bool	isNotice;		// attention 누적 시 플레이어 향해 다가오게, '!' 출력
+	
 	bool	isMove;			// 움직임 패턴 중인지
 
 public:

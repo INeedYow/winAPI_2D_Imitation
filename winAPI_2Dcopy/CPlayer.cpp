@@ -8,15 +8,11 @@
 
 CPlayer::CPlayer()
 {
-	setPlayerPos(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	setSize(fPoint(P_SIZE, P_SIZE));
+	setPlayerPos(fPoint((float)WINSIZEX / 2, (float)WINSIZEY / 2));
+	setSize(fPoint((float)P_SIZE, (float)P_SIZE));
 	m_fSpeed = P_SPEED;
 	m_fpPrevPos = fPoint(1.f, 1.f);
 	m_fvDir = fVec2(1.f, 1.f);
-	uiBullet = 0;
-	isScan = false;
-	scanTimer = 0.f;
-	isMode = false;
 	strMsg = L"........";
 }
 
@@ -91,11 +87,11 @@ void CPlayer::update()
 				death();
 	}
 
-	// 아이템 충돌처리 (아이템은 아이템쪽에서 하도록 했음)
-	// TODO : 지우는 작업 필요...
-	// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
-	/*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
-		iter != pVecArr[(int)OBJ::DROPITEM].end(); iter++)*/
+	////아이템 충돌처리 (아이템은 아이템쪽에서 하도록 했음)
+	////TODO : 지우는 작업 필요...
+	//// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
+	///*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
+	//	iter != pVecArr[(int)OBJ::DROPITEM].end(); iter++)*/
 	//for (int i = 0; i < pVecArr[(int)OBJ::DROPITEM].size(); i++)
 	//{
 	//	chkPos = pVecArr[(int)OBJ::DROPITEM][i]->getPos();
@@ -107,7 +103,8 @@ void CPlayer::update()
 	//	// TODO : 일단 임의로 rand함수로 돌려놓음
 	//	if (playerPos.COLL_CR(playerPos, (int)O_HSIZE, chkRt))
 	//	{	// 먹은 아이템 key값으로 분류할랬는데 불가능?
-	//		uiBullet += rand() % (I_B_MAXEA - I_B_MINEA + 1) + I_B_MINEA;
+	//		UCHAR bullet = (CItem_Bullet*)(pVecArr[(int)OBJ::DROPITEM][i])->getEA();
+	//		uiBullet += rand() % (IB_MAXEA - IB_MINEA + 1) + IB_MINEA;
 	//		if (uiBullet > 24)
 	//			uiBullet = 24;
 	//	}
@@ -136,7 +133,7 @@ void CPlayer::update()
 	setPlayerPos(playerPos);
 	
 	// 소유 관계니까 Scene에서 업데이트 시키는 게 아니라 플레이어 업뎃할 때 배터리 업뎃 호출해주는 게 맞는듯해서 이렇게 바꾸려했는데
-	// TODO (질문) 왜 심각한 오류.라고 에러 뜨는데 이유를 모르겠어요
+	// TODO 배터리 플레이어가 업데이트하도록
 	// m_battery.update();
 }
 
@@ -144,24 +141,6 @@ void CPlayer::render(HDC hDC)
 {
 	fPoint pos = getPlayerPos();
 	fPoint size = getSize();
-
-	int sight = isMode ? P_SIGHTON : P_SIGHTOFF;
-	
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
-
-	hBrush = CreateSolidBrush(RGB(200, 200, 200));
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
-
-	// 시야 원 분리할 필요
-	Ellipse(hDC,
-		(int)(pos.x - sight),
-		(int)(pos.y - sight),
-		(int)(pos.x + sight),
-		(int)(pos.y + sight));
-
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hBrush);
 
 	// mode에 따라 구분하기 good
 	SelectGDI pen(hDC, PEN::P_EDGEON, PEN::P_EDGEOFF, isMode);

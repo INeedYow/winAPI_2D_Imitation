@@ -33,6 +33,7 @@ void CSceneManager::sceneChange(SCENE scene)
 void CSceneManager::update()
 {
 	m_pCurScene->update();
+	m_pCurScene->finalUpdate();			// 모든 오브젝트의 업데이트가 끝난 후 동시간대 결과로써 처리
 }
 
 void CSceneManager::render(HDC hDC)

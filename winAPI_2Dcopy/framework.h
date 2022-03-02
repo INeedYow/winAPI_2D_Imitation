@@ -83,21 +83,26 @@ extern USHORT  g_resultKill;
 		// player
 #define P_PEN				6
 #define P_SIZE				(O_SIZE - P_PEN)
-#define P_SPEED				130
+#define P_SPEED				135
 #define P_SIGHTON			250
 #define P_SIGHTOFF			190
 		// enemy
 			// zombie
-#define EZ_SPEEDMAX			50
-#define EZ_SPEEDMIN			30
+#define EZ_SPEEDMAX			60
+#define EZ_SPEEDMIN			40
 #define EZ_SIZE				48
 			// zombieDog
 #define EZD_SIZE			30
 #define EZD_SPEED			75
 			// crawler
 #define EC_SIZE				40
-#define EC_SPEEDMAX			420
+#define EC_SPEEDMAX			400
 #define EC_SPEEDMIN			20
+			// worms
+#define EW_SIZE				40
+#define EW_HSIZE			(EW_SIZE / 2)
+#define EW_SPEED			180
+#define EW_LENMAX			(EW_SIZE * 2)
 		// bullet
 #define B_SIZE				10
 #define B_SPEED				200
@@ -105,7 +110,7 @@ extern USHORT  g_resultKill;
 #define I_SIZE				34
 #define I_HSIZE				(I_SIZE / 2)
 			// bullet
-#define IB_DURA			12
+#define IB_DURA				12
 #define IB_MAXEA			9
 #define IB_MINEA			4
 		// battery
@@ -174,6 +179,7 @@ enum class TYPE_BRUSH
 	EZ_BRU,
 	EZD_BRU,
 	EC_BRU,
+	EW_BRU,
 	// 플레이어
 	P_BRUON,
 	P_BRUOFF,
@@ -208,6 +214,8 @@ enum class TYPE_FONT
 {
 	COMIC24,
 	COMIC18,
+	COMIC48,
+	COMIC,
 
 	
 	SIZE

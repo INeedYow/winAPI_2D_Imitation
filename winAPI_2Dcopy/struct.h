@@ -114,6 +114,24 @@ struct fPoint
 		
 		return (distance <= cr1 + cr2);
 	}
+
+	fPoint operator+(fPoint other)
+	{
+		return fPoint(x + other.x, y + other.y);
+	}
+	fPoint operator-(fPoint other)
+	{
+		return fPoint(x - other.x, y - other.y);
+	}
+	bool operator==(fPoint other)
+	{
+		return (x == other.x && y == other.y);
+	}
+	bool operator!=(fPoint other)
+	{
+		return !(*this == other);
+	}
+
 };
 
 // ¹æÇâ¼º

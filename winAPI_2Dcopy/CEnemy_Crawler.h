@@ -3,8 +3,9 @@
 class CEnemy_Crawler : public CEnemy
 {
 	bool	isNotice;
-	bool	isBoosting;			// 증감 구분
 	float	fAttention;
+
+	bool	isBoosting;			// 증감 구분
 	float	fAccel;				// 가속
 	float	fDecel;				// 감속
 

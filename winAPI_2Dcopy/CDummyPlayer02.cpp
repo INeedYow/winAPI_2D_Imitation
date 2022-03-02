@@ -3,6 +3,8 @@
 #include "CItem_Scanner.h"
 #include "CScene.h"
 
+#include "SelectGDI.h"
+
 CDummyPlayer02::CDummyPlayer02()
 {
 	uiPrevBullet = GETBULLET;
@@ -78,42 +80,18 @@ void CDummyPlayer02::update()
 
 void CDummyPlayer02::render(HDC hDC)
 {
-	int sight = isMode ? P_SIGHTON : P_SIGHTOFF;
 	fPoint pos = getPlayerPos();
 	fPoint size = getSize();
 
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
-	HFONT hFont, hOriginalFont;
-
-	hBrush = CreateSolidBrush(RGB(200, 200, 200));
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
-
-	Ellipse(hDC,
-		(int)(pos.x - sight),
-		(int)(pos.y - sight),
-		(int)(pos.x + sight),
-		(int)(pos.y + sight));
-
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hBrush);
-
-	hPen = CreatePen(PS_SOLID, P_PEN, isMode ? RGB(125, 150, 100) : RGB(75, 100, 50));
-	hBrush = CreateSolidBrush(isMode ? RGB(150, 200, 100) : RGB(100, 125, 75));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	// mode에 따라 구분하기 good
+	SelectGDI pen(hDC, PEN::P_EDGEON, PEN::P_EDGEOFF, isMode);
+	SelectGDI brush(hDC, BRUSH::P_BRUON, BRUSH::P_BRUOFF, isMode);
 
 	Ellipse(hDC,
 		(int)(pos.x - size.x / 2),
 		(int)(pos.y - size.y / 2),
 		(int)(pos.x + size.x / 2),
 		(int)(pos.y + size.y / 2));
-
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
 
 	// 보유한 총알 그림
 	if (0 < uiBullet)
@@ -136,16 +114,10 @@ void CDummyPlayer02::render(HDC hDC)
 		}
 	}
 
-	
-	hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
-	hOriginalFont = (HFONT)SelectObject(hDC, hFont);
+	SelectGDI font(hDC, FONT::COMIC18);
 
 	SetTextColor(hDC, RGB(102, 51, 255));
-	TextOutW(hDC, pos.x - 100, pos.y - 40, szText, wcslen(szText));
-
-	SelectObject(hDC, hOriginalFont);
-	DeleteObject(hFont);
-
+	TextOutW(hDC, pos.x - 95, pos.y - 45, szText, wcslen(szText));
 }
 
 void CDummyPlayer02::createNext()

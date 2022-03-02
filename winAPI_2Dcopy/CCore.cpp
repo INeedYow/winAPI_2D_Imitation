@@ -99,7 +99,8 @@ void CCore::CreateBrushPenFont()
 				
 	m_arrBrush[(UINT)TYPE_BRUSH::EZ_BRU]		= CreateSolidBrush(RGB(45, 45, 45));
 	m_arrBrush[(UINT)TYPE_BRUSH::EZD_BRU]		= CreateSolidBrush(RGB(70, 0, 70));
-	m_arrBrush[(UINT)TYPE_BRUSH::EC_BRU]		= CreateSolidBrush(RGB(70, 20, 50));
+	m_arrBrush[(UINT)TYPE_BRUSH::EC_BRU]		= CreateSolidBrush(RGB(20, 70, 50));
+	m_arrBrush[(UINT)TYPE_BRUSH::EW_BRU]		= CreateSolidBrush(RGB(90, 40, 10));
 	m_arrBrush[(UINT)TYPE_BRUSH::P_BRUON]		= CreateSolidBrush(RGB(150, 200, 100));
 	m_arrBrush[(UINT)TYPE_BRUSH::P_BRUOFF]		= CreateSolidBrush(RGB(100, 125, 75));
 	m_arrBrush[(UINT)TYPE_BRUSH::I_BRUFLICK]	= CreateSolidBrush(RGB(240, 240, 180));

@@ -34,6 +34,7 @@ void CScene_Result::update()
 	}
 }
 
+// TODO GDI로 정리해보기
 void CScene_Result::render(HDC hDC)
 {
 	HPEN	hPen, hPen2, hOriginalPen;
@@ -151,9 +152,9 @@ void CScene_Result::enter()
 
 void CScene_Result::exit()
 {
-	uiCount = 0;
-	fTimer = 0;
-	g_resultTimer = 0;
-	g_resultBullet = 0;
+	g_resultTimer = 0.f;
 	g_resultKill = 0;
+	g_resultBullet = 0;
+	SETSCANTIMER(0.f);
+	SETBULLET(0);
 }

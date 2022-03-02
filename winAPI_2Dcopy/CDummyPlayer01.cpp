@@ -27,41 +27,17 @@ void CDummyPlayer01::update()
 
 void CDummyPlayer01::render(HDC hDC)
 {
-	int sight = isMode ? P_SIGHTON : P_SIGHTOFF;
 	fPoint pos = getPlayerPos();
 	fPoint size = getSize();
-
-	HPEN hPen, hOriginalPen;
-	HBRUSH hBrush, hOriginalBrush;
-
-	hBrush = CreateSolidBrush(RGB(200, 200, 200));
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
-
-	Ellipse(hDC,
-		(int)(pos.x - sight),
-		(int)(pos.y - sight),
-		(int)(pos.x + sight),
-		(int)(pos.y + sight));
-
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hBrush);
-
-	hPen = CreatePen(PS_SOLID, P_PEN, isMode ? RGB(125, 150, 100) : RGB(75, 100, 50));
-	hBrush = CreateSolidBrush(isMode ? RGB(150, 200, 100) : RGB(100, 125, 75));
-
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
-	hOriginalBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	
+	SelectGDI pen(hDC, PEN::P_EDGEON, PEN::P_EDGEOFF, isMode);
+	SelectGDI brush(hDC, BRUSH::P_BRUON, BRUSH::P_BRUOFF, isMode);
 
 	Ellipse(hDC,
 		(int)(pos.x - size.x / 2),
 		(int)(pos.y - size.y / 2),
 		(int)(pos.x + size.x / 2),
 		(int)(pos.y + size.y / 2));
-
-	SelectObject(hDC, hOriginalPen);
-	SelectObject(hDC, hOriginalBrush);
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
 
 	if (isMode)
 	{

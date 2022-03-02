@@ -153,12 +153,14 @@
   <ItemGroup>
     <ClInclude Include="CBattery.h" />
     <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDummyEnemy01.h" />
     <ClInclude Include="CDummyPlayer01.h" />
     <ClInclude Include="CDummyPlayer02.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemy_Crawler.h" />
+    <ClInclude Include="CEnemy_Worms.h" />
     <ClInclude Include="CEnemy_Zombie.h" />
     <ClInclude Include="CEnemy_ZombieDog.h" />
     <ClInclude Include="CItem.h" />
@@ -188,12 +190,14 @@
   <ItemGroup>
     <ClCompile Include="CBattery.cpp" />
     <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDummyEnemy01.cpp" />
     <ClCompile Include="CDummyPlayer01.cpp" />
     <ClCompile Include="CDummyPlayer02.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemy_Crawler.cpp" />
+    <ClCompile Include="CEnemy_Worms.cpp" />
     <ClCompile Include="CEnemy_Zombie.cpp" />
     <ClCompile Include="CEnemy_ZombieDog.cpp" />
     <ClCompile Include="CItem.cpp" />
