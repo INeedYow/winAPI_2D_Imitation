@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CEnemy_Zombie.h"
+#include "CCollider.h"
 
 #include "SelectGDI.h"
 
@@ -14,6 +15,11 @@ CEnemy_Zombie::CEnemy_Zombie()
 	setSize(fPoint(EZ_SIZE, EZ_SIZE));
 	isMove = false;
 	strMsg = L"!";
+
+	createCollider();
+	getCollider()->setSize(fPoint(EZ_SIZE, EZ_SIZE));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::CIRCLE);
 }
 
 CEnemy_Zombie::CEnemy_Zombie(fPoint pos, fVec2 dir)

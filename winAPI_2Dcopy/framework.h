@@ -21,12 +21,12 @@
 // # STL
 #include <vector>
 #include <string>
-
+#include <map>
 
 // # 전역 변수
 extern HWND			hWnd;
 extern HINSTANCE	hInstance;
-// 게임 결과 출력용
+	// 게임 결과 출력용
 extern float   g_resultTimer;
 extern USHORT  g_resultBullet;
 extern USHORT  g_resultKill;
@@ -45,19 +45,19 @@ extern USHORT  g_resultKill;
 #define KEY_OFF(key)		CKeyManager::getInst()->getKeyOff(key)
 
 	// 충돌관련 함수
-#define COLL_PC				isCollisionPointToCircle
-#define COLL_CR				isCollisionCircleToRect
-#define COLL_CC				isCollisionCircleToCircle
-#define COLL_PR				isCollisionPointToRect
-#define COLL_RRS			isCollisionRectToRectSameSize
+#define ISCOLLPC			isCollisionPointToCircle
+#define ISCOLLCR			isCollisionCircleToRect
+#define ISCOLLCC			isCollisionCircleToCircle
+#define ISCOLLPR			isCollisionPointToRect
+#define ISCOLLRR			isCollisionRectToRect
 
 #define ISMODE				CPlayer::getMode()
 #define ISSCAN				CPlayer::getScan()
 #define GETPOS				CPlayer::getPlayerPos()
-#define SETMODE(mode)		CPlayer::setMode(mode)
 #define GETBULLET			CPlayer::getBullet()
-#define SETBULLET(v)		CPlayer::setBullet(v)
 #define GETSCANTIMER()		CPlayer::getScanTimer()
+#define SETMODE(v)			CPlayer::setMode(v)
+#define SETBULLET(v)		CPlayer::setBullet(v)
 #define SETSCANTIMER(v)		CPlayer::setScanTimer(v)
 
 
@@ -66,15 +66,6 @@ extern USHORT  g_resultKill;
 
 #define SCORE_RANK			(UINT)75
 
-// 비트연산 실패
-//#define BIT_LOW(key)		(UINT)(key | 0xffff)
-//#define BIT_HIGH(key)		(UINT)((key >> 16) | 0xffff)
-//
-//#define CNT_BULLET		BIT_LOW(resultCnt)
-//#define CNT_KILL			BIT_HIGH(resultCnt)
-//
-//#define ADD_BULLET		resultCnt++
-//#define ADD_KILL			resultCnt += (0x01 <<16)
 
 	// 오브젝트 설정 관련
 		// obj
@@ -127,7 +118,7 @@ extern USHORT  g_resultKill;
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
 #define OBJ		GROUP_OBJECT
 enum class GROUP_OBJECT
-{	// 현재 시야 원을 플레이어가 render하고 있어서 플레이어 뒤에 뭘 놓을 수가 없음 -> 배경obj등으로 따로 만들어서 관리해야 할듯
+{
 	DEFAULT,
 	SIGHTCIRCLE,
 	PLAYER,
@@ -139,7 +130,7 @@ enum class GROUP_OBJECT
 	DROPITEM,
 	BULLET,
 
-	SIZE				// 마지막에 size 써주면 딱 맞아떨어져서 편하게 쓸 수 있음
+	SIZE
 };
 
 #define SCENE	GROUP_SCENE
@@ -221,6 +212,15 @@ enum class TYPE_FONT
 	SIZE
 };
 
+#define SHAPE	COLL_SHAPE
+enum class COLL_SHAPE
+{
+	CIRCLE,
+	RECT,
+	POINT,
+
+	END
+};
 
 // # Util
 #include "struct.h"
@@ -234,10 +234,12 @@ enum class TYPE_FONT
 #include "CTimeManager.h"
 #include "CKeyManager.h"
 #include "CSceneManager.h"
+#include "CCollisionManager.h"
 
 
 // # winAPI_2Dcopy.cpp에 static 멤버변수 초기화할 때 필요
 #include "CPlayer.h"
+#include "CCollider.h"
 
 
 using namespace std;

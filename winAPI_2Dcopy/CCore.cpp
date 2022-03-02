@@ -76,6 +76,7 @@ void CCore::init()
 	CTimeManager::getInst()->init();
 	CKeyManager::getInst()->init();
 	CSceneManager::getInst()->init();
+	CCollisionManager::getInst()->init();
 
 
 	m_hDC = GetDC(hWnd);		// hWnd 전역변수로 선언할 필요성;
@@ -90,7 +91,7 @@ void CCore::init()
 }
 
 void CCore::CreateBrushPenFont()
-{
+{	// 나중에 이미지 넣게 되면 대부분 사라질 것들
 	m_arrBrush[(UINT)TYPE_BRUSH::HOLLOW]		= (HBRUSH)GetStockObject(HOLLOW_BRUSH);	// 이미 자주 쓰는 거 모아놓은 stock이 있음
 			
 	m_arrBrush[(UINT)TYPE_BRUSH::BLACK15]		= CreateSolidBrush(RGB(15, 15, 15));

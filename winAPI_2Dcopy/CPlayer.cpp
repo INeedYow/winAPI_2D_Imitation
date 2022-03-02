@@ -3,6 +3,7 @@
 #include "CScene.h"
 #include "CBullet.h"
 #include "CItem_Bullet.h"
+#include "CCollider.h"
 
 #include "SelectGDI.h"
 
@@ -14,6 +15,13 @@ CPlayer::CPlayer()
 	m_fpPrevPos = fPoint(1.f, 1.f);
 	m_fvDir = fVec2(1.f, 1.f);
 	strMsg = L"........";
+
+	// 생성자에서 호출
+	// 그냥 get을 쓸 수 있는 이유는? createCollider를 했기 때문인가
+	createCollider();
+	getCollider()->setSize(fPoint((float)P_SIZE - 2, (float)P_SIZE - 2));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::CIRCLE);
 }
 
 CPlayer::~CPlayer()
@@ -52,7 +60,7 @@ void CPlayer::update()
 	if (KEY_ON('I'))
 	{
 		isScan = true;
-		scanTimer += 3.f;				// dont cheat
+		scanTimer += 5.f;				// dont cheat
 	}
 		
 	
@@ -69,62 +77,24 @@ void CPlayer::update()
 		setDir(m_fvDir);
 	}
 
-	// 몬스터 충돌처리
-	fPoint chkPos;
-	fPoint chkSize;
-	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
-	vector<CObject*>* pVecArr = pCurScene->getVecArr();
-	
-	//vector<CObject*>::iterator tmpIter;
+	//// 몬스터 충돌처리
+	//fPoint chkPos;
+	//fPoint chkSize;
+	//CScene* pCurScene = CSceneManager::getInst()->getCurScene();
+	//vector<CObject*>* pVecArr = pCurScene->getVecArr();
 
-	for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
-	{	
-		chkPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
-		chkSize = pVecArr[(int)OBJ::ENEMY][i]->getSize();
+	//for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
+	//{	
+	//	chkPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
+	//	chkSize = pVecArr[(int)OBJ::ENEMY][i]->getSize();
 
-		// enemy와 충돌
-		if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)chkSize.x / 2))
-				death();
-	}
-
-	////아이템 충돌처리 (아이템은 아이템쪽에서 하도록 했음)
-	////TODO : 지우는 작업 필요...
-	//// iter로 충돌한 오브젝트 delete하고 iter가 가리키고 있는 인덱스가 (size - 1)끝 인덱스가 아니라면 당기기
-	///*for(vector<CObject*>::iterator iter = pVecArr[(int)OBJ::DROPITEM].begin(); 
-	//	iter != pVecArr[(int)OBJ::DROPITEM].end(); iter++)*/
-	//for (int i = 0; i < pVecArr[(int)OBJ::DROPITEM].size(); i++)
-	//{
-	//	chkPos = pVecArr[(int)OBJ::DROPITEM][i]->getPos();
-
-	//	RECT chkRt = { (int)chkPos.x - (int)I_HSIZE , (int)chkPos.y - (int)I_HSIZE,
-	//				   (int)chkPos.x + (int)I_HSIZE , (int)chkPos.y + (int)I_HSIZE };
-	//	// item 습득
-	//	// pVecArr로 접근하면 CObject* 로 접근해서 getEA()함수를 호출할 수 없음
-	//	// TODO : 일단 임의로 rand함수로 돌려놓음
-	//	if (playerPos.COLL_CR(playerPos, (int)O_HSIZE, chkRt))
-	//	{	// 먹은 아이템 key값으로 분류할랬는데 불가능?
-	//		UCHAR bullet = (CItem_Bullet*)(pVecArr[(int)OBJ::DROPITEM][i])->getEA();
-	//		uiBullet += rand() % (IB_MAXEA - IB_MINEA + 1) + IB_MINEA;
-	//		if (uiBullet > 24)
-	//			uiBullet = 24;
-	//	}
+	//	// enemy와 충돌
+	//	if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)chkSize.x / 2))
+	//			death();
 	//}
 
 	if (KEY_ON('A') && uiBullet)
 		createBullet();
-
-	
-	//// 시야 ON OFF
-	//// 왜 이렇게 하면 ON OFF 조건 제대로 작동 안 함?
-	//if (KEY_ON(VK_SPACE) && m_battery.isEnough())
-	//{
-	//	SETMODE(true);
-	//	float fBatt = m_battery.getBattery();
-	//	fBatt -= BAT_INITCONSUME;
-	//	m_battery.setBattery(fBatt);
-	//}
-	//else if (KEY_HOLD(VK_SPACE) && isMode && m_battery.getBattery() > 0)	SETMODE(true);
-	//else																	SETMODE(false);
 
 	// 이전좌표 갱신
 	m_fpPrevPos.x = playerPos.x;
@@ -132,7 +102,6 @@ void CPlayer::update()
 
 	setPlayerPos(playerPos);
 	
-	// 소유 관계니까 Scene에서 업데이트 시키는 게 아니라 플레이어 업뎃할 때 배터리 업뎃 호출해주는 게 맞는듯해서 이렇게 바꾸려했는데
 	// TODO 배터리 플레이어가 업데이트하도록
 	// m_battery.update();
 }
@@ -172,6 +141,7 @@ void CPlayer::render(HDC hDC)
 		}
 	}
 	//m_battery.render(hDC);
+	componentRender(hDC);
 }
 
 void CPlayer::setDir(fVec2 vec)

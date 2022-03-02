@@ -3,60 +3,101 @@
 
 #include "CObject.h"
 
+#include "SelectGDI.h"
+
 CCollider::CCollider()
 {
-	pOwner = nullptr;
-	fpPos = { 0.f, 0.f };
-	fpSize = { 0.f, 0.f };
-	fpOffset = { 0.f, 0.f };
+	m_pOwner	= nullptr;
+	m_fpPos		= {};
+	m_fpSize	= {};
+	m_fpOffset	= {};
+
+	m_uiID		= s_uiID++;
+}
+
+CCollider::CCollider(const CCollider& other)
+{
+	m_pOwner	= nullptr;
+	m_fpPos		= other.m_fpPos;
+	m_fpSize	= other.m_fpSize;
+	m_fpOffset	= other.m_fpOffset;
+
+	m_uiID = s_uiID++;
 }
 
 CCollider::~CCollider()
 {
-	if (nullptr != pOwner)
-		delete pOwner;
+	if (nullptr != m_pOwner)
+		delete m_pOwner;
 }
 
 void CCollider::setPos(fPoint pos)
 {
-	fpPos = pos;
+	m_fpPos = pos;
 }
 
 void CCollider::setSize(fPoint size)
 {
-	fpSize = size;
+	m_fpSize = size;
 }
 
 void CCollider::setOffset(fPoint offset)
 {
-	fpOffset = offset;
+	m_fpOffset = offset;
+}
+
+void CCollider::setShape(SHAPE shape)
+{
+	m_eShape = shape;
 }
 
 fPoint CCollider::getPos()
 {
-	return fpPos;
+	return m_fpPos;
 }
 
 fPoint CCollider::getSize()
 {
-	return fpSize;
+	return m_fpSize;
 }
 
 fPoint CCollider::getOffset()
 {
-	return fpOffset;
+	return m_fpOffset;
 }
 
 CObject* CCollider::getOwner()
 {
-	return pOwner;
+	return m_pOwner;
+}
+
+SHAPE CCollider::getShape()
+{
+	return m_eShape;
+}
+
+UINT CCollider::getID()
+{
+	return 0;
 }
 
 void CCollider::finalUpdate()
 {
-	fpPos = pOwner->getPos() + fpOffset;
+	m_fpPos = m_pOwner->getPos() + m_fpOffset;
 }
 
 void CCollider::render(HDC hDC)
+{
+}
+
+void CCollider::collisionKeep(CCollider* pOther)
+{
+}
+
+void CCollider::collisionEnter(CCollider* pOther)
+{
+}
+
+void CCollider::collisionExit(CCollider* pOther)
 {
 }

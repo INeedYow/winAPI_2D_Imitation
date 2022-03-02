@@ -45,6 +45,12 @@ void CObject::render(HDC hDC)
 {
 }
 
+void CObject::componentRender(HDC hDC)
+{
+	if (nullptr != m_pCollider)
+		m_pCollider->render(hDC);
+}
+
 CCollider* CObject::getCollider()
 {
 	return m_pCollider;
@@ -53,5 +59,5 @@ CCollider* CObject::getCollider()
 void CObject::createCollider()
 {
 	m_pCollider = new CCollider();
-	m_pCollider->pOwner = this;				// Collider의 friend 선언 필요
+	m_pCollider->m_pOwner = this;				// Collider의 friend 선언 필요
 }

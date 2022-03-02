@@ -12,8 +12,8 @@ CScene::~CScene()
 		for (int j = 0; j < m_arrObj[i].size(); j++)
 			delete m_arrObj[i][j];
 
-		while (m_arrObj[i].size() > 0)
-			m_arrObj[i].pop_back();
+		/*while (m_arrObj[i].size() > 0)	// 벡터에서 알아서 할 내용인듯
+			m_arrObj[i].pop_back();*/
 	}
 }
 
@@ -57,6 +57,11 @@ void CScene::render(HDC hDC)
 		for (int j = 0; j < m_arrObj[i].size(); j++)
 			m_arrObj[i][j]->render(hDC);
 	}
+}
+
+const vector<CObject*>& CScene::getGroupObject(OBJ group)
+{
+	return m_arrObj[(UINT)group];
 }
 
 vector<CObject*>* CScene::getVecArr()

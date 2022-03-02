@@ -23,6 +23,7 @@ public:
 	virtual void update() = 0;
 	virtual void finalUpdate() final;	// 오버라이딩 막음
 	virtual void render(HDC hDC);
+	virtual void componentRender(HDC hDC);
 
 	CCollider* getCollider();
 	void createCollider();				// 세터로 지정해주는 게 아니라 생성

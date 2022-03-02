@@ -79,6 +79,9 @@ void CScene_Stage01::enter()
 	addObject(pItemScan1, OBJ::DROPITEM);
 	addObject(pBattery, OBJ::BATTERY);
 	addObject(pSight, OBJ::SIGHTCIRCLE);
+
+	// 각 씬마다 오브젝트끼리 충돌 여부 설정가능
+	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::ENEMY);
 }
 
 void CScene_Stage01::exit()
@@ -93,4 +96,6 @@ void CScene_Stage01::exit()
 		while (pVec[i].size() > 0)
 			pVec[i].pop_back();
 	}
+
+	CCollisionManager::getInst()->resetGroup();
 }

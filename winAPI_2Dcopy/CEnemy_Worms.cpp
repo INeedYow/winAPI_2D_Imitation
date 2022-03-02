@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CEnemy_Worms.h"
+#include "CCollider.h"
 
 #include "SelectGDI.h"
 
@@ -19,6 +20,11 @@ CEnemy_Worms::CEnemy_Worms()
 	fPosVariance = 0.f;
 	fSizeVariance = 0.f;
 	isMoveX = true;
+
+	createCollider();
+	getCollider()->setSize(fPoint(EW_SIZE - 2, EW_SIZE - 2));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::RECT);
 }
 
 CEnemy_Worms::~CEnemy_Worms()
@@ -179,7 +185,7 @@ void CEnemy_Worms::update()
 		}
 
 		// 최대 변화량만큼 늘어났으면 줄어들게 
-		// TODO : 또는 xDist,yDist만큼 이동했을 경우도 추가해야 함
+		// xDist,yDist만큼 이동했을 경우도 추가해야...?
 		if ((float)EW_LENMAX <= size.x || (float)EW_LENMAX <= size.y)
 		{
 			isWiggle = false;
@@ -216,12 +222,12 @@ void CEnemy_Worms::render(HDC hDC)
 	SelectGDI pen(hDC, PEN::E_EDGE);
 	SelectGDI brush(hDC, BRUSH::EW_BRU);
 
-	/*if (!pos.COLL_PC(pos, playerPos, sight))
+	if (!pos.COLL_PC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
 		return;
-	}*/
+	}
 
 	Rectangle(hDC,
 		(int)(getPos().x - getSize().x / 2),

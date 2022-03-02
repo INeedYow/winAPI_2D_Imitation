@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CEnemy_Crawler.h"
+#include "CCollider.h"
 
 #include "SelectGDI.h"
 //#include "CSightCircle.h"
@@ -18,6 +19,11 @@ CEnemy_Crawler::CEnemy_Crawler()
 	fAccel = 0;
 	fDecel = 0;
 	strMsg = L"!";
+
+	createCollider();
+	getCollider()->setSize(fPoint(EC_SIZE - 2, EC_SIZE - 2));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::CIRCLE);
 }
 
 CEnemy_Crawler::~CEnemy_Crawler()

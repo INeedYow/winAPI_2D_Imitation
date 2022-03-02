@@ -70,6 +70,9 @@
     <Filter Include="Component">
       <UniqueIdentifier>{73a63cbb-1c83-42a5-8b64-900ce4496095}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Manager\CCollisionManager">
+      <UniqueIdentifier>{9783b3b3-f20d-4fef-b384-f7aa158d08a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -177,6 +180,9 @@
     <ClInclude Include="CCollider.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="CCollisionManager.h">
+      <Filter>Engine\Manager\CCollisionManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -265,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="CCollider.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionManager.cpp">
+      <Filter>Engine\Manager\CCollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

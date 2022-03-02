@@ -154,6 +154,7 @@
     <ClInclude Include="CBattery.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDummyEnemy01.h" />
     <ClInclude Include="CDummyPlayer01.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="CBattery.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDummyEnemy01.cpp" />
     <ClCompile Include="CDummyPlayer01.cpp" />

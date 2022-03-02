@@ -42,21 +42,18 @@ void CItem_Scanner::update()
 			isFlick = !isFlick;	// 지속시간 6초 이하이면 1초마다 전환 
 	}
 
-	// TODO (교수님 질문)
-	// 아이템이 플레이어와 충돌했을 때(습득) 플레이어와 아이템이 각각 처리해야 하는 내용이 다른데 또 서로 자기 멤버에만 접근할 수 있잖아요..
-	// 지금 충돌했는지 계산을 플레이어 update()에서도 하고 있고 item_bullet의 update()에서도 하고 있는데요
-	// 각각의 후처리를 하려면 이렇게 하는 게 맞는데 또 같은 계산을 두 번해서 효율적이지 않은데 방법이 뭘까요?
-	RECT areaRect = { (int)itemPos.x - (int)I_HSIZE,
-					  (int)itemPos.y - (int)I_HSIZE,
-					  (int)itemPos.x + (int)I_HSIZE,
-					  (int)itemPos.y + (int)I_HSIZE };
+	
+	//RECT areaRect = { (int)itemPos.x - (int)I_HSIZE,
+	//				  (int)itemPos.y - (int)I_HSIZE,
+	//				  (int)itemPos.x + (int)I_HSIZE,
+	//				  (int)itemPos.y + (int)I_HSIZE };
 
-	if (itemPos.COLL_CR(playerPos, (int)O_HSIZE, areaRect))
-	{	// 습득하면 위치 이동
-		SETSCANTIMER(3.f);
-		setRandPos();
-		duraCnt = IB_DURA;
-	}
+	//if (itemPos.COLL_CR(playerPos, (int)O_HSIZE, areaRect))
+	//{	// 습득하면 위치 이동
+	//	SETSCANTIMER(3.f);
+	//	setRandPos();
+	//	duraCnt = IB_DURA;
+	//}
 
 	setTimer(timeCnt);
 	setDuration(duraCnt);

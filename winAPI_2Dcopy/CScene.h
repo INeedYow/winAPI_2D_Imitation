@@ -24,6 +24,9 @@ public:
 	virtual void enter() = 0;
 	virtual void exit() = 0;
 
+	// const 원본, 해당 OBJ의 배열.
+	const vector<CObject*>& getGroupObject(OBJ type);
+
 public:
 	vector<CObject*>* getVecArr();	
 };
