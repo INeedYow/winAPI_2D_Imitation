@@ -20,5 +20,6 @@ public:
 
 	unsigned int	getFPS();
 	double			getDT();
+	float			getfDT();
 	
 };

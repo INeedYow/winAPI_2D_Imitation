@@ -11,6 +11,7 @@ CCollider::CCollider()
 	m_fpPos		= {};
 	m_fpSize	= {};
 	m_fpOffset	= {};
+	m_uiCollCnt = 0;
 	m_eShape	= SHAPE::END;
 
 	m_uiID		= s_uiID++;
@@ -23,6 +24,7 @@ CCollider::CCollider(const CCollider& other)
 	m_fpPos		= other.m_fpPos;
 	m_fpSize	= other.m_fpSize;
 	m_fpOffset	= other.m_fpOffset;
+	m_uiCollCnt = other.m_uiCollCnt;
 	m_eShape	= other.m_eShape;
 
 	m_uiID = s_uiID++;

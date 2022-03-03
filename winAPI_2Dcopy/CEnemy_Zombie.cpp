@@ -47,7 +47,7 @@ void CEnemy_Zombie::setRandSpeed()
 	int spdMax = (int)EZ_SPEEDMAX + a;
 	int spdMin = (int)EZ_SPEEDMIN + a;
 
-	fSpeed = rand() % (spdMax - spdMin + 1) + spdMin;
+	fSpeed = (float)(rand() % (spdMax - spdMin + 1) + spdMin);
 }
 
 void CEnemy_Zombie::update()
@@ -60,14 +60,14 @@ void CEnemy_Zombie::update()
 	if (ISCOLLPC(pos, playerPos, sight))		// 시야 안에 있으면
 	{
 		if (fAttention <= 3.f)						
-			fAttention += ISMODE ? 2 * DT : DT;		// 어그로 관리
+			fAttention += ISMODE ? 2 * fDT : fDT;		// 어그로 관리
 		if (fAttention >= 2.f)
 			isNotice = true;
 	}
 	else										// 시야 안에 없으면
 	{
 		if (fAttention > 0.f)
-			fAttention -= DT;						// 어그로 관리
+			fAttention -= fDT;						// 어그로 관리
 		if (fAttention <= 1.f)
 			isNotice = false;
 	}
@@ -79,19 +79,19 @@ void CEnemy_Zombie::update()
 	}
 	else										// 어그로 안 끌렸을 때 방향설정
 	{
-		fTimer -= DT;
+		fTimer -= fDT;
 
 		if (0.f > fTimer )							// 타이머 0되면 
 		{
 			if (isMove)									// 잠시 멈췄다가 또 움직이게
 			{
 				isMove = false;
-				fTimer = rand() % 4 + 1;
+				fTimer = (float)(rand() % 4 + 1);
 				return;
 			}
 
 			setRandDir();								// 방향, 타이머 재설정
-			fTimer = rand() % 3 + 2;
+			fTimer = (float)(rand() % 3 + 2);
 
 			if (0 == fvDir.x && 0 == fvDir.y)
 				isMove = false;
@@ -106,8 +106,8 @@ void CEnemy_Zombie::update()
 
 	if (0 != fvDir.x || 0 != fvDir.y)
 		setDir(fvDir);
-	pos.x += EZ_SPEEDMIN * fvDir.x * DT;
-	pos.y += EZ_SPEEDMIN * fvDir.y * DT;
+	pos.x += EZ_SPEEDMIN * fvDir.x * fDT;
+	pos.y += EZ_SPEEDMIN * fvDir.y * fDT;
 
 	setPos(pos);
 }
@@ -125,21 +125,21 @@ void CEnemy_Zombie::render(HDC hDC)
 	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)			// 스캐너
-			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			Rectangle(hDC, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 		return;
 	}
 
 	Ellipse(hDC,
-		(int)(getPos().x - getSize().x / 2),
-		(int)(getPos().y - getSize().y / 2),
-		(int)(getPos().x + getSize().x / 2),
-		(int)(getPos().y + getSize().y / 2));
+		(int)(getPos().x - (int)getSize().x / 2),
+		(int)(getPos().y - (int)getSize().y / 2),
+		(int)(getPos().x + (int)getSize().x / 2),
+		(int)(getPos().y + (int)getSize().y / 2));
 
 	if (isNotice)
 	{
 		SelectGDI font(hDC, FONT::COMIC24);
 
 		SetTextColor(hDC, RGB(200, 150, 50));
-		TextOutW(hDC, pos.x, pos.y - 20, strMsg, wcslen(strMsg));
+		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMsg, (int)wcslen(strMsg));
 	}
 }

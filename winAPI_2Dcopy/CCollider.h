@@ -6,15 +6,15 @@ class CCollider
 {
 	friend class CObject;
 
-	static UINT		s_uiID;				// 
+	static UINT		s_uiID;				// 고유 키값 생성을 위한 static변수
 
 	CObject*		m_pOwner;			// 주인
 	fPoint			m_fpPos;
 	fPoint			m_fpSize;
 	fPoint			m_fpOffset;			// 유격, 편차 이런 느낌인듯
-	
-	SHAPE			m_eShape;			// 히트박스 모양 (원인지 사각형인지)
-											// bool로 하려다가 혹시 타원이나 기타 다른 경우가 생길 수 있을 것 같아서
+	UINT			m_uiCollCnt;		// 충돌 카운트
+
+	SHAPE			m_eShape;			// 히트박스 모양 (원,사각형,점)
 	
 	UINT			m_uiID;				// 고유 키값(아이디) // 충돌여부 고유 키값으로 저장하고 찾기 위함
 

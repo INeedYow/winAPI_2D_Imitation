@@ -37,7 +37,7 @@ void CDummyPlayer02::update()
 			szText = L"스캐너는 안개 속 위치를 드러내요";
 			uiCheck++;
 		}
-		scanTimer -= (float)DT;
+		scanTimer -= fDT;
 		if (0.f > scanTimer)
 			isScan = false;
 	}
@@ -48,23 +48,23 @@ void CDummyPlayer02::update()
 		uiCheck++;
 	}
 	if (2 <= uiCheck)
-		g_resultTimer += (float)DT;
+		g_resultTimer += fDT;
 	if (g_resultTimer > 4.f)
 		szText = L"이제 \'D\'키를 눌러 시작해요";
 
 	fPoint playerPos = getPlayerPos();
 
 	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)		// 맵 탈출 방지
-		playerPos.y -= (float)(m_fSpeed * DT);
+		playerPos.y -= m_fSpeed * fDT;
 
 	if (KEY_HOLD(VK_DOWN) && (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
-		playerPos.y += (float)(m_fSpeed * DT);
+		playerPos.y += m_fSpeed * fDT;
 
 	if (KEY_HOLD(VK_LEFT) && (playerPos.x - getSize().x / 2.f) > 0.f)
-		playerPos.x -= (float)(m_fSpeed * DT);
+		playerPos.x -= m_fSpeed * fDT;
 
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
-		playerPos.x += (float)(m_fSpeed * DT);
+		playerPos.x += m_fSpeed * fDT;
 
 	if ((playerPos.x != m_fpPrevPos.x) || (playerPos.y != m_fpPrevPos.y))
 	{

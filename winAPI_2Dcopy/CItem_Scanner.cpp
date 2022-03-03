@@ -25,7 +25,7 @@ void CItem_Scanner::update()
 	bool	isFlick = getIsFlick();
 	fPoint	playerPos = GETPOS;
 
-	timeCnt += DT;
+	timeCnt += fDT;
 
 	if (timeCnt >= 1.f)			// 1초 경과
 	{
@@ -73,7 +73,7 @@ void CItem_Scanner::render(HDC hDC)
 		if (ISSCAN)
 		{	// 스캐너
 			SelectGDI pen(hDC, PEN::I_SCAN);
-			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			Rectangle(hDC, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 		}
 		return;
 	}
@@ -89,5 +89,5 @@ void CItem_Scanner::render(HDC hDC)
 		(int)(pos.y + I_HSIZE));
 	//
 	SetTextColor(hDC, RGB(0,0,0));
-	TextOutW(hDC, pos.x - 18, pos.y, getName(), wcslen(getName()));
+	TextOutW(hDC, (int)pos.x - 18, (int)pos.y, getName(), (int)wcslen(getName()));
 }

@@ -26,7 +26,7 @@ void CSightCircle::render(HDC hDC)
 	fPoint pos = GETPOS;
 	fPoint size = getSize();
 	
-	int sight = ISMODE ? size.x : size.y;
+	int sight = ISMODE ? (int)size.x : (int)size.y;
 
 	SelectGDI brush(hDC, BRUSH::WHITE200);
 

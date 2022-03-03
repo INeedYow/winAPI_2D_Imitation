@@ -49,8 +49,8 @@ void CBullet::update()
 		}
 	}
 
-	bulletPos.x += (float)(m_fSpeed * m_fvDir.x * DT);
-	bulletPos.y += (float)(m_fSpeed * m_fvDir.y * DT);
+	bulletPos.x += m_fSpeed * m_fvDir.x * fDT;
+	bulletPos.y += m_fSpeed * m_fvDir.y * fDT;
 
 	setPos(bulletPos);
 }

@@ -36,7 +36,7 @@ void CItem_Bullet::update()
 	bool	isFlick = getIsFlick();
 	fPoint	playerPos = GETPOS;
 
-	timeCnt += DT;
+	timeCnt += fDT;
 
 	if (timeCnt >= 1.f)			// 1초 경과
 	{
@@ -87,7 +87,7 @@ void CItem_Bullet::render(HDC hDC)
 		if (ISSCAN)
 		{	// 스캐너
 			SelectGDI pen(hDC, PEN::I_SCAN);
-			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			Rectangle(hDC, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 		}
 		return;
 	}
@@ -103,7 +103,7 @@ void CItem_Bullet::render(HDC hDC)
 		(int)(pos.y + I_HSIZE));
 	//
 	SetTextColor(hDC, RGB(0,0,0));
-	TextOutW(hDC, pos.x - 12, pos.y, getName(), wcslen(getName()));
+	TextOutW(hDC, (int)pos.x - 12, (int)pos.y, getName(), (int)wcslen(getName()));
 
 	// 드랍아이템 지속시간 표시하는 코드
 	/*WCHAR szBuffer[255] = {};

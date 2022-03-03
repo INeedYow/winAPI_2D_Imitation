@@ -31,11 +31,11 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-	g_resultTimer += (float)DT;
+	g_resultTimer += fDT;
 
 	if (isScan && scanTimer > 0.f)				// Ω∫ƒ≥≥ 
 	{
-		scanTimer -= (float)DT;
+		scanTimer -= fDT;
 		if (0.f > scanTimer)
 			isScan = false;
 	}
@@ -45,16 +45,16 @@ void CPlayer::update()
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
 
 	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)		// ∏  ≈ª√‚ πÊ¡ˆ
-		playerPos.y -= (float)(m_fSpeed * DT);
+		playerPos.y -= m_fSpeed * fDT;
 
 	if (KEY_HOLD(VK_DOWN) && (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
-		playerPos.y += (float)(m_fSpeed * DT);
+		playerPos.y += m_fSpeed * fDT;
 
 	if (KEY_HOLD(VK_LEFT) && (playerPos.x - getSize().x / 2.f) > 0.f)
-		playerPos.x -= (float)(m_fSpeed * DT);
+		playerPos.x -= m_fSpeed * fDT;
 
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
-		playerPos.x += (float)(m_fSpeed * DT);
+		playerPos.x += m_fSpeed * fDT;
 
 	if (KEY_ON('O')) uiBullet = 24;		// dont cheat
 	if (KEY_ON('I'))

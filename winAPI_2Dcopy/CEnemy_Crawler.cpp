@@ -41,21 +41,21 @@ void CEnemy_Crawler::update()
 	if (ISCOLLPC(pos, playerPos, sight))		// 시야 안에 있으면
 	{
 		if (fAttention <= 3.f)					
-			fAttention += (float)(ISMODE ? 2 * DT : DT);	// 어그로 관리
+			fAttention += ISMODE ? 2 * fDT : fDT;	// 어그로 관리
 		if (fAttention >= 2.f)
 			isNotice = true;
 	}
 	else										// 시야 안에 없으면
 	{
 		if (fAttention > 0.f)
-			fAttention -= (float)DT;						// 어그로 관리
+			fAttention -= fDT;						// 어그로 관리
 		if (fAttention <= 1.f)
 			isNotice = false;	
 	}
 
 	if (fTimer > 0.f)							// 위치 중요 (멈칫할 때도 어그로 관리는 해주고 return)
 	{
-		fTimer -= (float)DT;
+		fTimer -= fDT;
 		return;
 	}
 
@@ -75,8 +75,8 @@ void CEnemy_Crawler::update()
 
 	if (isBoosting)								// 속도 변화
 	{
-		fDecel += (float)(10000 * DT);
-		fSpeed -= (float)((5000 + fDecel) * DT);
+		fDecel += 10000 * fDT;
+		fSpeed -= (5000 + fDecel) * fDT;
 		if (fSpeed < (float)EC_SPEEDMIN)
 		{
 			fSpeed = (float)EC_SPEEDMIN;
@@ -87,8 +87,8 @@ void CEnemy_Crawler::update()
 	}
 	else
 	{
-		fAccel += (float)(4000 * DT);
-		fSpeed += (float)((2000 + fAccel) * DT);
+		fAccel += 4000 * fDT;
+		fSpeed += (2000 + fAccel) * fDT;
 		if (fSpeed > (float)EC_SPEEDMAX)
 		{
 			fSpeed = (float)EC_SPEEDMAX;
@@ -98,8 +98,8 @@ void CEnemy_Crawler::update()
 		}
 	}
 
-	pos.x += (float)(fSpeed * fvDir.x * DT);
-	pos.y += (float)(fSpeed * fvDir.y * DT);
+	pos.x += fSpeed * fvDir.x * fDT;
+	pos.y += fSpeed * fvDir.y * fDT;
 
 	setPos(pos);
 }

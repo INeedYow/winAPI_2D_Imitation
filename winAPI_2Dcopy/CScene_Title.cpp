@@ -27,7 +27,7 @@ void CScene_Title::update()
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
 	}
 
-	m_fCount += (float)DT;
+	m_fCount += fDT;
 	if (m_fCount >= 1.f)
 	{
 		m_isChange = !m_isChange; 

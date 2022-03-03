@@ -42,6 +42,7 @@ extern USHORT  g_resultKill;
 #define WINSIZEY			720
 
 #define DT					CTimeManager::getInst()->getDT()
+#define fDT					CTimeManager::getInst()->getfDT()
 #define	KEY_HOLD(key)		CKeyManager::getInst()->getKeyPress(key)
 #define KEY_ON(key)			CKeyManager::getInst()->getKeyOn(key)
 #define KEY_OFF(key)		CKeyManager::getInst()->getKeyOff(key)

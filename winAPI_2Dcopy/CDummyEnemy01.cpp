@@ -32,14 +32,14 @@ void CDummyEnemy01::update()
 		if (ISCOLLPC(enemyPos, playerPos, sight))
 		{
 			if (fAttention <= 2.f)
-				fAttention += (float)DT;
+				fAttention += fDT;
 			if (fAttention >= 1.f && !isNotice)
 			{
 				isNotice = true;
 			}
 			if (isNotice)
 			{
-				enemyPos.x += (float)(fSpeed * DT);
+				enemyPos.x += fSpeed * fDT;
 			}
 		}
 		else
@@ -48,7 +48,7 @@ void CDummyEnemy01::update()
 
 			if (fAttention > 0.f)
 			{
-				fAttention -= (float)DT;
+				fAttention -= fDT;
 
 				if (fAttention < 0.f)
 					fAttention = 0.f;

@@ -63,3 +63,8 @@ double CTimeManager::getDT()
 {
 	return m_dDT;
 }
+
+float CTimeManager::getfDT()
+{
+	return (float)m_dDT;
+}

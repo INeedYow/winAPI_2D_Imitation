@@ -41,25 +41,25 @@ void CEnemy_Worms::setRandDir()
 	{
 		fvDir = { 1.f, 0.f };
 		isMoveX = true;
-		fPosVariance = fSpeed * fvDir.x * DT;
+		fPosVariance = fSpeed * fvDir.x * fDT;
 	}
 	else if ((int)pos.x >= (int)WINSIZEX - (int)size.x / 2)		// 위치 : 우 -> xDir : 좌
 	{
 		fvDir = { -1.f, 0.f };
 		isMoveX = true;
-		fPosVariance = fSpeed * fvDir.x * DT;
+		fPosVariance = fSpeed * fvDir.x * fDT;
 	}
 	else if ((int)pos.y <= (int)size.x / 2)						// 위치 : 상 -> yDir : 하
 	{
 		fvDir = { 0.f, 1.f };
 		isMoveX = false;
-		fPosVariance = fSpeed * fvDir.y * DT;
+		fPosVariance = fSpeed * fvDir.y * fDT;
 	}
 	else if ((int)pos.y >= (int)WINSIZEY - (int)size.x / 2)		// 위치 : 하 -> yDir : 상
 	{
 		fvDir = { 0.f, -1.f };
 		isMoveX = false;
-		fPosVariance = fSpeed * fvDir.y * DT;
+		fPosVariance = fSpeed * fvDir.y * fDT;
 	}
 	else
 	{
@@ -70,22 +70,22 @@ void CEnemy_Worms::setRandDir()
 		case 0:
 			fvDir = { 1.f, 0.f };
 			isMoveX = true;
-			fPosVariance = fSpeed * fvDir.x * DT;
+			fPosVariance = fSpeed * fvDir.x * fDT;
 			break;
 		case 1:
 			fvDir = { -1.f, 0.f };
 			isMoveX = true;
-			fPosVariance = fSpeed * fvDir.x * DT;
+			fPosVariance = fSpeed * fvDir.x * fDT;
 			break;
 		case 2:
 			fvDir = { 0.f, 1.f };
 			isMoveX = false;
-			fPosVariance = fSpeed * fvDir.y * DT;
+			fPosVariance = fSpeed * fvDir.y * fDT;
 			break;
 		case 3:
 			fvDir = { 0.f, -1.f };
 			isMoveX = false;
-			fPosVariance = fSpeed * fvDir.y * DT;
+			fPosVariance = fSpeed * fvDir.y * fDT;
 			break;
 		}
 	}
@@ -103,19 +103,19 @@ void CEnemy_Worms::update()
 	if (ISCOLLPC(pos, playerPos, sight))			// 시야 안에 있으면
 	{
 		if (fAttention <= 3.f)
-			fAttention += ISMODE ? 2 * DT : DT;	
+			fAttention += ISMODE ? 2 * fDT : fDT;	
 		if (fAttention >= 2.f)
 			isNotice = true;
 	}
 	else											// 시야 안에 없으면
 	{
 		if (fAttention > 0.f)
-			fAttention -= DT;	
+			fAttention -= fDT;	
 		if (fAttention <= 1.f)
 			isNotice = false;
 	}
 
-	fTimer -= DT;
+	fTimer -= fDT;
 	if (fTimer > 0.f)
 		return;
 	
@@ -132,7 +132,7 @@ void CEnemy_Worms::update()
 					fvDir = {-1.f, 0.f};
 				else
 					fvDir = { 1.f, 0.f };
-				fPosVariance = fSpeed * fvDir.x * DT;
+				fPosVariance = fSpeed * fvDir.x * fDT;
 				isMoveX = true;
 			}
 			else
@@ -142,7 +142,7 @@ void CEnemy_Worms::update()
 				else
 					fvDir = { 0.f, 1.f };
 
-				fPosVariance = fSpeed * fvDir.y * DT;
+				fPosVariance = fSpeed * fvDir.y * fDT;
 				isMoveX = false;
 			}
 			
@@ -225,7 +225,7 @@ void CEnemy_Worms::render(HDC hDC)
 	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
-			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			Rectangle(hDC, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 		return;
 	}
 
@@ -240,6 +240,6 @@ void CEnemy_Worms::render(HDC hDC)
 		SelectGDI font(hDC, FONT::COMIC24);
 
 		SetTextColor(hDC, RGB(200, 150, 50));
-		TextOutW(hDC, pos.x, pos.y - 20, strMsg, wcslen(strMsg));
+		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMsg, (int)wcslen(strMsg));
 	}
 }

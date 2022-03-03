@@ -36,10 +36,10 @@ void CEnemy_ZombieDog::update()
 		fTimer = 0.f;								// 가속 초기화
 	}
 
-	pos.x += (EZD_SPEED + fTimer) * fvDir.x * DT;
-	pos.y += (EZD_SPEED + fTimer) * fvDir.y * DT;
+	pos.x += (EZD_SPEED + fTimer) * fvDir.x * fDT;
+	pos.y += (EZD_SPEED + fTimer) * fvDir.y * fDT;
 
-	fTimer += 20 * DT;			// 가속
+	fTimer += 20 * fDT;			// 가속
 
 	setPos(pos);
 }
@@ -57,21 +57,21 @@ void CEnemy_ZombieDog::render(HDC hDC)
 	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
-			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			Rectangle(hDC, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 		return;
 	}
 
 	Ellipse(hDC,
-		(int)(getPos().x - getSize().x / 2),
-		(int)(getPos().y - getSize().y / 2),
-		(int)(getPos().x + getSize().x / 2),
-		(int)(getPos().y + getSize().y / 2));
+		(int)(getPos().x - (int)getSize().x / 2),
+		(int)(getPos().y - (int)getSize().y / 2),
+		(int)(getPos().x + (int)getSize().x / 2),
+		(int)(getPos().y + (int)getSize().y / 2));
 
 	if ((int)fTimer % 60 < 20)
 	{	 // Grrr
 		SelectGDI font(hDC, FONT::COMIC18);
 
 		SetTextColor(hDC, RGB(125, 25, 25));
-		TextOutW(hDC, pos.x + 23, pos.y - 23, strMsg, wcslen(strMsg));
+		TextOutW(hDC, (int)pos.x + 23, (int)pos.y - 23, strMsg, (int)wcslen(strMsg));
 	}
 }

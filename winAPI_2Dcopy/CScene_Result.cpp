@@ -25,8 +25,9 @@ void CScene_Result::update()
 		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
 	if (KEY_ON('E') && uiCount > 3)
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
+
 	if (uiCount < 4)
-	fTimer += (float)DT;
+	fTimer += fDT;
 
 	if (fTimer > 1.f)
 	{
