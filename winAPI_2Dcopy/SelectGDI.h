@@ -12,6 +12,8 @@ public:
 		m_hDC = hDC;
 		HBRUSH hBrush = CCore::getInst()->getBrush(type);
 		m_hDefaultBrush = (HBRUSH)SelectObject(hDC, hBrush);
+		m_hDefaultPen = 0;
+		m_hDefaultFont = 0;
 	}
 	// 시야 모드에 따라서 brush나 pen 다르게 쓰는 경우에 쓰려고 만들어봄
 	SelectGDI(HDC hDC, BRUSH typeTrue, BRUSH typeFalse, bool mode)
@@ -25,6 +27,9 @@ public:
 			hBrush = CCore::getInst()->getBrush(typeFalse);
 
 		m_hDefaultBrush = (HBRUSH)SelectObject(hDC, hBrush);
+		m_hDefaultPen = 0;
+		m_hDefaultFont = 0;
+
 	}
 
 	SelectGDI(HDC hDC, PEN type)
@@ -32,6 +37,9 @@ public:
 		m_hDC = hDC;
 		HPEN hPen = CCore::getInst()->getPen(type);
 		m_hDefaultPen = (HPEN)SelectObject(hDC, hPen);
+		m_hDefaultBrush = 0;
+		m_hDefaultFont = 0;
+
 	}
 
 	SelectGDI(HDC hDC, PEN typeTrue, PEN typeFalse, bool mode)
@@ -45,6 +53,9 @@ public:
 			hPen = CCore::getInst()->getPen(typeFalse);
 
 		m_hDefaultPen = (HPEN)SelectObject(hDC, hPen);
+		m_hDefaultBrush = 0;
+		m_hDefaultFont = 0;
+
 	}
 
 	SelectGDI(HDC hDC, FONT type/*, UINT size = 24*/)
@@ -59,6 +70,9 @@ public:
 
 		hFont = CCore::getInst()->getFont(type);
 		m_hDefaultFont = (HFONT)SelectObject(hDC, hFont);
+		m_hDefaultBrush = 0;
+		m_hDefaultPen = 0;
+
 		
 	}
 	~SelectGDI()

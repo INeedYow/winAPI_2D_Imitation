@@ -5,6 +5,7 @@ CScene_Result::CScene_Result()
 {
 	setName(L"Result_Scene");
 	uiCount = 0;
+	uiTotalScore = 0;
 	fTimer = 0.f;
 	szTextArr[0] = {L"G a m e  O v e r"};
 	szTextArr[1] = {L"생존한 시간"};
@@ -25,7 +26,7 @@ void CScene_Result::update()
 	if (KEY_ON('E') && uiCount > 3)
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
 	if (uiCount < 4)
-	fTimer += DT;
+	fTimer += (float)DT;
 
 	if (fTimer > 1.f)
 	{
@@ -141,7 +142,7 @@ void CScene_Result::render(HDC hDC)
 
 void CScene_Result::enter()
 {	// 랭크
-	uiTotalScore = g_resultBullet + g_resultKill + g_resultTimer;
+	uiTotalScore = (UINT)(g_resultBullet + g_resultKill + g_resultTimer);
 
 	if		(uiTotalScore < SCORE_RANK)												szTextArr[5] = L"C";
 	else if (SCORE_RANK		<= uiTotalScore && uiTotalScore < SCORE_RANK * 2)		szTextArr[5] = L"B";

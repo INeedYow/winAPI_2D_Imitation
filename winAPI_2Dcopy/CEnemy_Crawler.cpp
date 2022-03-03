@@ -38,24 +38,24 @@ void CEnemy_Crawler::update()
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 	
-	if (pos.COLL_PC(pos, playerPos, sight))		// 시야 안에 있으면
+	if (ISCOLLPC(pos, playerPos, sight))		// 시야 안에 있으면
 	{
 		if (fAttention <= 3.f)					
-			fAttention += ISMODE ? 2 * DT : DT;		// 어그로 관리
+			fAttention += (float)(ISMODE ? 2 * DT : DT);	// 어그로 관리
 		if (fAttention >= 2.f)
 			isNotice = true;
 	}
 	else										// 시야 안에 없으면
 	{
 		if (fAttention > 0.f)
-			fAttention -= DT;						// 어그로 관리
+			fAttention -= (float)DT;						// 어그로 관리
 		if (fAttention <= 1.f)
 			isNotice = false;	
 	}
 
 	if (fTimer > 0.f)							// 위치 중요 (멈칫할 때도 어그로 관리는 해주고 return)
 	{
-		fTimer -= DT;
+		fTimer -= (float)DT;
 		return;
 	}
 
@@ -75,8 +75,8 @@ void CEnemy_Crawler::update()
 
 	if (isBoosting)								// 속도 변화
 	{
-		fDecel += 10000 * DT;
-		fSpeed -= (5000 + fDecel) * DT;
+		fDecel += (float)(10000 * DT);
+		fSpeed -= (float)((5000 + fDecel) * DT);
 		if (fSpeed < (float)EC_SPEEDMIN)
 		{
 			fSpeed = (float)EC_SPEEDMIN;
@@ -87,8 +87,8 @@ void CEnemy_Crawler::update()
 	}
 	else
 	{
-		fAccel += 4000 * DT;
-		fSpeed += (2000 + fAccel) * DT;
+		fAccel += (float)(4000 * DT);
+		fSpeed += (float)((2000 + fAccel) * DT);
 		if (fSpeed > (float)EC_SPEEDMAX)
 		{
 			fSpeed = (float)EC_SPEEDMAX;
@@ -98,8 +98,8 @@ void CEnemy_Crawler::update()
 		}
 	}
 
-	pos.x += fSpeed * fvDir.x * DT;
-	pos.y += fSpeed * fvDir.y * DT;
+	pos.x += (float)(fSpeed * fvDir.x * DT);
+	pos.y += (float)(fSpeed * fvDir.y * DT);
 
 	setPos(pos);
 }
@@ -118,10 +118,10 @@ void CEnemy_Crawler::render(HDC hDC)
 	SelectGDI pen(hDC, PEN::E_EDGE);
 	SelectGDI brush(hDC, BRUSH::EC_BRU);
 
-	if (!pos.COLL_PC(pos, playerPos, sight))
+	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
-			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+			Rectangle(hDC, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 		return;
 	}
 
@@ -136,6 +136,6 @@ void CEnemy_Crawler::render(HDC hDC)
 		SelectGDI font(hDC, FONT::COMIC24);
 
 		SetTextColor(hDC, RGB(200, 150, 50));
-		TextOutW(hDC, pos.x, pos.y - 20, strMsg, wcslen(strMsg));
+		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMsg, (int)wcslen(strMsg));
 	}
 }

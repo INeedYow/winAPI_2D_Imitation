@@ -82,11 +82,12 @@ void CScene_Stage01::enter()
 
 	// 각 씬마다 오브젝트끼리 충돌 여부 설정가능
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::ENEMY);
+	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::DROPITEM);
 }
 
 void CScene_Stage01::exit()
 {
-	vector<CObject*>* pVec = getVecArr();
+	/*vector<CObject*>* pVec = getVecArr();
 
 	for (int i = 0; i < (int)OBJ::SIZE; i++)
 	{
@@ -95,7 +96,7 @@ void CScene_Stage01::exit()
 
 		while (pVec[i].size() > 0)
 			pVec[i].pop_back();
-	}
+	}*/
 
 	CCollisionManager::getInst()->resetGroup();
 }

@@ -10,6 +10,11 @@ CItem::CItem()
 	isFlick = false;
 	ucKey = (UCHAR)IKEY::NONE;
 	strName = L"";
+
+	createCollider();
+	getCollider()->setSize(fPoint(I_SIZE - 2, I_SIZE - 2));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::RECT);
 }
 
 CItem::~CItem()
@@ -75,7 +80,7 @@ void CItem::setRandPos()
 	{
 		x = rand() % (WINSIZEX - 120) + 60;
 		y = rand() % (WINSIZEY - 70) + 40;
-	} while (playerPos.COLL_PC(fPoint((float)x, (float)y), playerPos, (int)O_SIZE));
+	} while (ISCOLLPC(fPoint((float)x, (float)y), playerPos, (int)O_SIZE));
 	
 	// 플레이어 위치에 너무 가까이 생성되지 않도록
 

@@ -41,7 +41,7 @@ void CBullet::update()
 	{	// 이게 되네;
 		enemyPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
 		
-		if (bulletPos.COLL_PC(bulletPos, enemyPos, (int)O_HSIZE))
+		if (ISCOLLPC(bulletPos, enemyPos, (int)O_HSIZE))
 		{
 			if(!isColl) g_resultKill++; // 임시로 총알 맞추기만 해도 kill count 증가하도록
 			isColl = true;
@@ -49,8 +49,8 @@ void CBullet::update()
 		}
 	}
 
-	bulletPos.x += m_fSpeed * m_fvDir.x * DT;
-	bulletPos.y += m_fSpeed * m_fvDir.y * DT;
+	bulletPos.x += (float)(m_fSpeed * m_fvDir.x * DT);
+	bulletPos.y += (float)(m_fSpeed * m_fvDir.y * DT);
 
 	setPos(bulletPos);
 }
@@ -65,7 +65,7 @@ void CBullet::render(HDC hDC)
 	fPoint bulletPos = getPos();
 	fPoint playerPos = GETPOS;
 
-	if (bulletPos.COLL_PC(bulletPos, playerPos, sight))
+	if (ISCOLLPC(bulletPos, playerPos, sight))
 	{	// 시야 범위 원 안에 총알이 위치하면 출력
 		Ellipse(hDC,
 			(int)(bulletPos.x - B_SIZE / 2),

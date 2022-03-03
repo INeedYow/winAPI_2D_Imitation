@@ -54,4 +54,5 @@ void CScene_Tutorial01::exit()
 		while (pVec[i].size() > 0)
 			pVec[i].pop_back();
 	}
+	CCollisionManager::getInst()->resetGroup();
 }

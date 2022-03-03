@@ -180,6 +180,7 @@
     <ClInclude Include="CSightCircle.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTimeManager.h" />
+    <ClInclude Include="func.h" />
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="framework.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="CSightCircle.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
+    <ClCompile Include="func.cpp" />
     <ClCompile Include="winAPI_2Dcopy.cpp" />
   </ItemGroup>
   <ItemGroup>

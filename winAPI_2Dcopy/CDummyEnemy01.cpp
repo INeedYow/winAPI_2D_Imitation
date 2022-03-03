@@ -29,17 +29,17 @@ void CDummyEnemy01::update()
 		fPoint playerPos = GETPOS;
 		int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-		if (enemyPos.COLL_PC(enemyPos, playerPos, sight))
+		if (ISCOLLPC(enemyPos, playerPos, sight))
 		{
 			if (fAttention <= 2.f)
-				fAttention += DT;
+				fAttention += (float)DT;
 			if (fAttention >= 1.f && !isNotice)
 			{
 				isNotice = true;
 			}
 			if (isNotice)
 			{
-				enemyPos.x += fSpeed * DT;
+				enemyPos.x += (float)(fSpeed * DT);
 			}
 		}
 		else
@@ -48,7 +48,7 @@ void CDummyEnemy01::update()
 
 			if (fAttention > 0.f)
 			{
-				fAttention -= DT;
+				fAttention -= (float)DT;
 
 				if (fAttention < 0.f)
 					fAttention = 0.f;
@@ -66,7 +66,7 @@ void CDummyEnemy01::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	if (!pos.COLL_PC(pos, playerPos, sight)) return;
+	if (!ISCOLLPC(pos, playerPos, sight)) return;
 
 	HPEN hPen, hOriginalPen;
 	HBRUSH hBrush, hOriginalBrush;
@@ -95,7 +95,7 @@ void CDummyEnemy01::render(HDC hDC)
 		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
 
 		SetTextColor(hDC, RGB(200, 150, 50));
-		TextOutW(hDC, pos.x, pos.y - 20, strMessage, wcslen(strMessage));
+		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMessage, (int)wcslen(strMessage));
 
 		SelectObject(hDC, hOriginFont);
 		DeleteObject(hFont);
@@ -107,7 +107,7 @@ void CDummyEnemy01::render(HDC hDC)
 		HFONT hOriginFont = (HFONT)SelectObject(hDC, hFont);
 
 		SetTextColor(hDC, RGB(25, 25, 153));
-		TextOutW(hDC, pos.x - 25, pos.y + 105, strMessage, wcslen(strMessage));
+		TextOutW(hDC, (int)pos.x - 25, (int)pos.y + 105, strMessage, (int)wcslen(strMessage));
 
 		SelectObject(hDC, hOriginFont);
 		DeleteObject(hFont);

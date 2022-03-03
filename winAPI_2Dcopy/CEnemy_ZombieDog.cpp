@@ -54,7 +54,7 @@ void CEnemy_ZombieDog::render(HDC hDC)
 	SelectGDI pen(hDC, PEN::E_EDGE);
 	SelectGDI brush(hDC, BRUSH::EZD_BRU);
 
-	if (!pos.COLL_PC(pos, playerPos, sight))
+	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);

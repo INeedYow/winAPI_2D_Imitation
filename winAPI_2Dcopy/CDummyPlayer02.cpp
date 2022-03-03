@@ -10,6 +10,11 @@ CDummyPlayer02::CDummyPlayer02()
 	uiPrevBullet = GETBULLET;
 	szText = L"방향키( ↑ ↓ ← → )로 움직여요";
 	uiCheck = 0;
+
+	createCollider();
+	getCollider()->setSize(fPoint(P_SIZE - 2, P_SIZE - 2));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::CIRCLE);
 }
 
 CDummyPlayer02::~CDummyPlayer02()
@@ -32,7 +37,7 @@ void CDummyPlayer02::update()
 			szText = L"스캐너는 안개 속 위치를 드러내요";
 			uiCheck++;
 		}
-		scanTimer -= DT;
+		scanTimer -= (float)DT;
 		if (0.f > scanTimer)
 			isScan = false;
 	}
@@ -43,23 +48,23 @@ void CDummyPlayer02::update()
 		uiCheck++;
 	}
 	if (2 <= uiCheck)
-		g_resultTimer += DT;
+		g_resultTimer += (float)DT;
 	if (g_resultTimer > 4.f)
 		szText = L"이제 \'D\'키를 눌러 시작해요";
 
 	fPoint playerPos = getPlayerPos();
 
 	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)		// 맵 탈출 방지
-		playerPos.y -= m_fSpeed * DT;
+		playerPos.y -= (float)(m_fSpeed * DT);
 
 	if (KEY_HOLD(VK_DOWN) && (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
-		playerPos.y += m_fSpeed * DT;
+		playerPos.y += (float)(m_fSpeed * DT);
 
 	if (KEY_HOLD(VK_LEFT) && (playerPos.x - getSize().x / 2.f) > 0.f)
-		playerPos.x -= m_fSpeed * DT;
+		playerPos.x -= (float)(m_fSpeed * DT);
 
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
-		playerPos.x += m_fSpeed * DT;
+		playerPos.x += (float)(m_fSpeed * DT);
 
 	if ((playerPos.x != m_fpPrevPos.x) || (playerPos.y != m_fpPrevPos.y))
 	{
@@ -100,24 +105,24 @@ void CDummyPlayer02::render(HDC hDC)
 		LPCWSTR strMessage = L"........";
 
 		if (uiBullet <= 8)
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, uiBullet);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 20, strMessage, uiBullet);
 		else if (8 < uiBullet && uiBullet <= 16)
 		{
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, (uiBullet - 8));
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 20, strMessage, 8);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 24, strMessage, (uiBullet - 8));
 		}
 		else
 		{
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMessage, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 28, strMessage, (uiBullet - 16));
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 20, strMessage, 8);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 24, strMessage, 8);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 28, strMessage, (uiBullet - 16));
 		}
 	}
 
 	SelectGDI font(hDC, FONT::COMIC18);
 
 	SetTextColor(hDC, RGB(102, 51, 255));
-	TextOutW(hDC, pos.x - 95, pos.y - 45, szText, wcslen(szText));
+	TextOutW(hDC, (int)pos.x - 95, (int)pos.y - 45, szText, (int)wcslen(szText));
 }
 
 void CDummyPlayer02::createNext()

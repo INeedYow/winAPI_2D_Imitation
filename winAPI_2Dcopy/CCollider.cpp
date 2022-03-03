@@ -11,16 +11,19 @@ CCollider::CCollider()
 	m_fpPos		= {};
 	m_fpSize	= {};
 	m_fpOffset	= {};
+	m_eShape	= SHAPE::END;
 
 	m_uiID		= s_uiID++;
 }
 
+// 복사 생성자
 CCollider::CCollider(const CCollider& other)
 {
 	m_pOwner	= nullptr;
 	m_fpPos		= other.m_fpPos;
 	m_fpSize	= other.m_fpSize;
 	m_fpOffset	= other.m_fpOffset;
+	m_eShape	= other.m_eShape;
 
 	m_uiID = s_uiID++;
 }
@@ -88,6 +91,7 @@ void CCollider::finalUpdate()
 
 void CCollider::render(HDC hDC)
 {
+	
 }
 
 void CCollider::collisionKeep(CCollider* pOther)

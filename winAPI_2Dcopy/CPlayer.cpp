@@ -17,7 +17,7 @@ CPlayer::CPlayer()
 	strMsg = L"........";
 
 	// 생성자에서 호출
-	// 그냥 get을 쓸 수 있는 이유는? createCollider를 했기 때문인가
+	// 그냥 getCollider()를 쓸 수 있는 이유는? -> CObject에서 구현된 부모의 함수이기 때문(collider함수 아니었음)
 	createCollider();
 	getCollider()->setSize(fPoint((float)P_SIZE - 2, (float)P_SIZE - 2));
 	getCollider()->setOffset(fPoint((float)0, (float)0));
@@ -31,11 +31,11 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-	g_resultTimer += DT;
+	g_resultTimer += (float)DT;
 
 	if (isScan && scanTimer > 0.f)				// 스캐너
 	{
-		scanTimer -= DT;
+		scanTimer -= (float)DT;
 		if (0.f > scanTimer)
 			isScan = false;
 	}
@@ -45,16 +45,16 @@ void CPlayer::update()
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
 
 	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)		// 맵 탈출 방지
-		playerPos.y -= m_fSpeed * DT;
+		playerPos.y -= (float)(m_fSpeed * DT);
 
 	if (KEY_HOLD(VK_DOWN) && (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
-		playerPos.y += m_fSpeed * DT;
+		playerPos.y += (float)(m_fSpeed * DT);
 
 	if (KEY_HOLD(VK_LEFT) && (playerPos.x - getSize().x / 2.f) > 0.f)
-		playerPos.x -= m_fSpeed * DT;
+		playerPos.x -= (float)(m_fSpeed * DT);
 
 	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
-		playerPos.x += m_fSpeed * DT;
+		playerPos.x += (float)(m_fSpeed * DT);
 
 	if (KEY_ON('O')) uiBullet = 24;		// dont cheat
 	if (KEY_ON('I'))
@@ -127,17 +127,17 @@ void CPlayer::render(HDC hDC)
 		SetTextColor(hDC, RGB(52, 0, 0));
 
 		if (uiBullet <= 8)
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMsg, uiBullet);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 20, strMsg, uiBullet);
 		else if (8 < uiBullet && uiBullet <= 16)
 		{
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMsg, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMsg, (uiBullet - 8));
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 20, strMsg, 8);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 24, strMsg, (uiBullet - 8));
 		}
 		else
 		{
-			TextOutW(hDC, pos.x - 15, pos.y + 20, strMsg, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 24, strMsg, 8);
-			TextOutW(hDC, pos.x - 15, pos.y + 28, strMsg, (uiBullet - 16));
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 20, strMsg, 8);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 24, strMsg, 8);
+			TextOutW(hDC, (int)pos.x - 15, (int)pos.y + 28, strMsg, (uiBullet - 16));
 		}
 	}
 	//m_battery.render(hDC);

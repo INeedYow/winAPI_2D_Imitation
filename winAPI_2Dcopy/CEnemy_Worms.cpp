@@ -100,7 +100,7 @@ void CEnemy_Worms::update()
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 	float xDist, yDist;
 
-	if (pos.COLL_PC(pos, playerPos, sight))			// 시야 안에 있으면
+	if (ISCOLLPC(pos, playerPos, sight))			// 시야 안에 있으면
 	{
 		if (fAttention <= 3.f)
 			fAttention += ISMODE ? 2 * DT : DT;	
@@ -222,7 +222,7 @@ void CEnemy_Worms::render(HDC hDC)
 	SelectGDI pen(hDC, PEN::E_EDGE);
 	SelectGDI brush(hDC, BRUSH::EW_BRU);
 
-	if (!pos.COLL_PC(pos, playerPos, sight))
+	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);

@@ -36,9 +36,9 @@ void CBattery::update()
  		if (m_fBattery < BAT_MAX)			// 배터리 풀 아닌 상태
 		{
 			m_fDecel = 0.f;
-			m_fBattery += ((float)BAT_RECOVER * DT + m_fAccel * DT);
+			m_fBattery += (float)(BAT_RECOVER * DT + m_fAccel * DT);
 
-			if (m_fAccel < (float)BAT_ACCELMAX)	m_fAccel += 1.f * DT;				// 가속도 증가
+			if (m_fAccel < (float)BAT_ACCELMAX)	m_fAccel += (float)(1 * DT);		// 가속도 증가
 			if (m_fAccel > (float)BAT_ACCELMAX)	m_fAccel = (float)BAT_ACCELMAX;		// 가속도 최대치
 		}
 	}
@@ -47,9 +47,9 @@ void CBattery::update()
 		if (m_fBattery > 0.f)				// 배터리 있는 상태
 		{
 			m_fAccel = 0.f;
-			m_fBattery -= ((float)BAT_CONSUME * DT - m_fDecel * DT);				// 오래 켤수록 소모량 작아지게
+			m_fBattery -= (float)(BAT_CONSUME * DT - m_fDecel * DT);				// 오래 켤수록 소모량 작아지게
 
-      		if (m_fDecel < (float)BAT_DECELMAX)	m_fDecel += 2.f * DT;				// 연비 상승
+      		if (m_fDecel < (float)BAT_DECELMAX)	m_fDecel += (float)(2 * DT);		// 연비 상승
 			if (m_fDecel > (float)BAT_DECELMAX)	m_fDecel = (float)BAT_DECELMAX;		// 최대치
 		}
 	}

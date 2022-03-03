@@ -45,7 +45,7 @@ void CDummyPlayer01::render(HDC hDC)
 
 		SetTextColor(hDC, RGB(0,0,0));
 		
-		TextOutW(hDC, pos.x - 200, pos.y + 70, strMsg1, wcslen(strMsg1));
-		TextOutW(hDC, pos.x - 90, pos.y + 40, strMsg2, wcslen(strMsg2));
+		TextOutW(hDC, (int)pos.x - 200, (int)pos.y + 70, strMsg1, (int)wcslen(strMsg1));
+		TextOutW(hDC, (int)pos.x - 90, (int)pos.y + 40, strMsg2, (int)wcslen(strMsg2));
 	}
 }

@@ -58,9 +58,6 @@
     <Filter Include="Object\CITem">
       <UniqueIdentifier>{7fba2ce4-6960-4801-b6d6-9ea570c5ec03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\CITem\CItem_child">
-      <UniqueIdentifier>{430bd294-e415-47f8-b54d-8e6a677930ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Obj_enemy">
       <UniqueIdentifier>{5771d4be-4512-4dc9-8f1b-f8cfbd566c3a}</UniqueIdentifier>
     </Filter>
@@ -141,9 +138,6 @@
     <ClInclude Include="CItem.h">
       <Filter>Object\CITem</Filter>
     </ClInclude>
-    <ClInclude Include="CItem_Bullet.h">
-      <Filter>Object\CITem\CItem_child</Filter>
-    </ClInclude>
     <ClInclude Include="CObject.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -152,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="CBattery.h">
       <Filter>Object\Obj_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CItem_Scanner.h">
-      <Filter>Object\CITem\CItem_child</Filter>
     </ClInclude>
     <ClInclude Include="CEnemy_ZombieDog.h">
       <Filter>Object\Obj_enemy</Filter>
@@ -182,6 +173,15 @@
     </ClInclude>
     <ClInclude Include="CCollisionManager.h">
       <Filter>Engine\Manager\CCollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="func.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Bullet.h">
+      <Filter>Object\CITem</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Scanner.h">
+      <Filter>Object\CITem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +236,6 @@
     <ClCompile Include="CItem.cpp">
       <Filter>Object\CITem</Filter>
     </ClCompile>
-    <ClCompile Include="CItem_Bullet.cpp">
-      <Filter>Object\CITem\CItem_child</Filter>
-    </ClCompile>
     <ClCompile Include="CObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -247,9 +244,6 @@
     </ClCompile>
     <ClCompile Include="CBattery.cpp">
       <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CItem_Scanner.cpp">
-      <Filter>Object\CITem\CItem_child</Filter>
     </ClCompile>
     <ClCompile Include="CEnemy_ZombieDog.cpp">
       <Filter>Object\Obj_enemy</Filter>
@@ -274,6 +268,15 @@
     </ClCompile>
     <ClCompile Include="CCollisionManager.cpp">
       <Filter>Engine\Manager\CCollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="func.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Bullet.cpp">
+      <Filter>Object\CITem</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Scanner.cpp">
+      <Filter>Object\CITem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

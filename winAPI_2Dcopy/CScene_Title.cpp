@@ -23,11 +23,11 @@ CScene_Title::~CScene_Title()
 void CScene_Title::update()
 {
 	if (KEY_ON(VK_SPACE))	// space bar 누르면 씬 넘어가도록
-	{
-		CSceneManager::getInst()->sceneChange(SCENE::TUTORIAL_01);
+	{	// 이벤트매니저로 씬 전환구현할 때까지 stage01로 바로 넘어가도록
+		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
 	}
 
-	m_fCount += DT;
+	m_fCount += (float)DT;
 	if (m_fCount >= 1.f)
 	{
 		m_isChange = !m_isChange; 
@@ -38,7 +38,6 @@ void CScene_Title::update()
 	m_ucColorB++;
 }
 
-// FPS 도둑...
 void CScene_Title::render(HDC hDC)
 {
 	LPCWSTR strTitle1 = L"AMaDo";
@@ -50,8 +49,8 @@ void CScene_Title::render(HDC hDC)
 	SetTextColor(hDC, RGB(m_ucColorR, m_ucColorG, m_ucColorB));
 	SetBkMode(hDC, TRANSPARENT);
 
-	TextOutW(hDC, 150, 70, strTitle1, wcslen(strTitle1));
-	TextOutW(hDC, 700, 220, strTitle2, wcslen(strTitle2));
+	TextOutW(hDC, 150, 70, strTitle1, (int)wcslen(strTitle1));
+	TextOutW(hDC, 700, 220, strTitle2, (int)wcslen(strTitle2));
 
 	SelectObject(hDC, hOriginFont);
 	DeleteObject(hFont);
@@ -63,7 +62,7 @@ void CScene_Title::render(HDC hDC)
 		SetTextColor(hDC, RGB(255,255,255));
 
 		LPCWSTR strMessage = L"Press \'Space\' to Play";
-		TextOutW(hDC, WINSIZEX / 2 - 115, WINSIZEY / 2 + 150, strMessage, wcslen(strMessage));
+		TextOutW(hDC, (int)WINSIZEX / 2 - 115, (int)WINSIZEY / 2 + 150, strMessage, (int)wcslen(strMessage));
 
 		SelectObject(hDC, hOriginFont);
 		DeleteObject(hFont);
@@ -82,7 +81,7 @@ void CScene_Title::enter()
 
 void CScene_Title::exit()
 {
-	vector<CObject*>* pVec = getVecArr();
+	/*vector<CObject*>* pVec = getVecArr();
 
 	for (int i = 0; i < (int)OBJ::SIZE; i++)
 	{
@@ -91,5 +90,5 @@ void CScene_Title::exit()
 
 		while (pVec[i].size() > 0)
 			pVec[i].pop_back();
-	}
+	}*/
 }

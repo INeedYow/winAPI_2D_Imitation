@@ -57,7 +57,7 @@ void CEnemy_Zombie::update()
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	if (pos.COLL_PC(pos, playerPos, sight))		// 시야 안에 있으면
+	if (ISCOLLPC(pos, playerPos, sight))		// 시야 안에 있으면
 	{
 		if (fAttention <= 3.f)						
 			fAttention += ISMODE ? 2 * DT : DT;		// 어그로 관리
@@ -122,7 +122,7 @@ void CEnemy_Zombie::render(HDC hDC)
 	SelectGDI pen(hDC, PEN::E_EDGE);
 	SelectGDI brush(hDC, BRUSH::EZ_BRU);
 
-	if (!pos.COLL_PC(pos, playerPos, sight))
+	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)			// 스캐너
 			Rectangle(hDC, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);

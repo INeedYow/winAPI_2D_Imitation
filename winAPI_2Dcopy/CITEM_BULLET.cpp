@@ -82,7 +82,7 @@ void CItem_Bullet::render(HDC hDC)
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
 
-	if (!pos.COLL_PC(pos, playerPos, sight))
+	if (!ISCOLLPC(pos, playerPos, sight))
 	{
 		if (ISSCAN)
 		{	// ½ºÄ³³Ê

@@ -23,6 +23,8 @@
 #include <string>
 #include <map>
 
+using namespace std;
+
 // # 전역 변수
 extern HWND			hWnd;
 extern HINSTANCE	hInstance;
@@ -225,6 +227,7 @@ enum class COLL_SHAPE
 // # Util
 #include "struct.h"
 #include "SingleTon.h"
+#include "func.h"
 //#include "SelectGDI.h"		// 사용하는 cpp 파일에서 참조하는 식으로
 
 
@@ -240,7 +243,3 @@ enum class COLL_SHAPE
 // # winAPI_2Dcopy.cpp에 static 멤버변수 초기화할 때 필요
 #include "CPlayer.h"
 #include "CCollider.h"
-
-
-using namespace std;
-

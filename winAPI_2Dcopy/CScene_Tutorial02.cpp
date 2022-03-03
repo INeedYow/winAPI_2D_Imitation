@@ -41,6 +41,8 @@ void CScene_Tutorial02::enter()
 	addObject(pItemBullet1, OBJ::DROPITEM);
 	addObject(pItemBullet2, OBJ::DROPITEM);
 	addObject(pBattery, OBJ::BATTERY);
+
+	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::DROPITEM);
 }
 
 void CScene_Tutorial02::exit()
@@ -61,4 +63,6 @@ void CScene_Tutorial02::exit()
 		while (pVec[i].size() > 0)
 			pVec[i].pop_back();
 	}
+
+	CCollisionManager::getInst()->resetGroup();
 }

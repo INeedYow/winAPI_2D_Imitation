@@ -145,6 +145,7 @@ bool CCollisionManager::isCollision(CCollider* pColl1, SHAPE shape1, CCollider* 
 		}
 		}
 	}
+	return false;
 }
 
 void CCollisionManager::init()
