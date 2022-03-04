@@ -44,6 +44,22 @@ extern HINSTANCE	hInstance;
 #define ISCOLLPR			isCollisionPointToRect
 #define ISCOLLRR			isCollisionRectToRect
 
+// # 비트연산
+#define SP_JUMP				0x0001
+#define SP_DIR				0x0002
+#define SP_BIG				0x0004
+#define SP_FIRE				0x0008
+
+#define SP_SUPER			0x0010
+
+
+// # 능력치
+	// player
+#define P_SPD				150
+#define P_SSIZEX			50	
+#define P_SSIZEY			50	
+#define P_BSIZEX			50	
+#define P_BSIZEY			100	
 
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
@@ -51,6 +67,12 @@ extern HINSTANCE	hInstance;
 enum class GROUP_OBJECT
 {
 	DEFAULT,
+	TILE,
+	BLOCK,
+	ITEM,
+	PLAYER,
+	MONSER,
+	FIREBALL,
 
 	SIZE
 };
@@ -68,6 +90,10 @@ enum class GROUP_SCENE
 enum class KEY_ITEM
 {
 	NONE,
+	COIN,
+	FLOWER,
+	MUSHROOM,
+	STAR,
 
 	SIZE
 };

@@ -40,9 +40,6 @@
     <Filter Include="Engine\Manager\CSceneManager">
       <UniqueIdentifier>{b76509f7-10d4-4c2a-a358-275f9884d5f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Obj_enemy">
-      <UniqueIdentifier>{5771d4be-4512-4dc9-8f1b-f8cfbd566c3a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{73a63cbb-1c83-42a5-8b64-900ce4496095}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,24 @@
     </Filter>
     <Filter Include="Engine\Manager\CPathManager">
       <UniqueIdentifier>{abbe7fb0-60a3-46a9-8ef8-d122959bb0cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_player">
+      <UniqueIdentifier>{680eeebc-14db-4851-a54e-a83e6de78198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_monster">
+      <UniqueIdentifier>{5771d4be-4512-4dc9-8f1b-f8cfbd566c3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_item">
+      <UniqueIdentifier>{c8eb5f26-f441-4140-90f6-9d1a04c0b03c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_tile">
+      <UniqueIdentifier>{47f2e2da-3df2-4747-89be-0f2f01d8260d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_block">
+      <UniqueIdentifier>{6a1ee56a-a1f1-425f-9a76-ce5035d36c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Obj_fireball">
+      <UniqueIdentifier>{7d0fd15d-383a-467c-96cc-8aa767bb5502}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,11 +156,41 @@
     <ClInclude Include="CPathManager.h">
       <Filter>Engine\Manager\CPathManager</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Object\Obj_player</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>Object\Obj_tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>Object\Obj_item</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Coin.h">
+      <Filter>Object\Obj_item</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Flower.h">
+      <Filter>Object\Obj_item</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Mushroom.h">
+      <Filter>Object\Obj_item</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem_Star.h">
+      <Filter>Object\Obj_item</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Obj_monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster_Mush.h">
+      <Filter>Object\Obj_monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster_Turtle.h">
+      <Filter>Object\Obj_monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster_Plants.h">
+      <Filter>Object\Obj_monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="winAPI_2Dcopy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CCore.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
@@ -196,6 +241,42 @@
     </ClCompile>
     <ClCompile Include="CPathManager.cpp">
       <Filter>Engine\Manager\CPathManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Object\Obj_player</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>Object\Obj_tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>Object\Obj_item</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Coin.cpp">
+      <Filter>Object\Obj_item</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Star.cpp">
+      <Filter>Object\Obj_item</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Mushroom.cpp">
+      <Filter>Object\Obj_item</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem_Flower.cpp">
+      <Filter>Object\Obj_item</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Obj_monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster_Mush.cpp">
+      <Filter>Object\Obj_monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster_Turtle.cpp">
+      <Filter>Object\Obj_monster</Filter>
+    </ClCompile>
+    <ClCompile Include="winAPI_2Dcopy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster_Plants.cpp">
+      <Filter>Object\Obj_monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
