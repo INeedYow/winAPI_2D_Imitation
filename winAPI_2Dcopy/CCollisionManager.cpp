@@ -47,29 +47,42 @@ void CCollisionManager::collisionGroupUpdate(OBJ obj1, OBJ obj2)
 
 			if (isCollision(vec1[i]->getCollider(), vec1[i]->getCollider()->getShape(),
 				vec2[j]->getCollider(), vec2[j]->getCollider()->getShape()))
-			{	// vec1[i]의 충돌체 모양과 vec2[j]의 충돌체 모양에 따라 충돌 검사
+			{	// 현재 충돌 O
 				if (iter->second)
-				{	// 계속 충돌
-					// 각 충돌체에게 충돌상태에 따라 다르게 알려줄 필요성 (collider에 함수 추가)
-					vec1[i]->getCollider()->collisionKeep(vec2[j]->getCollider());
-					vec2[j]->getCollider()->collisionKeep(vec1[i]->getCollider());
+				{	// 이전 충돌 O // 각 충돌체에게 충돌상태에 따라 다르게 알려줄 필요성 (collider에 함수 추가)
+					if (vec1[i]->isDead() || vec2[j]->isDead())
+					{	// 유예 O : 충돌 해제
+						vec1[i]->getCollider()->collisionExit(vec2[j]->getCollider());
+						vec2[j]->getCollider()->collisionExit(vec1[i]->getCollider());
+						iter->second = false;
+					}
+					else
+					{	// 유예 X : 충돌 진행 중
+						vec1[i]->getCollider()->collisionKeep(vec2[j]->getCollider());
+						vec2[j]->getCollider()->collisionKeep(vec1[i]->getCollider());
+					}
+					
 				}
 				else
-				{	// 충돌 시작
-					vec1[i]->getCollider()->collisionEnter(vec2[j]->getCollider());
-					vec2[j]->getCollider()->collisionEnter(vec1[i]->getCollider());
+				{	// 이전 충돌 X
+					if (!vec1[i]->isDead() && !vec2[j]->isDead())
+					{	// 유예 X : 충돌 진입
+						vec1[i]->getCollider()->collisionEnter(vec2[j]->getCollider());
+						vec2[j]->getCollider()->collisionEnter(vec1[i]->getCollider());
+						iter->second = true;
+					}	
+					// 유예 O : 충돌 진입 안 함 (else는 아무 것도 할 필요없음)
 				}
-				iter->second = true;		// 이전 충돌 true로 저장
 			}
 			else
-			{	// 지금 충돌 x
+			{	// 현재 충돌 X
 				if (iter->second)
-				{	// 충돌 종료
+				{	// 이전 충돌 O : 충돌 종료 (유예든 아니든 탈출하면 됨)
 					vec1[i]->getCollider()->collisionExit(vec2[j]->getCollider());
 					vec2[j]->getCollider()->collisionExit(vec1[i]->getCollider());
+					iter->second = false;
 				}
 				// else 는 충돌한 적 없고 충돌하고 있지 않은 상태니까 아무것도 할 필요 없음
-				iter->second = false;
 			}
 		}
 	}

@@ -81,14 +81,5 @@ void CScene_Title::enter()
 
 void CScene_Title::exit()
 {
-	/*vector<CObject*>* pVec = getVecArr();
 
-	for (int i = 0; i < (int)OBJ::SIZE; i++)
-	{
-		for (int j = 0; j < pVec[i].size(); j++)
-			delete pVec[i][j];
-
-		while (pVec[i].size() > 0)
-			pVec[i].pop_back();
-	}*/
 }

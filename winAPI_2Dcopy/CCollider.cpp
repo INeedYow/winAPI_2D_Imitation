@@ -31,8 +31,6 @@ CCollider::CCollider(const CCollider& other)
 
 CCollider::~CCollider()
 {
-	if (nullptr != m_pOwner)
-		delete m_pOwner;
 }
 
 void CCollider::setPos(fPoint pos)

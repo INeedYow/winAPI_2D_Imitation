@@ -9,11 +9,29 @@ void CObject::setDead()
 
 CObject::CObject()
 {
-	m_bDead = false;
-	m_fptPos = { 0.f, 0.f };
-	m_fptSize = { 0.f, 0.f };
+	m_fptPos	= {};
+	m_fptSize	= {};
 	m_pCollider = nullptr;
+	m_bDead		= false;
 }
+
+
+CObject::CObject(const CObject& other)
+{
+	m_fptPos	= other.m_fptPos;
+	m_fptSize	= other.m_fptSize;
+	m_bDead = false;
+
+	// TODO 충돌체 복사생성자 관리 (other에 있는 경우)
+	if (nullptr != other.m_pCollider)
+	{
+		m_pCollider = new CCollider(*other.m_pCollider);
+		m_pCollider->m_pOwner = this;
+	}
+	else
+		m_pCollider = nullptr;
+}
+
 
 CObject::~CObject()
 {

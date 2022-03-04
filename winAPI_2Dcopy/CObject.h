@@ -16,6 +16,7 @@ private:
 
 public:
 	CObject();
+	CObject(const CObject& other);
 	virtual ~CObject();
 
 	void setPos(fPoint pos);

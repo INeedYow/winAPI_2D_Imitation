@@ -36,6 +36,9 @@ CBullet::~CBullet()
 void CBullet::update()
 {
 	fPoint bulletPos = getPos();
+	fPoint enemyPos;
+
+	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 
 	bulletPos.x += m_fSpeed * m_fvDir.x * fDT;
 	bulletPos.y += m_fSpeed * m_fvDir.y * fDT;

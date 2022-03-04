@@ -27,6 +27,6 @@ public:
 	// const 원본, 해당 OBJ의 배열.
 	const vector<CObject*>& getGroupObject(OBJ type);
 
-public:
-	vector<CObject*>* getVecArr();	
+	void deleteObjectGroup(OBJ objGroup);			// 해당 obj그룹만 delete
+	void deleteObjectAll();							// 전체 obj delete
 };
