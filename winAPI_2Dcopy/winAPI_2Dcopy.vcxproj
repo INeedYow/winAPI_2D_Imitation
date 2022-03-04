@@ -173,7 +173,6 @@
     <ClInclude Include="CScene_Result.h" />
     <ClInclude Include="CScene_Stage01.h" />
     <ClInclude Include="CScene_Title.h" />
-    <ClInclude Include="CScene_Tutorial01.h" />
     <ClInclude Include="CSightCircle.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTimeManager.h" />
@@ -209,7 +208,6 @@
     <ClCompile Include="CScene_Result.cpp" />
     <ClCompile Include="CScene_Stage01.cpp" />
     <ClCompile Include="CScene_Title.cpp" />
-    <ClCompile Include="CScene_Tutorial01.cpp" />
     <ClCompile Include="CSightCircle.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTimeManager.cpp" />

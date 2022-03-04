@@ -117,9 +117,6 @@
     <ClInclude Include="CScene_Stage01.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Tutorial01.h">
-      <Filter>Scene\Scene_child</Filter>
-    </ClInclude>
     <ClInclude Include="CText.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
@@ -204,9 +201,6 @@
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
     <ClCompile Include="CScene_Stage01.cpp">
-      <Filter>Scene\Scene_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Tutorial01.cpp">
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
     <ClCompile Include="CText.cpp">

@@ -2,7 +2,6 @@
 #include "CSceneManager.h"
 #include "CScene.h"
 #include "CScene_Title.h"
-#include "CScene_Tutorial01.h"
 #include "CScene_Stage01.h"
 #include "CScene_Result.h"
 
@@ -44,7 +43,6 @@ void CSceneManager::render(HDC hDC)
 void CSceneManager::init()
 {
 	m_pArrScene[(int)SCENE::TITLE] = new CScene_Title;
-	m_pArrScene[(int)SCENE::TUTORIAL_01] = new CScene_Tutorial01;
 	m_pArrScene[(int)SCENE::STAGE_01] = new CScene_Stage01;
 	m_pArrScene[(int)SCENE::RESULT] = new CScene_Result;
 
