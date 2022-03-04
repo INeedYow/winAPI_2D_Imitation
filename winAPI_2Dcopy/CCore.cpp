@@ -51,16 +51,13 @@ void CCore::update()
 // 게임 전체 그리기 진행
 void CCore::render()												
 {
-	SelectGDI brush(m_hMemDC, BRUSH::BLACK30, BRUSH::BLACK15, ISMODE);
-
 	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
-	// memDC에 그려야 한다.
 	CSceneManager::getInst()->render(m_hMemDC);
 
 	// FPS 출력하기
 	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"[MyGame] FPS : %d", CTimeManager::getInst()->getFPS());
+	swprintf_s(szBuffer, L"[Flatform Imitation] FPS : %d", CTimeManager::getInst()->getFPS());
 	SetWindowText(hWnd, szBuffer);
 
 	// 메모리 DC에서 원래 DC로 옮겨오는 함수
@@ -73,6 +70,7 @@ void CCore::init()
 {
 	CreateBrushPenFont();
 
+	CPathManager::getInst()->init();
 	CTimeManager::getInst()->init();
 	CKeyManager::getInst()->init();
 	CSceneManager::getInst()->init();
@@ -93,19 +91,6 @@ void CCore::init()
 void CCore::CreateBrushPenFont()
 {	// 나중에 이미지 넣게 되면 대부분 사라질 것들
 	m_arrBrush[(UINT)TYPE_BRUSH::HOLLOW]		= (HBRUSH)GetStockObject(HOLLOW_BRUSH);	// 이미 자주 쓰는 거 모아놓은 stock이 있음
-			
-	m_arrBrush[(UINT)TYPE_BRUSH::BLACK15]		= CreateSolidBrush(RGB(15, 15, 15));
-	m_arrBrush[(UINT)TYPE_BRUSH::BLACK30]		= CreateSolidBrush(RGB(30, 30, 30));
-	m_arrBrush[(UINT)TYPE_BRUSH::WHITE200]		= CreateSolidBrush(RGB(200, 200, 200));
-				
-	m_arrBrush[(UINT)TYPE_BRUSH::EZ_BRU]		= CreateSolidBrush(RGB(45, 45, 45));
-	m_arrBrush[(UINT)TYPE_BRUSH::EZD_BRU]		= CreateSolidBrush(RGB(70, 0, 70));
-	m_arrBrush[(UINT)TYPE_BRUSH::EC_BRU]		= CreateSolidBrush(RGB(20, 70, 50));
-	m_arrBrush[(UINT)TYPE_BRUSH::EW_BRU]		= CreateSolidBrush(RGB(90, 40, 10));
-	m_arrBrush[(UINT)TYPE_BRUSH::P_BRUON]		= CreateSolidBrush(RGB(150, 200, 100));
-	m_arrBrush[(UINT)TYPE_BRUSH::P_BRUOFF]		= CreateSolidBrush(RGB(100, 125, 75));
-	m_arrBrush[(UINT)TYPE_BRUSH::I_BRUFLICK]	= CreateSolidBrush(RGB(240, 240, 180));
-	m_arrBrush[(UINT)TYPE_BRUSH::I_BRUNORMAL]	= CreateSolidBrush(RGB(160, 160, 120));
 
 	m_arrFont[(UINT)TYPE_FONT::COMIC24]			= CreateFont(24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	m_arrFont[(UINT)TYPE_FONT::COMIC18]			= CreateFont(18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
@@ -113,17 +98,9 @@ void CCore::CreateBrushPenFont()
 	m_arrPen[(UINT)TYPE_PEN::RED]				= CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	m_arrPen[(UINT)TYPE_PEN::GREEN]				= CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	m_arrPen[(UINT)TYPE_PEN::BLUE]				= CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
-
-	m_arrPen[(UINT)TYPE_PEN::BAT_YELLOW]		= CreatePen(PS_SOLID, 2, RGB(255, 255, 0));
-
-	m_arrPen[(UINT)TYPE_PEN::E_EDGE]			= CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
-	m_arrPen[(UINT)TYPE_PEN::P_EDGEON]			= CreatePen(PS_SOLID, P_PEN, RGB(125, 150, 100));
-	m_arrPen[(UINT)TYPE_PEN::P_EDGEOFF]			= CreatePen(PS_SOLID, P_PEN, RGB(75, 100, 50));
-	m_arrPen[(UINT)TYPE_PEN::I_SCAN]			= CreatePen(PS_SOLID, 1, RGB(240, 240, 100));
-	m_arrPen[(UINT)TYPE_PEN::I_EDGE]			= CreatePen(PS_SOLID, 1, RGB(75, 100, 50));
 	
-	m_arrPen[(UINT)TYPE_PEN::COLLIDER0]			= CreatePen(PS_SOLID, 2, RGB(0, 255, 255));
-	m_arrPen[(UINT)TYPE_PEN::COLLIDER1]			= CreatePen(PS_SOLID, 2, RGB(255, 0, 255));
+	m_arrPen[(UINT)TYPE_PEN::COLLIDER0]			= CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
+	m_arrPen[(UINT)TYPE_PEN::COLLIDER1]			= CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	
 }
 
@@ -140,4 +117,9 @@ HPEN CCore::getPen(PEN type)
 HFONT CCore::getFont(FONT type)
 {
 	return m_arrFont[(UINT)type];
+}
+
+HDC CCore::getMainDC()
+{
+	return m_hMemDC;
 }

@@ -1,8 +1,6 @@
 #include "framework.h"
 #include "CScene_Title.h"
 
-#include "CEnemy.h"
-#include "CPlayer.h"
 
 //class CEnemy;		// 전방선언 해봤는데 new CEnemy;에서 오류 생김
 

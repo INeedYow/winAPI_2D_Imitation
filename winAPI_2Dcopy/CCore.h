@@ -23,5 +23,7 @@ public:
 	HBRUSH	getBrush(BRUSH type);
 	HPEN	getPen(PEN type);
 	HFONT	getFont(FONT type);
+
+	HDC		getMainDC();
 };
 

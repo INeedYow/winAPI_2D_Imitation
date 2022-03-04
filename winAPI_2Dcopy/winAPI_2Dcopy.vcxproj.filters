@@ -40,29 +40,8 @@
     <Filter Include="Engine\Manager\CSceneManager">
       <UniqueIdentifier>{b76509f7-10d4-4c2a-a358-275f9884d5f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\Scene_parent">
-      <UniqueIdentifier>{be615e21-3a80-4865-85bf-30c94f7617de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Scene_child">
-      <UniqueIdentifier>{f87e5ed6-ce6f-45c0-abfa-559867092529}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Obj_parent">
-      <UniqueIdentifier>{34f34221-77c5-4ea6-90ec-fa2369335b0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Obj_child">
-      <UniqueIdentifier>{a5287edd-4538-492b-9b81-003bbf8e5132}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Obj_dummy">
-      <UniqueIdentifier>{634fbaf5-7a51-4df0-b826-82f5cbf5954a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\CITem">
-      <UniqueIdentifier>{7fba2ce4-6960-4801-b6d6-9ea570c5ec03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Obj_enemy">
       <UniqueIdentifier>{5771d4be-4512-4dc9-8f1b-f8cfbd566c3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Obj_UI">
-      <UniqueIdentifier>{311aed8b-5026-4964-a8b7-287d8bb68af1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{73a63cbb-1c83-42a5-8b64-900ce4496095}</UniqueIdentifier>
@@ -72,6 +51,21 @@
     </Filter>
     <Filter Include="Engine\Manager\CEventManager">
       <UniqueIdentifier>{b019c4bc-b4d4-485f-a162-a7e6a90e81fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{75f94250-a55a-4455-9eca-16f0f0ef5b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\CSound">
+      <UniqueIdentifier>{4b878738-2953-42e2-a4ef-59bc33fcd6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\CTexture">
+      <UniqueIdentifier>{ee852254-0c6c-4c82-ad9f-8b58c8a722c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\CResourceManager">
+      <UniqueIdentifier>{e68f9281-a2d9-4d1e-86c3-9ddee5bb34a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\CPathManager">
+      <UniqueIdentifier>{abbe7fb0-60a3-46a9-8ef8-d122959bb0cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,56 +99,11 @@
     <ClInclude Include="CSceneManager.h">
       <Filter>Engine\Manager\CSceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="CScene.h">
-      <Filter>Scene\Scene_parent</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Title.h">
-      <Filter>Scene\Scene_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Stage01.h">
-      <Filter>Scene\Scene_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CText.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CItem.h">
-      <Filter>Object\CITem</Filter>
-    </ClInclude>
     <ClInclude Include="CObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Result.h">
-      <Filter>Scene\Scene_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CBattery.h">
-      <Filter>Object\Obj_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy_ZombieDog.h">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy_Zombie.h">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy.h">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy_Crawler.h">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClInclude>
     <ClInclude Include="SelectGDI.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="CSightCircle.h">
-      <Filter>Object\Obj_UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy_Worms.h">
-      <Filter>Object\Obj_enemy</Filter>
     </ClInclude>
     <ClInclude Include="CCollider.h">
       <Filter>Component</Filter>
@@ -165,14 +114,32 @@
     <ClInclude Include="func.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="CItem_Bullet.h">
-      <Filter>Object\CITem</Filter>
-    </ClInclude>
-    <ClInclude Include="CItem_Scanner.h">
-      <Filter>Object\CITem</Filter>
-    </ClInclude>
     <ClInclude Include="CEventManager.h">
       <Filter>Engine\Manager\CEventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Stage01.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Title.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Resource\CTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>Resource\CSound</Filter>
+    </ClInclude>
+    <ClInclude Include="CResourceManager.h">
+      <Filter>Engine\Manager\CResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathManager.h">
+      <Filter>Engine\Manager\CPathManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,53 +158,8 @@
     <ClCompile Include="CSceneManager.cpp">
       <Filter>Engine\Manager\CSceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="CScene.cpp">
-      <Filter>Scene\Scene_parent</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Title.cpp">
-      <Filter>Scene\Scene_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Stage01.cpp">
-      <Filter>Scene\Scene_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CText.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CItem.cpp">
-      <Filter>Object\CITem</Filter>
-    </ClCompile>
     <ClCompile Include="CObject.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Result.cpp">
-      <Filter>Scene\Scene_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CBattery.cpp">
-      <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy_ZombieDog.cpp">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy_Zombie.cpp">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy.cpp">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy_Crawler.cpp">
-      <Filter>Object\Obj_enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="CSightCircle.cpp">
-      <Filter>Object\Obj_UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy_Worms.cpp">
-      <Filter>Object\Obj_enemy</Filter>
     </ClCompile>
     <ClCompile Include="CCollider.cpp">
       <Filter>Component</Filter>
@@ -248,14 +170,32 @@
     <ClCompile Include="func.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="CItem_Bullet.cpp">
-      <Filter>Object\CITem</Filter>
-    </ClCompile>
-    <ClCompile Include="CItem_Scanner.cpp">
-      <Filter>Object\CITem</Filter>
-    </ClCompile>
     <ClCompile Include="CEventManager.cpp">
       <Filter>Engine\Manager\CEventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Title.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Stage01.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>Resource\CTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>Resource\CSound</Filter>
+    </ClCompile>
+    <ClCompile Include="CResourceManager.cpp">
+      <Filter>Engine\Manager\CResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathManager.cpp">
+      <Filter>Engine\Manager\CPathManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

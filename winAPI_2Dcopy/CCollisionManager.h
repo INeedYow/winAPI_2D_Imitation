@@ -1,5 +1,7 @@
 #pragma once
 
+class CCollider;
+
 union COLLIDER_ID
 {
 	struct {

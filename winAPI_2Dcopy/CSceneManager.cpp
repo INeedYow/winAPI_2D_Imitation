@@ -3,7 +3,6 @@
 #include "CScene.h"
 #include "CScene_Title.h"
 #include "CScene_Stage01.h"
-#include "CScene_Result.h"
 
 CSceneManager::CSceneManager()
 {
@@ -44,7 +43,6 @@ void CSceneManager::init()
 {
 	m_pArrScene[(int)SCENE::TITLE] = new CScene_Title;
 	m_pArrScene[(int)SCENE::STAGE_01] = new CScene_Stage01;
-	m_pArrScene[(int)SCENE::RESULT] = new CScene_Result;
 
 	m_pCurScene = m_pArrScene[(int)SCENE::TITLE];
 	m_pCurScene->enter();
