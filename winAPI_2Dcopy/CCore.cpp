@@ -14,7 +14,7 @@ CCore::CCore()
 
 // DC들 해제해야 함
 CCore::~CCore()
-{// 둘을 반납하는 함수가 다름	// 해제 함수 미흡..
+{// 둘을 반납하는 함수가 다름
 	// 해당 윈도우 DC 핸들 반납
 	ReleaseDC(hWnd, m_hDC);
 	// 메모리 DC, 비트맵 반납
@@ -36,7 +36,6 @@ CCore::~CCore()
 	}
 }
 
-// 게임 전체 업데이트 진행
 void CCore::update()
 {	
 	// 동기화
@@ -48,7 +47,6 @@ void CCore::update()
 	CCollisionManager::getInst()->update();
 }
 
-// 게임 전체 그리기 진행
 void CCore::render()												
 {
 	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
@@ -60,7 +58,6 @@ void CCore::render()
 	swprintf_s(szBuffer, L"[Flatform Imitation] FPS : %d", CTimeManager::getInst()->getFPS());
 	SetWindowText(hWnd, szBuffer);
 
-	// 메모리 DC에서 원래 DC로 옮겨오는 함수
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);
 }
 

@@ -45,7 +45,7 @@ void CKeyManager::init()
 {
 }
 
-bool CKeyManager::getKeyPress(const int key)
+bool CKeyManager::getKeyHold(const int key)
 {
 	return (true == m_arrPrevKey[key] && true == m_arrCurKey[key]);
 }
@@ -58,4 +58,9 @@ bool CKeyManager::getKeyOn(const int key)
 bool CKeyManager::getKeyOff(const int key)
 {
 	return (true == m_arrPrevKey[key] && false == m_arrCurKey[key]);
+}
+
+bool CKeyManager::getKeyNone(const int key)
+{
+	return (false == m_arrPrevKey[key] && false == m_arrCurKey[key]);
 }

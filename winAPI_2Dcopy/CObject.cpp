@@ -49,6 +49,11 @@ void CObject::setSize(fPoint size)
 	m_fptSize = size;
 }
 
+void CObject::setType(OBJ type)
+{
+	m_eType = type;
+}
+
 fPoint CObject::getPos()
 {
 	return m_fptPos;
@@ -57,6 +62,11 @@ fPoint CObject::getPos()
 fPoint CObject::getSize()
 {
 	return m_fptSize;
+}
+
+OBJ CObject::getType()
+{
+	return m_eType;
 }
 
 bool CObject::isDead()

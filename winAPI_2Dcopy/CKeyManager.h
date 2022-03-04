@@ -13,8 +13,9 @@ public:
 	void update();
 	void init();
 
-	bool getKeyPress(const int key);		// 누르고 있으면 계속 처리함
-	bool getKeyOn(const int key);			// 누르고 있어도 한 번만
-	bool getKeyOff(const int key);			// 떼는 순간 한 번
+	bool getKeyHold(const int key);		
+	bool getKeyOn(const int key);
+	bool getKeyOff(const int key);		
+	bool getKeyNone(const int key);	
 };
 

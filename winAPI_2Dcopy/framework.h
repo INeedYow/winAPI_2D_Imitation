@@ -45,21 +45,27 @@ extern HINSTANCE	hInstance;
 #define ISCOLLRR			isCollisionRectToRect
 
 // # 비트연산
-#define SP_JUMP				0x0001
-#define SP_DIR				0x0002
-#define SP_BIG				0x0004
-#define SP_FIRE				0x0008
+	// 상태값
+#define S_JUMP				0x0001
+#define S_DIR				0x0002
+#define S_BIG				0x0004
+#define S_FIRE				0x0008
 
-#define SP_SUPER			0x0010
+#define S_SUPER				0x0010
 
 
 // # 능력치
 	// player
-#define P_SPD				150
+#define P_SPD				100
+#define P_JUMPSPD			300
 #define P_SSIZEX			50	
 #define P_SSIZEY			50	
 #define P_BSIZEX			50	
-#define P_BSIZEY			100	
+#define P_BSIZEY			100
+#define P_ACCEL 			250
+#define P_DECEL				175
+	// tile
+#define T_SIZE				50
 
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
@@ -176,9 +182,10 @@ enum class TYPE_EVENT
 #define DT						CTimeManager::getInst()->getDT()
 #define fDT						CTimeManager::getInst()->getfDT()
 
-#define	KEY_HOLD(key)			CKeyManager::getInst()->getKeyPress(key)
+#define	KEY_HOLD(key)			CKeyManager::getInst()->getKeyHold(key)
 #define KEY_ON(key)				CKeyManager::getInst()->getKeyOn(key)
 #define KEY_OFF(key)			CKeyManager::getInst()->getKeyOff(key)
+#define KEY_NONE(key)			CKeyManager::getInst()->getKeyNone(key)
 
 #define createObj(pObj, group)	CEventManager::getInst()->eventCreateObject(pObj, group)
 #define deleteObj(pObj)			CEventManager::getInst()->eventDeleteObject(pObj)

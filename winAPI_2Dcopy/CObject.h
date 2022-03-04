@@ -9,6 +9,8 @@ private:
 	bool		m_bDead;			// 1프레임 유예
 	void		setDead();			// 이벤트 매니저만 호출할 수 있도록 friend, private;
 
+	OBJ			m_eType;			// 충돌 대상의 종류를 알려면 필요함
+
 	fPoint		m_fptPos;
 	fPoint		m_fptSize;
 	
@@ -21,9 +23,11 @@ public:
 
 	void setPos(fPoint pos);
 	void setSize(fPoint size);
+	void setType(OBJ type);
 
-	fPoint getPos();
-	fPoint getSize();
+	fPoint	getPos();
+	fPoint	getSize();
+	OBJ		getType();
 
 	bool isDead();
 
