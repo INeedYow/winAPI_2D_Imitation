@@ -15,7 +15,7 @@ class CCollisionManager
 	
 private:
 	UINT	m_arrCollChk[(UINT)OBJ::SIZE];				// 비트연산으로
-			//m_arrCollChk[OBJ::PLAYER] 에는 비트마다 해당 오브젝트enum class와 충돌 여부 0,1 저장
+				//m_arrCollChk[OBJ::PLAYER] 에는 비트마다 해당 오브젝트enum class와 충돌 여부 0,1 저장
 
 	map<ULONGLONG, bool> m_mapIsColl;						// 이전 프레임에 충돌했는지 저장하는 자료구조
 

@@ -21,9 +21,7 @@ void CItem_Scanner::update()
 {
 	float   timeCnt = getTimer();
 	UINT	duraCnt = getDuration();
-	fPoint	itemPos = getPos();
 	bool	isFlick = getIsFlick();
-	fPoint	playerPos = GETPOS;
 
 	timeCnt += fDT;
 
@@ -41,19 +39,6 @@ void CItem_Scanner::update()
 		if (duraCnt <= 6)
 			isFlick = !isFlick;	// 지속시간 6초 이하이면 1초마다 전환 
 	}
-
-	
-	//RECT areaRect = { (int)itemPos.x - (int)I_HSIZE,
-	//				  (int)itemPos.y - (int)I_HSIZE,
-	//				  (int)itemPos.x + (int)I_HSIZE,
-	//				  (int)itemPos.y + (int)I_HSIZE };
-
-	//if (itemPos.COLL_CR(playerPos, (int)O_HSIZE, areaRect))
-	//{	// 습득하면 위치 이동
-	//	SETSCANTIMER(3.f);
-	//	setRandPos();
-	//	duraCnt = IB_DURA;
-	//}
 
 	setTimer(timeCnt);
 	setDuration(duraCnt);
@@ -90,4 +75,6 @@ void CItem_Scanner::render(HDC hDC)
 	//
 	SetTextColor(hDC, RGB(0,0,0));
 	TextOutW(hDC, (int)pos.x - 18, (int)pos.y, getName(), (int)wcslen(getName()));
+
+	componentRender(hDC);
 }

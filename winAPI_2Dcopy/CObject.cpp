@@ -2,8 +2,14 @@
 #include "CObject.h"
 #include "CCollider.h"
 
+void CObject::setDead()
+{
+	m_bDead = true;
+}
+
 CObject::CObject()
 {
+	m_bDead = false;
 	m_fptPos = { 0.f, 0.f };
 	m_fptSize = { 0.f, 0.f };
 	m_pCollider = nullptr;
@@ -33,6 +39,11 @@ fPoint CObject::getPos()
 fPoint CObject::getSize()
 {
 	return m_fptSize;
+}
+
+bool CObject::isDead()
+{
+	return m_bDead;
 }
 
 void CObject::finalUpdate()

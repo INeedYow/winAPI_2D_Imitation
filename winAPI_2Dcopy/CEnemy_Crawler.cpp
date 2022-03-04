@@ -110,10 +110,6 @@ void CEnemy_Crawler::render(HDC hDC)
 	fPoint playerPos = GETPOS;
 
 	int sight = ISMODE ? P_SIGHTON : P_SIGHTOFF;
-	
-	// 이런식으로 다른 객체의 정보를 못 얻어오는데 대체 이건 어떻게 하나???
-	// 죄다 static으로 만들어야하나
-	//int range = CSightCircle::getRange(ISMODE);
 
 	SelectGDI pen(hDC, PEN::E_EDGE);
 	SelectGDI brush(hDC, BRUSH::EC_BRU);
@@ -138,4 +134,6 @@ void CEnemy_Crawler::render(HDC hDC)
 		SetTextColor(hDC, RGB(200, 150, 50));
 		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMsg, (int)wcslen(strMsg));
 	}
+
+	componentRender(hDC);
 }

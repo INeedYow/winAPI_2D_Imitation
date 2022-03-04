@@ -41,12 +41,6 @@ extern USHORT  g_resultKill;
 #define WINSIZEX			1280
 #define WINSIZEY			720
 
-#define DT					CTimeManager::getInst()->getDT()
-#define fDT					CTimeManager::getInst()->getfDT()
-#define	KEY_HOLD(key)		CKeyManager::getInst()->getKeyPress(key)
-#define KEY_ON(key)			CKeyManager::getInst()->getKeyOn(key)
-#define KEY_OFF(key)		CKeyManager::getInst()->getKeyOff(key)
-
 	// 충돌관련 함수
 #define ISCOLLPC			isCollisionPointToCircle
 #define ISCOLLCR			isCollisionCircleToRect
@@ -141,7 +135,6 @@ enum class GROUP_SCENE
 {
 	TITLE,
 	TUTORIAL_01,
-	TUTORIAL_02,
 	STAGE_01,
 	RESULT,
 	
@@ -196,9 +189,14 @@ enum class TYPE_PEN
 	// 플레이어
 	P_EDGEON,
 	P_EDGEOFF,
+	// 배터리
+	BAT_YELLOW,
 	// 아이템
 	I_EDGE,
 	I_SCAN,
+	// 충돌체
+	COLLIDER0,
+	COLLIDER1,
 
 	SIZE
 };
@@ -225,6 +223,16 @@ enum class COLL_SHAPE
 	END
 };
 
+#define EVENT	TYPE_EVENT
+enum class TYPE_EVENT
+{
+	CREATEOBJ,
+	DELETEOBJ,
+	SCENECHANGE,
+
+	END
+};
+
 // # Util
 #include "struct.h"
 #include "SingleTon.h"
@@ -239,8 +247,19 @@ enum class COLL_SHAPE
 #include "CKeyManager.h"
 #include "CSceneManager.h"
 #include "CCollisionManager.h"
-
+#include "CEventManager.h"
 
 // # winAPI_2Dcopy.cpp에 static 멤버변수 초기화할 때 필요
 #include "CPlayer.h"
 #include "CCollider.h"
+
+
+#define DT						CTimeManager::getInst()->getDT()
+#define fDT						CTimeManager::getInst()->getfDT()
+
+#define	KEY_HOLD(key)			CKeyManager::getInst()->getKeyPress(key)
+#define KEY_ON(key)				CKeyManager::getInst()->getKeyOn(key)
+#define KEY_OFF(key)			CKeyManager::getInst()->getKeyOff(key)
+
+#define createObj(pObj, group)	CEventManager::getInst()->eventCreateObject(pObj, group)
+#define deleteObj(pObj)			CEventManager::getInst()->eventDeleteObject(pObj)

@@ -1,12 +1,13 @@
 #include "framework.h"
 #include "CBattery.h"
+#include "SelectGDI.h"
 
 CBattery::CBattery()
 {
 	m_fBattery = (float)BAT_MAX;
 	m_fAccel = 0.f;
 	m_fDecel = 0.f;
-	m_fBar = (float)BATBAR_MAX;
+	m_fBar = (UINT)BATBAR_MAX;
 }
 
 CBattery::~CBattery()
@@ -27,6 +28,11 @@ float CBattery::getBattery()
 void CBattery::setBattery(float batt)
 {
 	m_fBattery = batt;
+
+	if (m_fBattery > (float)BAT_MAX)
+		m_fBattery = (float)BAT_MAX;
+	if (m_fBattery < 0.f)
+		m_fBattery = 0.f;
 }
 
 void CBattery::update()
@@ -63,25 +69,20 @@ void CBattery::update()
 	else if (KEY_HOLD(VK_SPACE) && m_fBattery > 0 && ISMODE)	SETMODE(true);
 	else														SETMODE(false);
 
-	m_fBar = m_fBattery * BATBAR_MAX / (float)BAT_MAX;			// 배터리 출력바
+	m_fBar = (UINT)(m_fBattery * BATBAR_MAX / BAT_MAX);			// 배터리 출력바
 }
 
 void CBattery::render(HDC hDC)
 {
 	// 배터리 없거나 최대면 안 그리도록
-	if (1.f > m_fBar || m_fBar >= (float)BATBAR_MAX) return;
+	if (0 == m_fBar || m_fBar >= (UINT)BATBAR_MAX) return;
 
 	fPoint pos = GETPOS;
 
-	HPEN hPen, hOriginalPen;
-	hPen = CreatePen(PS_SOLID, 2, RGB(255, 255, 0));
-	hOriginalPen = (HPEN)SelectObject(hDC, hPen);
+	SelectGDI pen(hDC, PEN::BAT_YELLOW);
 
-	// 선으로 배터리
 	MoveToEx(hDC, (int)pos.x - (int)O_HSIZE + 10, (int)pos.y + 27, nullptr);
 	LineTo(hDC, (int)pos.x - (int)O_HSIZE + 10 + (int)m_fBar, (int)pos.y + 27);
 
-	SelectObject(hDC, hOriginalPen);
-	DeleteObject(hPen);
 }
 

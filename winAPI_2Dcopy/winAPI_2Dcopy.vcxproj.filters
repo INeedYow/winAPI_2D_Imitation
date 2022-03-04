@@ -70,6 +70,9 @@
     <Filter Include="Engine\Manager\CCollisionManager">
       <UniqueIdentifier>{9783b3b3-f20d-4fef-b384-f7aa158d08a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Manager\CEventManager">
+      <UniqueIdentifier>{b019c4bc-b4d4-485f-a162-a7e6a90e81fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -117,23 +120,11 @@
     <ClInclude Include="CScene_Tutorial01.h">
       <Filter>Scene\Scene_child</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Tutorial02.h">
-      <Filter>Scene\Scene_child</Filter>
-    </ClInclude>
     <ClInclude Include="CText.h">
       <Filter>Object\Obj_child</Filter>
     </ClInclude>
-    <ClInclude Include="CDummyPlayer01.h">
-      <Filter>Object\Obj_dummy</Filter>
-    </ClInclude>
-    <ClInclude Include="CDummyPlayer02.h">
-      <Filter>Object\Obj_dummy</Filter>
-    </ClInclude>
     <ClInclude Include="CBullet.h">
       <Filter>Object\Obj_child</Filter>
-    </ClInclude>
-    <ClInclude Include="CDummyEnemy01.h">
-      <Filter>Object\Obj_dummy</Filter>
     </ClInclude>
     <ClInclude Include="CItem.h">
       <Filter>Object\CITem</Filter>
@@ -183,6 +174,9 @@
     <ClInclude Include="CItem_Scanner.h">
       <Filter>Object\CITem</Filter>
     </ClInclude>
+    <ClInclude Include="CEventManager.h">
+      <Filter>Engine\Manager\CEventManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_2Dcopy.cpp">
@@ -215,23 +209,11 @@
     <ClCompile Include="CScene_Tutorial01.cpp">
       <Filter>Scene\Scene_child</Filter>
     </ClCompile>
-    <ClCompile Include="CScene_Tutorial02.cpp">
-      <Filter>Scene\Scene_child</Filter>
-    </ClCompile>
     <ClCompile Include="CText.cpp">
       <Filter>Object\Obj_child</Filter>
     </ClCompile>
-    <ClCompile Include="CDummyPlayer01.cpp">
-      <Filter>Object\Obj_dummy</Filter>
-    </ClCompile>
-    <ClCompile Include="CDummyPlayer02.cpp">
-      <Filter>Object\Obj_dummy</Filter>
-    </ClCompile>
     <ClCompile Include="CBullet.cpp">
       <Filter>Object\Obj_child</Filter>
-    </ClCompile>
-    <ClCompile Include="CDummyEnemy01.cpp">
-      <Filter>Object\Obj_dummy</Filter>
     </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>Object\CITem</Filter>
@@ -277,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="CItem_Scanner.cpp">
       <Filter>Object\CITem</Filter>
+    </ClCompile>
+    <ClCompile Include="CEventManager.cpp">
+      <Filter>Engine\Manager\CEventManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

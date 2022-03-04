@@ -157,43 +157,69 @@ void CEnemy_Worms::update()
 	}
 	else											// 움직임 싸이클 진행 중
 	{	// 움직임 구현
-		if (isMoveX)				// x
+		if (isMoveX)									// 가로
 		{
-			if (isWiggle)			// 늘어남
+			if (isWiggle)									// 늘어남
 			{
 				pos.x += 2 * fPosVariance;
 				size.x += 4 * fSizeVariance;
 			}
-			else					// 줄어듦
+			else											// 줄어듦
 			{
 				pos.x += fPosVariance;
 				size.x -= 2 * fSizeVariance;
 			}
+
+			if ((float)EW_LENMAX <= size.x				// 최대만큼 늘어났거나 플레이어랑 같은 좌표까지 이동했으면
+				|| playerPos.x == pos.x)
+			{	
+				isWiggle = false;
+				fTimer = 0.8f;
+			}
+			if ((float)EW_SIZE > size.x)				// 원래 사이즈만큼 줄었으면
+			{
+				isFinish = true;
+				size.x = (float)EW_SIZE;
+				fTimer = 0.4f;
+			}
 		}
-		else						// y
+		else											// 세로
 		{
-			if (isWiggle)			// 늘어남
+			if (isWiggle)									// 늘어남
 			{
 				pos.y += 2 * fPosVariance;
 				size.y += 4 * fSizeVariance;
 			}
-			else					// 줄어듦
+			else											// 줄어듦
 			{
 				pos.y += fPosVariance;
 				size.y -= 2 * fSizeVariance;
+			}
+
+			if ((float)EW_LENMAX <= size.y				// 줄어드는 조건
+				|| playerPos.y == pos.y)
+			{
+				isWiggle = false;
+				fTimer = 0.8f;
+			}
+			if ((float)EW_SIZE > size.y)				// 한 번의 움직임 끝나는 조건
+			{
+				isFinish = true;
+				size.y = (float)EW_SIZE;
+				fTimer = 0.4f;
 			}
 		}
 
 		// 최대 변화량만큼 늘어났으면 줄어들게 
 		// xDist,yDist만큼 이동했을 경우도 추가해야...?
-		if ((float)EW_LENMAX <= size.x || (float)EW_LENMAX <= size.y)
+	/*	if ((float)EW_LENMAX <= size.x || (float)EW_LENMAX <= size.y)
 		{
 			isWiggle = false;
 			fTimer = 0.8f;
-		}
+		}*/
 
 		// 원래 크기만큼 줄어들었으면 움직임 한 사이클 종료
-		if ((float)EW_SIZE > size.x)
+	/*	if ((float)EW_SIZE > size.x)
 		{
 			isFinish = true;
 			size.x = (float)EW_SIZE;
@@ -204,7 +230,7 @@ void CEnemy_Worms::update()
 			isFinish = true;
 			size.y = (float)EW_SIZE;
 			fTimer = 0.4f;
-		}
+		}*/
 	}
 	
 	setPos(pos);
@@ -242,4 +268,6 @@ void CEnemy_Worms::render(HDC hDC)
 		SetTextColor(hDC, RGB(200, 150, 50));
 		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMsg, (int)wcslen(strMsg));
 	}
+
+	componentRender(hDC);
 }

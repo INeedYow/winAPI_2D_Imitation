@@ -17,7 +17,7 @@ CEnemy_Zombie::CEnemy_Zombie()
 	strMsg = L"!";
 
 	createCollider();
-	getCollider()->setSize(fPoint(EZ_SIZE, EZ_SIZE));
+	getCollider()->setSize(fPoint(EZ_SIZE - 2, EZ_SIZE - 2));
 	getCollider()->setOffset(fPoint((float)0, (float)0));
 	getCollider()->setShape(SHAPE::CIRCLE);
 }
@@ -33,6 +33,11 @@ CEnemy_Zombie::CEnemy_Zombie(fPoint pos, fVec2 dir)
 	setSize(fPoint(EZ_SIZE, EZ_SIZE));
 	isMove = false;
 	strMsg = L"!";
+
+	createCollider();
+	getCollider()->setSize(fPoint(EZ_SIZE - 2, EZ_SIZE - 2));
+	getCollider()->setOffset(fPoint((float)0, (float)0));
+	getCollider()->setShape(SHAPE::CIRCLE);
 }
 
 CEnemy_Zombie::~CEnemy_Zombie()
@@ -142,4 +147,6 @@ void CEnemy_Zombie::render(HDC hDC)
 		SetTextColor(hDC, RGB(200, 150, 50));
 		TextOutW(hDC, (int)pos.x, (int)pos.y - 20, strMsg, (int)wcslen(strMsg));
 	}
+
+	componentRender(hDC);
 }

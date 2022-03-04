@@ -17,7 +17,7 @@ protected:
 	LPCWSTR			strMsg;				// 총알 출력
 
 	CBattery		m_battery;			// 배터리 (스페이스바)
-	
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -33,8 +33,8 @@ public:
 	static fPoint getPlayerPos();
 	static UINT getBullet();
 
-	static void setScanTimer(float time);
 	static void setMode(bool mode);
+	static void setScanTimer(float time);
 	static void setPlayerPos(fPoint pos);
 	static void setBullet(UINT bullet);
 

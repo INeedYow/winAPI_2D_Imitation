@@ -12,6 +12,7 @@ CItem_Bullet::CItem_Bullet()
 	setRandEA();
 	setKey((UCHAR)IKEY::BULLET);
 	setName(L"총알");
+
 }
 
 CItem_Bullet::~CItem_Bullet()
@@ -32,9 +33,7 @@ void CItem_Bullet::update()
 {
 	float   timeCnt = getTimer();
 	UINT	duraCnt = getDuration();
-	fPoint	itemPos = getPos();
 	bool	isFlick = getIsFlick();
-	fPoint	playerPos = GETPOS;
 
 	timeCnt += fDT;
 
@@ -53,21 +52,6 @@ void CItem_Bullet::update()
 			isFlick = !isFlick;
 	}
 
-	//RECT areaRect = { (int)itemPos.x - (int)I_HSIZE,
-	//				  (int)itemPos.y - (int)I_HSIZE,
-	//				  (int)itemPos.x + (int)I_HSIZE,
-	//				  (int)itemPos.y + (int)I_HSIZE };
-
-	//if (itemPos.COLL_CR(playerPos, (int)O_HSIZE, areaRect))
-	//{	// 습득하면 위치 이동
-	//	int a = GETBULLET;
-	//	SETBULLET(a + ucEA);
-	//	setRandPos();
-	//	setRandEA();		// 총알 몇발짜리 아이템인지 변수로 가지고 있다가 그만큼 플레이어 총알 증가시키고 싶은데 못하는 중
-	//	duraCnt = IB_DURA;
-	//}
-
-	// setPos(itemPos);		// setRandPos()로 위치 바꿔놓고는 다시 itemPos로 돌려놓으니까 위치가 안 바뀌지
 	setTimer(timeCnt);
 	setDuration(duraCnt);
 	setIsFlick(isFlick);
@@ -105,6 +89,8 @@ void CItem_Bullet::render(HDC hDC)
 	SetTextColor(hDC, RGB(0,0,0));
 	TextOutW(hDC, (int)pos.x - 12, (int)pos.y, getName(), (int)wcslen(getName()));
 
+
+	componentRender(hDC);
 	// 드랍아이템 지속시간 표시하는 코드
 	/*WCHAR szBuffer[255] = {};
 	swprintf_s(szBuffer, L"%d", duraCnt);

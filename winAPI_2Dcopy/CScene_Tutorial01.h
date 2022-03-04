@@ -6,11 +6,8 @@ public:
 	CScene_Tutorial01();
 	virtual ~CScene_Tutorial01();
 
-	//virtual void update();
+	//virtual void update();		// 부모꺼 쓰면서 CScene::update() 해주면 됨
 
 	virtual void enter();
 	virtual void exit();
 };
-
-// update()랑 render()는 virtual로 받아쓰면 
-// 부모의 해당 씬 모든 옵젝 update, render 함수 돌려주는 기능 잃음

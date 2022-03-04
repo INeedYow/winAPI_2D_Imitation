@@ -11,7 +11,7 @@ class CCollider
 	CObject*		m_pOwner;			// 주인
 	fPoint			m_fpPos;
 	fPoint			m_fpSize;
-	fPoint			m_fpOffset;			// 유격, 편차 이런 느낌인듯
+	fPoint			m_fpOffset;			// 유격, 편차
 	UINT			m_uiCollCnt;		// 충돌 카운트
 
 	SHAPE			m_eShape;			// 히트박스 모양 (원,사각형,점)
@@ -46,7 +46,5 @@ public:
 	void collisionKeep(CCollider* pOther);
 	void collisionEnter(CCollider* pOther);
 	void collisionExit(CCollider* pOther);
-
-
 };
 

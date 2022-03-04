@@ -74,4 +74,6 @@ void CEnemy_ZombieDog::render(HDC hDC)
 		SetTextColor(hDC, RGB(125, 25, 25));
 		TextOutW(hDC, (int)pos.x + 23, (int)pos.y - 23, strMsg, (int)wcslen(strMsg));
 	}
+
+	componentRender(hDC);
 }

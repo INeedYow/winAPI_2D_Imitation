@@ -1,6 +1,5 @@
 #include "framework.h"
 #include "CCollider.h"
-
 #include "CObject.h"
 
 #include "SelectGDI.h"
@@ -12,7 +11,7 @@ CCollider::CCollider()
 	m_fpSize	= {};
 	m_fpOffset	= {};
 	m_uiCollCnt = 0;
-	m_eShape	= SHAPE::END;
+	m_eShape	= SHAPE::POINT;
 
 	m_uiID		= s_uiID++;
 }
@@ -83,7 +82,7 @@ SHAPE CCollider::getShape()
 
 UINT CCollider::getID()
 {
-	return 0;
+	return m_uiID;
 }
 
 void CCollider::finalUpdate()
@@ -93,17 +92,46 @@ void CCollider::finalUpdate()
 
 void CCollider::render(HDC hDC)
 {
-	
+	SelectGDI pen(hDC, PEN::COLLIDER1, PEN::COLLIDER0, m_uiCollCnt);
+	SelectGDI brush(hDC, BRUSH::HOLLOW);
+
+	switch (m_eShape)
+	{
+	case SHAPE::CIRCLE:
+		Ellipse(hDC,
+			(int)(m_fpPos.x - m_fpSize.x / 2.f),
+			(int)(m_fpPos.y - m_fpSize.y / 2.f),
+			(int)(m_fpPos.x + m_fpSize.x / 2.f),
+			(int)(m_fpPos.y + m_fpSize.y / 2.f));
+		break;
+	case SHAPE::RECT:
+		Rectangle(hDC,
+			(int)(m_fpPos.x - m_fpSize.x / 2.f),
+			(int)(m_fpPos.y - m_fpSize.y / 2.f),
+			(int)(m_fpPos.x + m_fpSize.x / 2.f),
+			(int)(m_fpPos.y + m_fpSize.y / 2.f));
+		break;
+	}
+
+	WCHAR szBuffer[255] = {};
+	swprintf_s(szBuffer, L"%d", m_uiCollCnt);
+	TextOutW(hDC, (int)m_fpPos.x, (int)m_fpPos.y, szBuffer, (int)wcslen(szBuffer));
+
 }
 
 void CCollider::collisionKeep(CCollider* pOther)
 {
+	m_pOwner->collisionKeep(pOther);
 }
 
 void CCollider::collisionEnter(CCollider* pOther)
 {
+	m_pOwner->collisionEnter(pOther);
+	m_uiCollCnt++;
 }
 
 void CCollider::collisionExit(CCollider* pOther)
 {
+	m_pOwner->collisionExit(pOther);
+	m_uiCollCnt--;
 }

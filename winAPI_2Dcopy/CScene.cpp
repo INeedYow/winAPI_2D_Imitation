@@ -11,9 +11,6 @@ CScene::~CScene()
 	{
 		for (int j = 0; j < m_arrObj[i].size(); j++)
 			delete m_arrObj[i][j];
-
-		/*while (m_arrObj[i].size() > 0)	// 벡터에서 알아서 할 내용인듯
-			m_arrObj[i].pop_back();*/
 	}
 }
 
@@ -37,7 +34,10 @@ void CScene::update()
 	for (int i = 0; i < (int)OBJ::SIZE; i++)
 	{
 		for (int j = 0; j < m_arrObj[i].size(); j++)
+		{
+			if (!m_arrObj[i][j]->isDead())				// 유예 중이면 업데이트 x
 			m_arrObj[i][j]->update();
+		}
 	}
 }
 
@@ -46,7 +46,9 @@ void CScene::finalUpdate()
 	for (int i = 0; i < (int)OBJ::SIZE; i++)
 	{
 		for (int j = 0; j < m_arrObj[i].size(); j++)
+		{
 			m_arrObj[i][j]->finalUpdate();
+		}
 	}
 }
 
@@ -54,8 +56,13 @@ void CScene::render(HDC hDC)
 {
 	for (int i = 0; i < (int)OBJ::SIZE; i++)
 	{
-		for (int j = 0; j < m_arrObj[i].size(); j++)
-			m_arrObj[i][j]->render(hDC);
+		for (vector<CObject*>::iterator iter = m_arrObj[i].begin(); iter != m_arrObj[i].end();)
+		{
+			if (!(*iter)->isDead())
+				(*iter++)->render(hDC);
+			else										// 유예 중이면 erase
+				iter = m_arrObj[i].erase(iter);
+		}
 	}
 }
 

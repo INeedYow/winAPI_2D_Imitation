@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CCore.h"
+#include "SelectGDI.h"
 
 CCore::CCore()
 {
@@ -37,22 +38,22 @@ CCore::~CCore()
 
 // 게임 전체 업데이트 진행
 void CCore::update()
-{
+{	
+	// 동기화
+	CEventManager::getInst()->update();
 	CTimeManager::getInst()->update();
 	CKeyManager::getInst()->update();
+
 	CSceneManager::getInst()->update();
+	CCollisionManager::getInst()->update();
 }
 
 // 게임 전체 그리기 진행
 void CCore::render()												
 {
-	HBRUSH hBrush = CreateSolidBrush(ISMODE ? RGB(30,30,30) : RGB(15, 15, 15));
-	HBRUSH hOriginBrush = (HBRUSH)SelectObject(m_hMemDC, hBrush);
-	
-	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
+	SelectGDI brush(m_hMemDC, BRUSH::BLACK30, BRUSH::BLACK15, ISMODE);
 
-	SelectObject(m_hMemDC, hOriginBrush);
-	DeleteObject(hBrush);
+	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
 	// memDC에 그려야 한다.
 	CSceneManager::getInst()->render(m_hMemDC);
@@ -68,7 +69,6 @@ void CCore::render()
 
 // render() 위해서 DC받아와야
 // 더블 버퍼링 위해서 bitmap 생성과 해당 메모리 DC필요
-	// 더블 버퍼링 구현 미흡
 void CCore::init()
 {
 	CreateBrushPenFont();
@@ -114,11 +114,16 @@ void CCore::CreateBrushPenFont()
 	m_arrPen[(UINT)TYPE_PEN::GREEN]				= CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	m_arrPen[(UINT)TYPE_PEN::BLUE]				= CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 
+	m_arrPen[(UINT)TYPE_PEN::BAT_YELLOW]		= CreatePen(PS_SOLID, 2, RGB(255, 255, 0));
+
 	m_arrPen[(UINT)TYPE_PEN::E_EDGE]			= CreatePen(PS_SOLID, 1, RGB(200, 25, 25));
 	m_arrPen[(UINT)TYPE_PEN::P_EDGEON]			= CreatePen(PS_SOLID, P_PEN, RGB(125, 150, 100));
 	m_arrPen[(UINT)TYPE_PEN::P_EDGEOFF]			= CreatePen(PS_SOLID, P_PEN, RGB(75, 100, 50));
 	m_arrPen[(UINT)TYPE_PEN::I_SCAN]			= CreatePen(PS_SOLID, 1, RGB(240, 240, 100));
 	m_arrPen[(UINT)TYPE_PEN::I_EDGE]			= CreatePen(PS_SOLID, 1, RGB(75, 100, 50));
+	
+	m_arrPen[(UINT)TYPE_PEN::COLLIDER0]			= CreatePen(PS_SOLID, 2, RGB(0, 255, 255));
+	m_arrPen[(UINT)TYPE_PEN::COLLIDER1]			= CreatePen(PS_SOLID, 2, RGB(255, 0, 255));
 	
 }
 

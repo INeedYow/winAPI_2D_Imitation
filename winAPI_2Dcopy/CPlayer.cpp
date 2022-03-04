@@ -9,14 +9,13 @@
 
 CPlayer::CPlayer()
 {
-	setPlayerPos(fPoint((float)WINSIZEX / 2, (float)WINSIZEY / 2));
+	setPos(fPoint((float)WINSIZEX / 2, (float)WINSIZEY / 2));
 	setSize(fPoint((float)P_SIZE, (float)P_SIZE));
 	m_fSpeed = P_SPEED;
 	m_fpPrevPos = fPoint(1.f, 1.f);
 	m_fvDir = fVec2(1.f, 1.f);
 	strMsg = L"........";
 
-	// 생성자에서 호출
 	// 그냥 getCollider()를 쓸 수 있는 이유는? -> CObject에서 구현된 부모의 함수이기 때문(collider함수 아니었음)
 	createCollider();
 	getCollider()->setSize(fPoint((float)P_SIZE - 2, (float)P_SIZE - 2));
@@ -40,21 +39,22 @@ void CPlayer::update()
 			isScan = false;
 	}
 
-	fPoint playerPos = getPlayerPos();
+	fPoint pos = getPos();
+
 	if (KEY_OFF(VK_ESCAPE))
 		CSceneManager::getInst()->sceneChange(SCENE::TITLE);
 
-	if (KEY_HOLD(VK_UP) && (playerPos.y - getSize().y / 2.f) > 0.f)		// 맵 탈출 방지
-		playerPos.y -= m_fSpeed * fDT;
+	if (KEY_HOLD(VK_UP) && (pos.y - getSize().y / 2.f) > 0.f)		// 맵 탈출 방지
+		pos.y -= m_fSpeed * fDT;
 
-	if (KEY_HOLD(VK_DOWN) && (playerPos.y + getSize().y / 2.f) < (float)WINSIZEY)
-		playerPos.y += m_fSpeed * fDT;
+	if (KEY_HOLD(VK_DOWN) && (pos.y + getSize().y / 2.f) < (float)WINSIZEY)
+		pos.y += m_fSpeed * fDT;
 
-	if (KEY_HOLD(VK_LEFT) && (playerPos.x - getSize().x / 2.f) > 0.f)
-		playerPos.x -= m_fSpeed * fDT;
+	if (KEY_HOLD(VK_LEFT) && (pos.x - getSize().x / 2.f) > 0.f)
+		pos.x -= m_fSpeed * fDT;
 
-	if (KEY_HOLD(VK_RIGHT) && (playerPos.x + getSize().y / 2.f) < (float)WINSIZEX)
-		playerPos.x += m_fSpeed * fDT;
+	if (KEY_HOLD(VK_RIGHT) && (pos.x + getSize().y / 2.f) < (float)WINSIZEX)
+		pos.x += m_fSpeed * fDT;
 
 	if (KEY_ON('O')) uiBullet = 24;		// dont cheat
 	if (KEY_ON('I'))
@@ -70,37 +70,23 @@ void CPlayer::update()
 		// 대각선으로 움직이다가 두 키를 정확히 동시에 떼는 경우가 없어서 그런가 -> 맞네;
 		// -> 복수 입력에 대한 처리를 다르게 하던가 다른 방법은?..
 
-	if ((playerPos.x != m_fpPrevPos.x) || (playerPos.y != m_fpPrevPos.y))
+	if ((pos.x != m_fpPrevPos.x) || (pos.y != m_fpPrevPos.y))
 	{
-		m_fvDir.x = playerPos.x - m_fpPrevPos.x;
-		m_fvDir.y = playerPos.y - m_fpPrevPos.y;
+		m_fvDir.x = pos.x - m_fpPrevPos.x;
+		m_fvDir.y = pos.y - m_fpPrevPos.y;
 		setDir(m_fvDir);
 	}
-
-	//// 몬스터 충돌처리
-	//fPoint chkPos;
-	//fPoint chkSize;
-	//CScene* pCurScene = CSceneManager::getInst()->getCurScene();
-	//vector<CObject*>* pVecArr = pCurScene->getVecArr();
-
-	//for (int i = 0; i < pVecArr[(int)OBJ::ENEMY].size(); i++)
-	//{	
-	//	chkPos = pVecArr[(int)OBJ::ENEMY][i]->getPos();
-	//	chkSize = pVecArr[(int)OBJ::ENEMY][i]->getSize();
-
-	//	// enemy와 충돌
-	//	if(playerPos.COLL_CC(playerPos, (int)O_HSIZE, chkPos, (int)chkSize.x / 2))
-	//			death();
-	//}
 
 	if (KEY_ON('A') && uiBullet)
 		createBullet();
 
 	// 이전좌표 갱신
-	m_fpPrevPos.x = playerPos.x;
-	m_fpPrevPos.y = playerPos.y;
+	m_fpPrevPos.x = pos.x;
+	m_fpPrevPos.y = pos.y;
 
-	setPlayerPos(playerPos);
+	// 충돌체 때문에 CObject의 pos, static pos 둘 다 가져가기로..
+	setPos(pos);
+	setPlayerPos(pos);
 	
 	// TODO 배터리 플레이어가 업데이트하도록
 	// m_battery.update();
@@ -108,7 +94,7 @@ void CPlayer::update()
 
 void CPlayer::render(HDC hDC)
 {
-	fPoint pos = getPlayerPos();
+	fPoint pos = getPos();
 	fPoint size = getSize();
 
 	// mode에 따라 구분하기 good
@@ -193,10 +179,9 @@ void CPlayer::setPlayerPos(fPoint pos)
 
 void CPlayer::createBullet()
 {
-	CBullet* pBullet = new CBullet(getPlayerPos(), m_fvDir);
+	CBullet* pBullet = new CBullet(getPos(), m_fvDir);
 
-	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
-	pCurScene->addObject(pBullet, OBJ::BULLET);
+	createObj(pBullet, OBJ::BULLET);
 
 	uiBullet--;
 	g_resultBullet++;
