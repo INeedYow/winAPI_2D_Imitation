@@ -78,10 +78,12 @@ extern HINSTANCE	hInstance;
 #define T_SIZE				50
 	// fireball
 #define FB_SIZE				10
-#define FB_SPD				500
+#define FB_SPD				250
 #define FB_DUR				8
-#define FB_GRAV				3600
+#define FB_GRAV				1000
 #define FB_GRAVMAX			(FB_GRAV * 3)
+	// item
+#define IT_SIZE				30
 
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
@@ -119,7 +121,8 @@ enum class TYPE_MARIO
 };
 
 
-#define ITEM	GROUP_ITEM
+// Obj::ITEM과 중복이슈
+//#define ITEM	GROUP_ITEM
 enum class GROUP_ITEM
 {
 	NONE,
@@ -201,7 +204,7 @@ enum class KEY_RESOURCE
 {
 	TEX_PLAYER,
 	TEX_MONSTER,
-	TEX_FIREBALL,
+	TEX_ITEM_FB,
 
 	SIZE
 
@@ -249,4 +252,6 @@ enum class KEY_RESOURCE
 #define setFocus(fp)			CCameraManager::getInst()->setFocusOn(fp)
 #define setTrace(pObj)			CCameraManager::getInst()->setTraceObj(pObj)
 #define getRendPos(pos)			CCameraManager::getInst()->getRenderPos(pos)
+
+#define loadTex					CResourceManager::getInst()->loadTextrue
 

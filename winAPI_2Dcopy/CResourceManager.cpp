@@ -18,7 +18,7 @@ CResourceManager::~CResourceManager()
 	m_mapTex.clear();
 }
 
-CTexture* CResourceManager::FindTexture(const KEY_RES& strKey)
+CTexture* CResourceManager::findTexture(const KEY_RES& strKey)
 {
 	map<KEY_RES, CTexture*>::iterator iter = m_mapTex.find(strKey);
 
@@ -28,9 +28,9 @@ CTexture* CResourceManager::FindTexture(const KEY_RES& strKey)
 	return iter->second;
 }
 
-CTexture* CResourceManager::LoadTextrue(const KEY_RES& eKey, const wstring& strRelativePath)
+CTexture* CResourceManager::loadTextrue(const KEY_RES& eKey, const wstring& strRelativePath)
 {
-	CTexture* pTex = FindTexture(eKey);		// 이미 Texture가 있는지 확인
+	CTexture* pTex = findTexture(eKey);		// 이미 Texture가 있는지 확인
 	if (nullptr == pTex)
 	{
 		// Texture 저장 경로 확인

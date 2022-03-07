@@ -26,7 +26,7 @@ CPlayer::CPlayer()
 	getCollider()->setOffset(fPoint(0.f, 20.f));
 	getCollider()->setShape(SHAPE::RECT);
 
-	m_pTex = CResourceManager::getInst()->LoadTextrue(KEY_RES::TEX_PLAYER, L"texture\\mario.bmp");
+	m_pTex = loadTex(KEY_RES::TEX_PLAYER, L"texture\\mario.bmp");
 
 	createAnimator();
 								//		lt,						slice,					step
@@ -67,7 +67,7 @@ CPlayer::CPlayer()
 	
 	// 연속 동작 안 됨 -> player update()에서 animator 업데이트 안 해줘서 그랬음
 
-	getAnimator()->play(L"smStand_R");
+	PLAY(L"smStand_R");
 
 }
 
@@ -90,7 +90,7 @@ void CPlayer::update()
 		if (m_fSpeedL < (float)P_ACCEL)
 			m_fSpeedL += P_ACCEL * fDT;						// 왼쪽 속도 증가
 
-		if (m_fSpeedR > 40.f)
+		if (m_fSpeedR > 60.f)
 			drawMario(L"Zig");
 	}
 	else												// 왼쪽 키 안 누르면
@@ -115,7 +115,7 @@ void CPlayer::update()
 		if (m_fSpeedR < (float)P_ACCEL)
 			m_fSpeedR += P_ACCEL * fDT;						// 오른쪽 속도 증가
 
-		if (m_fSpeedL > 40.f)
+		if (m_fSpeedL > 60.f)
 			drawMario(L"Zig");
 	}
 	else												// 오른쪽 키 안 누르면
@@ -203,7 +203,7 @@ void CPlayer::update()
 
 	// bottomCnt 출력용..
 	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"[Flatform Imitation] BottomCnt : %d", m_uiBottomCnt);
+	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d", m_uiBottomCnt, s_uiCoin);
 	SetWindowText(hWnd, szBuffer);
 
 	// 임시로 만든 되돌리는 키
@@ -244,11 +244,13 @@ void CPlayer::createFireball()
 	{
 		pFire->setDir(fVec2(1.f, 1.f));
 		pFire->setPos(fPoint(pos.x + size.x / 2, pos.y));
+		pFire->getAnimator()->play(L"Fireball_R");
 	}
 	else
 	{
 		pFire->setDir(fVec2(-1.f, 1.f));
 		pFire->setPos(fPoint(pos.x - size.x / 2, pos.y));
+		pFire->getAnimator()->play(L"Fireball_L");
 	}
 
 	createObj(pFire, OBJ::FIREBALL);
@@ -319,6 +321,12 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		}
 		break;
 		}
+		break;
+		// TODO : 현재 오브젝트 구별하려고 enum OBJ를 쓰는데 ITEM의 종류 구분이 안 돼있어서
+		// 아이템용 구별 키값을 또 만들거나 더 세분화된 enum으로 나눠야 할듯
+	case OBJ::ITEM:	// 임시 테스트로 그냥 ITEM
+		setCoin(getCoin() + 1);
+		break;
 	}
 }
 
@@ -377,5 +385,3 @@ void CPlayer::setBgMario()
 	setSize(fPoint((float)P_SIZEX - 8, (float)P_SIZEY - 6));
 	getCollider()->setOffset(fPoint(0.f, 6.f));
 }
-// TODO 
-// 바닥에 서 있게 하는 방법.. 

@@ -1,11 +1,16 @@
 #pragma once
 #include "CObject.h"
+
+class CTexture;
+
 class CFireball : public CObject
 {
 	float	m_fSpeed;
 	fVec2	m_fvDir;
 	float	m_fDuration;
 	float	m_fGravity;
+
+	CTexture* m_pTex;
 
 public:
 	CFireball();

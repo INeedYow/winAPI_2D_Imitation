@@ -15,6 +15,15 @@ CFireball::CFireball()
 	getCollider()->setSize(fPoint((float)FB_SIZE, (float)FB_SIZE));
 	getCollider()->setOffset(fPoint(0.f, 0.f));
 	getCollider()->setShape(SHAPE::RECT);
+
+	m_pTex = loadTex(KEY_RES::TEX_ITEM_FB, L"texture\\subObject.bmp");
+
+	createAnimator();
+
+	createAnim(L"Fireball_L", m_pTex, fPoint(64.f, 32.f),	fPoint(16.f, 32.f),		fPoint(16.f, 0.f), 0.1f, 4);
+	createAnim(L"Fireball_R", m_pTex, fPoint(0.f, 32.f),	fPoint(16.f, 32.f),		fPoint(16.f, 0.f), 0.1f, 4);
+
+	getAnimator()->play(L"Fireball_R");
 }
 
 CFireball::~CFireball()
@@ -27,7 +36,7 @@ void CFireball::setDir(fVec2 dir)
 }
 
 // 사라지는 조건은?
-// 맵 밖으로 나가거나 (몬스터랑 충돌, 벽에 부딪히거나) 지속시간? //-> (충돌에서 처리)
+// (몬스터랑 충돌, 벽에 부딪히거나) 지속시간? //-> (충돌에서 처리)
 void CFireball::update()
 {
 	m_fDuration -= fDT;
@@ -44,6 +53,7 @@ void CFireball::update()
 	pos.y += m_fSpeed * m_fvDir.y * fDT + m_fGravity * fDT;
 
 	setPos(pos);
+	getAnimator()->update();
 }
 
 void CFireball::render(HDC hDC)

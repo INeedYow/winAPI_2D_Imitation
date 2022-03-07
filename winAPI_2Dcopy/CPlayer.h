@@ -19,6 +19,7 @@ class CPlayer : public CObject
 	MARIO		m_eMario;		// 미니마리오, 빅마리오, 불꽃마리오 종류가 셋이라 비트 연산보다 이게 나을 것 같음
 
 	CTexture*	m_pTex;
+	// 모든 오브젝트가 가질 건데 CObject에 공통으로 묶는 게?
 
 	void createFireball();
 public:

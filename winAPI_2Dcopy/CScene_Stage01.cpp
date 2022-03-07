@@ -2,6 +2,7 @@
 #include "CScene_Stage01.h"
 #include "CPlayer.h"
 #include "CTile.h"
+#include "CItem_Coin.h"
 
 #include "SelectGDI.h"
 
@@ -50,8 +51,24 @@ void CScene_Stage01::enter()
 	addObject(pPlayer, OBJ::PLAYER);
 	
 
+	CItem_Coin* pCoin = new CItem_Coin();
+	pCoin->setPos(fPoint(-50.f, 650.f));
+	addObject(pCoin, OBJ::ITEM);
+
+	for (int i = 0; i < 8; i++)
+	{
+		pCoin = new CItem_Coin();
+		pCoin->setPos(fPoint(300.f + 50.f * i, 570.f));
+		addObject(pCoin, OBJ::ITEM);
+	}
+
+
+
+
+
 	// 각 씬마다 오브젝트끼리 충돌 여부 설정가능
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::TILE);
+	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::ITEM);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::MONSTER);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::TILE);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::BLOCK);
