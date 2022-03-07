@@ -1,6 +1,5 @@
 #include "framework.h"
 #include "CCore.h"
-#include "SelectGDI.h"
 
 CCore::CCore()
 {
@@ -45,6 +44,7 @@ void CCore::update()
 
 	CSceneManager::getInst()->update();
 	CCollisionManager::getInst()->update();
+	CCameraManager::getInst()->update();
 }
 
 void CCore::render()												

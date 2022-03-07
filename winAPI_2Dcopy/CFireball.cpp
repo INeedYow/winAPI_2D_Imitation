@@ -53,5 +53,38 @@ void CFireball::render(HDC hDC)
 
 void CFireball::collisionEnter(CCollider* pOther)
 {
-	
+	switch (pOther->getOwner()->getType())
+	{
+	case OBJ::MONSTER:
+		deleteObj(this);
+		break;
+	case OBJ::TILE:
+	case OBJ::BLOCK:
+		switch (COLLRR(getCollider(), pOther))
+		{
+		case DIR::LEFT:
+		case DIR::RIGHT:
+			deleteObj(this);
+			break;
+		case DIR::BOTTOM:
+		{
+			fPoint pos = getPos();
+			pos.y = pOther->getPos().y + (pOther->getOffset().y + pOther->getSize().y + getCollider()->getSize().y) / 2;
+			setPos(pos);
+			m_fvDir.y = 1.f;
+		}
+			break;
+		case DIR::TOP:
+		{
+			fPoint pos = getPos();
+			pos.y = pOther->getPos().y + (pOther->getOffset().y - pOther->getSize().y - getCollider()->getSize().y) / 2;
+			setPos(pos);
+			m_fvDir.y = -1.f;
+			m_fGravity = 0.f;
+			break;
+		}
+		}
+		break;
+
+	}
 }

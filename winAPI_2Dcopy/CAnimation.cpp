@@ -55,6 +55,9 @@ void CAnimation::render(HDC hDC)
 	fPoint pos = pObj->getPos();
 	tAniFrm frm = m_vecFrm[m_uiCurFrm];
 
+	pos = pos + frm.fpOffset;
+	pos = getRendPos(pos);
+
 	TransparentBlt(hDC,
 		(int)(pos.x - frm.fpSlice.x / 2.f),
 		(int)(pos.y - frm.fpSlice.y / 2.f),

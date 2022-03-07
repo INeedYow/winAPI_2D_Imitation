@@ -22,8 +22,8 @@ CPlayer::CPlayer()
 	m_uiState |= S_JUMP;
 
 	createCollider();
-	getCollider()->setSize(fPoint((float)P_sizex - 5, (float)P_sizey - 5));
-	getCollider()->setOffset(fPoint(0.f, 15.f));
+	getCollider()->setSize(fPoint((float)P_sizex - 8, (float)P_sizey - 6));
+	getCollider()->setOffset(fPoint(0.f, 20.f));
 	getCollider()->setShape(SHAPE::RECT);
 
 	m_pTex = CResourceManager::getInst()->LoadTextrue(KEY_RES::TEX_PLAYER, L"texture\\mario.bmp");
@@ -185,6 +185,22 @@ void CPlayer::update()
 		}
 	}
 
+	// 시점 토글
+	if (KEY_ON('O'))
+	{
+		if (m_uiState & S_CAMERA)
+		{
+			setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+			CCameraManager::getInst()->setTraceObj(nullptr);
+			m_uiState &= ~(S_CAMERA);
+		}
+		else
+		{
+			setTrace(this);
+			m_uiState |= S_CAMERA;
+		}
+	}
+
 	// bottomCnt 출력용..
 	wchar_t szBuffer[255] = {};
 	swprintf_s(szBuffer, L"[Flatform Imitation] BottomCnt : %d", m_uiBottomCnt);
@@ -192,7 +208,10 @@ void CPlayer::update()
 
 	// 임시로 만든 되돌리는 키
 	if (KEY_ON('R'))
+	{
 		pos = { 100.f, 500.f };
+		m_uiBottomCnt = 0;
+	}
 
 	setPos(pos);
 	getAnimator()->update();
@@ -235,6 +254,9 @@ void CPlayer::createFireball()
 	createObj(pFire, OBJ::FIREBALL);
 }
 
+// TODO 충돌 판정에서 버그가 엄청 많이 남..
+// 미니 마리오의 경우 m_uiBottomCnt가 계속 증가하기도 함
+// 벽에 비비다 보면 카운트 이상해짐
 
 void CPlayer::collisionKeep(CCollider* pOther)
 {
@@ -244,13 +266,19 @@ void CPlayer::collisionKeep(CCollider* pOther)
 	case OBJ::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
-		case DIR::LEFT:	// offset.x는 알아서 양음을 가질테니 무조건 +해주면 될듯, size는 방향따라 -+
+		case DIR::LEFT:
 		{
+			fPoint pos = getPos();
+			pos.x = pOther->getPos().x + (pOther->getOffset().x - pOther->getSize().x - getCollider()->getSize().x) / 2;
+			setPos(pos);
 			m_fSpeedR = 0.f;
 			break;
 		}
 		case DIR::RIGHT:
 		{
+			fPoint pos = getPos();
+			pos.x = pOther->getPos().x + (pOther->getOffset().x + pOther->getSize().x + getCollider()->getSize().x) / 2;
+			setPos(pos);
 			m_fSpeedL = 0.f;
 			break;
 		}
@@ -259,7 +287,7 @@ void CPlayer::collisionKeep(CCollider* pOther)
 	}
 }
 
-// enter에서 안 되면 keep으로 해보기
+// 현재 바닥 뚫고 낙하하는 버그
 void CPlayer::collisionEnter(CCollider* pOther)
 {
 	switch (pOther->getOwner()->getType())
@@ -341,13 +369,13 @@ void CPlayer::drawMario(const wstring& commonName)
 
 void CPlayer::setSmMario()
 {
-	setSize(fPoint((float)P_sizex - 5, (float)P_sizey - 5));
-	getCollider()->setOffset(fPoint(0.f, 15.f));
+	setSize(fPoint((float)P_sizex - 8, (float)P_sizey - 6));
+	getCollider()->setOffset(fPoint(0.f, 20.f));
 }
 void CPlayer::setBgMario()
 {
-	setSize(fPoint((float)P_SIZEX - 5, (float)P_SIZEY - 5));
-	getCollider()->setOffset(fPoint(0.f, 5.f));
+	setSize(fPoint((float)P_SIZEX - 8, (float)P_SIZEY - 6));
+	getCollider()->setOffset(fPoint(0.f, 6.f));
 }
 // TODO 
 // 바닥에 서 있게 하는 방법.. 

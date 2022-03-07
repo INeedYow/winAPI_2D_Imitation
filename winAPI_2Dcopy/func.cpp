@@ -3,21 +3,25 @@
 
 class CCollider;
 
+// x가 더 긴 캐릭터가 움직일 때 대각선 위에서 left로 판정이 나서 이동이 막힘
 DIR collisionRectToRect(CCollider* coll1, CCollider* coll2)
 {	// 이미 충돌인 상태에서
-	fPoint pos1 =coll1->getPos();
-	fPoint pos2 =coll2->getPos();
-	
-	if (abs(pos2.x - pos1.x) < abs(pos2.y - pos1.x))	// x 거리가 y 거리보다 짧으면
+	fPoint pos1 = coll1->getPos();
+	fPoint pos2 = coll2->getPos();
+	fPoint size2 = coll2->getOwner()->getSize();
+
+	if (abs(pos2.x - pos1.x) <= abs(pos2.y - pos1.y))	// x 거리가 y 거리보다 짧으면
 	{	// top or bottom
-		if (pos2.y > pos1.y) return DIR::TOP;
-		return DIR::BOTTOM;
+		if (pos2.y - size2.y / 2 > pos1.y) return DIR::TOP;
+		if (pos2.y + size2.y / 2 < pos1.y) return DIR::BOTTOM;
 	}
 	else
 	{	// left or right
-		if (pos2.x > pos1.x) return DIR::LEFT;
-		return DIR::RIGHT;
+		if (pos2.x - size2.x / 2 > pos1.x) return DIR::LEFT;
+		if (pos2.x + size2.x / 2 < pos1.x) return DIR::RIGHT;
 	}
+	return DIR::NONE;
+	// None 해도 되나?
 }
 
 bool isCollisionRectToRect(const fPoint& pos1, const fPoint& size1, const fPoint& pos2, const fPoint& size2)

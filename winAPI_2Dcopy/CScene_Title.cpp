@@ -35,11 +35,12 @@ void CScene_Title::render(HDC hDC)
 	SetBkMode(hDC, TRANSPARENT);
 
 	TextOutW(hDC, (int)WINSIZEX / 2 - 115, (int)WINSIZEY / 2 + 150, m_strMsg, (int)wcslen(m_strMsg));
+	SetTextColor(hDC, RGB(0, 0, 0));
 }
 
 void CScene_Title::enter()
 {
-
+	setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
 
 void CScene_Title::exit()

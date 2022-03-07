@@ -3,13 +3,29 @@
 #include "CPlayer.h"
 #include "CTile.h"
 
+#include "SelectGDI.h"
+
 CScene_Stage01::CScene_Stage01()
 {
 	setName(L"Stage01_Scene");
+	
+	// 임시
+	m_szText = L"시점 변경(O) 마리오 변경(P) 리셋(R) 발사(A)";
 }
 
 CScene_Stage01::~CScene_Stage01()
 {
+}
+
+void CScene_Stage01::render(HDC hDC)
+{
+	CScene::render(hDC);
+
+	SelectGDI font(hDC, FONT::COMIC24);
+	fPoint pos = { 400.f, 300.f };
+	pos = getRendPos(pos);
+
+	TextOutW(hDC, (int)pos.x, (int)pos.y, m_szText, (int)wcslen(m_szText));
 }
 
 void CScene_Stage01::enter()
@@ -39,6 +55,9 @@ void CScene_Stage01::enter()
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::MONSTER);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::TILE);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::BLOCK);
+
+	setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	//setTrace(pPlayer);
 }
 
 void CScene_Stage01::exit()

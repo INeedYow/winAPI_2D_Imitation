@@ -91,6 +91,8 @@ void CCollider::finalUpdate()
 
 void CCollider::render(HDC hDC)
 {
+	fPoint fpRendPos = getRendPos(m_fpPos);
+
 	SelectGDI pen(hDC, PEN::COLLIDER1, PEN::COLLIDER0, m_uiCollCnt);
 	SelectGDI brush(hDC, BRUSH::HOLLOW);
 
@@ -98,23 +100,23 @@ void CCollider::render(HDC hDC)
 	{
 	case SHAPE::CIRCLE:
 		Ellipse(hDC,
-			(int)(m_fpPos.x - m_fpSize.x / 2.f),
-			(int)(m_fpPos.y - m_fpSize.y / 2.f),
-			(int)(m_fpPos.x + m_fpSize.x / 2.f),
-			(int)(m_fpPos.y + m_fpSize.y / 2.f));
+			(int)(fpRendPos.x - m_fpSize.x / 2.f),
+			(int)(fpRendPos.y - m_fpSize.y / 2.f),
+			(int)(fpRendPos.x + m_fpSize.x / 2.f),
+			(int)(fpRendPos.y + m_fpSize.y / 2.f));
 		break;
 	case SHAPE::RECT:
 		Rectangle(hDC,
-			(int)(m_fpPos.x - m_fpSize.x / 2.f),
-			(int)(m_fpPos.y - m_fpSize.y / 2.f),
-			(int)(m_fpPos.x + m_fpSize.x / 2.f),
-			(int)(m_fpPos.y + m_fpSize.y / 2.f));
+			(int)(fpRendPos.x - m_fpSize.x / 2.f),
+			(int)(fpRendPos.y - m_fpSize.y / 2.f),
+			(int)(fpRendPos.x + m_fpSize.x / 2.f),
+			(int)(fpRendPos.y + m_fpSize.y / 2.f));
 		break;
 	}
 
 	WCHAR szBuffer[255] = {};
 	swprintf_s(szBuffer, L"%d", m_uiCollCnt);
-	TextOutW(hDC, (int)m_fpPos.x, (int)m_fpPos.y, szBuffer, (int)wcslen(szBuffer));
+	TextOutW(hDC, (int)fpRendPos.x, (int)fpRendPos.y, szBuffer, (int)wcslen(szBuffer));
 
 }
 

@@ -57,6 +57,8 @@ extern HINSTANCE	hInstance;
 
 #define S_SUPER				0x0010
 
+#define S_CAMERA			0x8000
+
 
 // # 능력치
 	// player
@@ -67,8 +69,8 @@ extern HINSTANCE	hInstance;
 #define P_GRAV				400
 #define P_GRAVMAX			(P_GRAV * 3)
 		// smallMario
-#define P_sizex				25
-#define P_sizey				20
+#define P_sizex				22
+#define P_sizey				24
 		// bigMario
 #define P_SIZEX				30
 #define P_SIZEY				55
@@ -76,9 +78,9 @@ extern HINSTANCE	hInstance;
 #define T_SIZE				50
 	// fireball
 #define FB_SIZE				10
-#define FB_SPD				360
+#define FB_SPD				500
 #define FB_DUR				8
-#define FB_GRAV				1500
+#define FB_GRAV				3600
 #define FB_GRAVMAX			(FB_GRAV * 3)
 
 // # enum 열거형
@@ -222,6 +224,7 @@ enum class KEY_RESOURCE
 #include "CCollisionManager.h"
 #include "CEventManager.h"
 #include "CPathManager.h"
+#include "CCameraManager.h"
 
 #include "CObject.h"
 // # winAPI_2Dcopy.cpp에 static 멤버변수 초기화할 때 필요
@@ -242,4 +245,8 @@ enum class KEY_RESOURCE
 
 #define createAnim				getAnimator()->createAnimation
 #define PLAY(name)				getAnimator()->play(name)
+
+#define setFocus(fp)			CCameraManager::getInst()->setFocusOn(fp)
+#define setTrace(pObj)			CCameraManager::getInst()->setTraceObj(pObj)
+#define getRendPos(pos)			CCameraManager::getInst()->getRenderPos(pos)
 
