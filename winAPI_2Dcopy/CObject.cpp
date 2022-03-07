@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CObject.h"
 #include "CCollider.h"
+#include "CAnimator.h"
 
 void CObject::setDead()
 {
@@ -12,7 +13,9 @@ CObject::CObject()
 	m_fptPos	= {};
 	m_fptSize	= {};
 	m_pCollider = nullptr;
+	m_pAnimator = nullptr;
 	m_bDead		= false;
+	m_eType		= OBJ::DEFAULT;
 }
 
 
@@ -20,9 +23,10 @@ CObject::CObject(const CObject& other)
 {
 	m_fptPos	= other.m_fptPos;
 	m_fptSize	= other.m_fptSize;
-	m_bDead = false;
+	m_eType		= other.m_eType;
+	m_bDead		= false;
 
-	// TODO 충돌체 복사생성자 관리 (other에 있는 경우)
+	// 컨포넌트 복사생성자 관리 (other에 있는 경우)
 	if (nullptr != other.m_pCollider)
 	{
 		m_pCollider = new CCollider(*other.m_pCollider);
@@ -30,6 +34,14 @@ CObject::CObject(const CObject& other)
 	}
 	else
 		m_pCollider = nullptr;
+
+	if (nullptr != other.m_pAnimator)
+	{
+		m_pAnimator = new CAnimator(*other.m_pAnimator);
+		m_pAnimator->m_pOwner = this;
+	}
+	else
+		m_pAnimator = nullptr;
 }
 
 
@@ -37,6 +49,8 @@ CObject::~CObject()
 {
 	if (nullptr != m_pCollider)
 		delete m_pCollider;
+	if (nullptr != m_pAnimator)
+		delete m_pAnimator;
 }
 
 void CObject::setPos(fPoint pos)
@@ -88,6 +102,8 @@ void CObject::componentRender(HDC hDC)
 {
 	if (nullptr != m_pCollider)
 		m_pCollider->render(hDC);
+	if (nullptr != m_pAnimator)
+		m_pAnimator->render(hDC);
 }
 
 CCollider* CObject::getCollider()
@@ -99,4 +115,15 @@ void CObject::createCollider()
 {
 	m_pCollider = new CCollider();
 	m_pCollider->m_pOwner = this;				// Collider의 friend 선언 필요
+}
+
+CAnimator* CObject::getAnimator()
+{
+	return m_pAnimator;
+}
+
+void CObject::createAnimator()
+{
+	m_pAnimator = new CAnimator();
+	m_pAnimator->m_pOwner = this;
 }

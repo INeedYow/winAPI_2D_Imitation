@@ -54,9 +54,9 @@ void CCore::render()
 	CSceneManager::getInst()->render(m_hMemDC);
 
 	// FPS 출력하기
-	wchar_t szBuffer[255] = {};
+	/*wchar_t szBuffer[255] = {};
 	swprintf_s(szBuffer, L"[Flatform Imitation] FPS : %d", CTimeManager::getInst()->getFPS());
-	SetWindowText(hWnd, szBuffer);
+	SetWindowText(hWnd, szBuffer);*/
 
 	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_hMemDC, 0, 0, SRCCOPY);
 }

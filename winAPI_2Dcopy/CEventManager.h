@@ -26,7 +26,8 @@ public:
 	void update();
 
 	void eventCreateObject(CObject* pObj, OBJ group);
-	void enentDeleteObject(CObject* pObj);
+	void eventDeleteObject(CObject* pObj);
+	void eventChangeScene(SCENE scn);
 };
 
 // 한 프레임 동안 발생한 이벤트(오브젝트 생성, 삭제, 씬전환 등)를 

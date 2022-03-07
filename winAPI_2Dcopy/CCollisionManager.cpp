@@ -44,6 +44,7 @@ void CCollisionManager::collisionGroupUpdate(OBJ obj1, OBJ obj2)
 				iter = m_mapIsColl.find(id.ID);
 			}	// iter->second에 이전 프레임 충돌 상태값 가지고 있음
 
+			
 
 			if (isCollision(vec1[i]->getCollider(), vec1[i]->getCollider()->getShape(),
 				vec2[j]->getCollider(), vec2[j]->getCollider()->getShape()))
@@ -159,6 +160,16 @@ bool CCollisionManager::isCollision(CCollider* pColl1, SHAPE shape1, CCollider* 
 		}
 	}
 	return false;
+}
+
+DIR CCollisionManager::dirCollision(CCollider* pColl1, SHAPE shape1, CCollider* pColl2, SHAPE shape2)
+{
+	fPoint pos1 = pColl1->getPos();
+	fPoint size1 = pColl1->getSize();
+	fPoint pos2 = pColl2->getPos();
+	fPoint size2 = pColl2->getSize();
+	
+	return COLLRR(pos1, size1, pos2, size2);
 }
 
 void CCollisionManager::init()

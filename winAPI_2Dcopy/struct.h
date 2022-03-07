@@ -1,5 +1,4 @@
 #pragma once
-#include <assert.h>
 
 struct iPoint
 {
@@ -61,6 +60,20 @@ struct fPoint
 	bool operator!=(fPoint other)
 	{
 		return !(*this == other);
+	}
+
+	template <typename T>
+	fPoint operator*(T num)
+	{
+		return fPoint(x * num, y * num);
+	}
+
+	template <typename T>
+	fPoint operator/(T num)
+	{
+		assert(0 != num);
+
+		return fPoint(x / num, y / num);
 	}
 
 };

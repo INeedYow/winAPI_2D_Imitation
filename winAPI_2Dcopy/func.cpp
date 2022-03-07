@@ -1,16 +1,45 @@
 #include "framework.h"
 #include "func.h"
 
+// TODO 수정필요
+DIR collisionRectToRect(const fPoint& pos1, const fPoint& size1, const fPoint& pos2, const fPoint& size2)
+{	
+	if (!ISCOLLRR(pos1, size1, pos2, size2))
+		return DIR::NONE;
+
+	RECT rt = { (int)(pos2.x - (size2.x + size1.x) / 2),
+				(int)(pos2.y - (size2.y + size1.y) / 2),
+				(int)(pos2.x + (size2.x + size1.x) / 2),
+				(int)(pos2.y + (size2.y + size1.y) / 2) };
+
+	if (rt.top < pos1.y && pos1.y < rt.bottom)
+	{
+		if (rt.left <= pos1.x && pos1.x < pos2.x)
+			return DIR::LEFT;
+		if (rt.right >= pos1.x && pos1.x > pos2.x)
+			return DIR::RIGHT;
+	}
+
+	if (rt.left < pos1.x && pos1.x < rt.right)
+	{
+		if (rt.top <= pos1.y && pos1.y < pos2.y)
+			return DIR::TOP;
+		if (rt.bottom >= pos1.y && pos1.y > pos2.y)
+			return DIR::BOTTOM;
+	}
+	return DIR::NONE;
+}
+
 bool isCollisionRectToRect(const fPoint& pos1, const fPoint& size1, const fPoint& pos2, const fPoint& size2)
 {	// == ISCOLLRR					// 사각형1 좌표, 사이즈				// 사각형2 좌표, 사이즈
 	return ((abs(pos1.x - pos2.x) < (size1.x + size2.x) / 2.f) &&
-		(abs(pos1.y - pos2.y) < (size1.y + size2.y) / 2.f));
+			(abs(pos1.y - pos2.y) < (size1.y + size2.y) / 2.f));
 }
 
 bool isCollisionPointToRect(const fPoint& point, const RECT& rt)
 {	// == ISCOLLPR						// 좌표		// 사각형
 	return ((rt.left <= point.x && point.x <= rt.right) &&
-		(rt.top <= point.y && point.y <= rt.bottom));
+			(rt.top <= point.y && point.y <= rt.bottom));
 }	// 좌표범위가 사각형에 포함되는지 확인
 
 bool isCollisionPointToCircle(const fPoint& point, const fPoint& cp, int cr)

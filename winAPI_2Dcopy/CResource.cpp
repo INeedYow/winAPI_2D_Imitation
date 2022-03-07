@@ -3,7 +3,7 @@
 
 CResource::CResource()
 {
-	m_uiKey = 0;
+	m_eKey = KEY_RES::SIZE;
 	m_strRelativePath = L"";
 
 }
@@ -12,9 +12,9 @@ CResource::~CResource()
 {
 }
 
-void CResource::setKey(const UINT& key)
+void CResource::setKey(const KEY_RES& eKey)
 {
-	m_uiKey = key;
+	m_eKey = eKey;
 }
 
 void CResource::setRelativePath(const wstring& strPath)
@@ -22,9 +22,9 @@ void CResource::setRelativePath(const wstring& strPath)
 	m_strRelativePath = strPath;
 }
 
-UINT CResource::getKey()
+KEY_RES CResource::getKey()
 {
-	return m_uiKey;
+	return m_eKey;
 }
 
 const wstring& CResource::getRelativePath()

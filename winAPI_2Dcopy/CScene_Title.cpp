@@ -21,7 +21,7 @@ void CScene_Title::update()
 
 	if (KEY_ON(VK_SPACE))
 	{
-		CSceneManager::getInst()->sceneChange(SCENE::STAGE_01);
+		changeScn(SCENE::STAGE_01);
 	}
 }
 

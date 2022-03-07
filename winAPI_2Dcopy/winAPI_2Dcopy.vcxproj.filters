@@ -82,6 +82,15 @@
     <Filter Include="Object\Obj_fireball">
       <UniqueIdentifier>{7d0fd15d-383a-467c-96cc-8aa767bb5502}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Collider">
+      <UniqueIdentifier>{8b76521f-a5e0-4cc6-b5c4-c84b01b284a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Animator">
+      <UniqueIdentifier>{0452d4b6-8aff-4d73-b70a-6037ccff5637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Animator\Animation">
+      <UniqueIdentifier>{fa2090cf-2e11-4d6c-ab69-48f62ec93e10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -119,9 +128,6 @@
     </ClInclude>
     <ClInclude Include="SelectGDI.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="CCollider.h">
-      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="CCollisionManager.h">
       <Filter>Engine\Manager\CCollisionManager</Filter>
@@ -189,6 +195,18 @@
     <ClInclude Include="CMonster_Plants.h">
       <Filter>Object\Obj_monster</Filter>
     </ClInclude>
+    <ClInclude Include="CFireball.h">
+      <Filter>Object\Obj_fireball</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimator.h">
+      <Filter>Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>Component\Animator\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -205,9 +223,6 @@
     </ClCompile>
     <ClCompile Include="CObject.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CCollider.cpp">
-      <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionManager.cpp">
       <Filter>Engine\Manager\CCollisionManager</Filter>
@@ -277,6 +292,18 @@
     </ClCompile>
     <ClCompile Include="CMonster_Plants.cpp">
       <Filter>Object\Obj_monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CFireball.cpp">
+      <Filter>Object\Obj_fireball</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimator.cpp">
+      <Filter>Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>Component\Animator\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

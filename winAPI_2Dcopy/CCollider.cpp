@@ -86,6 +86,7 @@ UINT CCollider::getID()
 void CCollider::finalUpdate()
 {
 	m_fpPos = m_pOwner->getPos() + m_fpOffset;
+	m_fpSize = m_pOwner->getSize();
 }
 
 void CCollider::render(HDC hDC)

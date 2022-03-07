@@ -19,7 +19,8 @@ void CScene_Stage01::enter()
 
 	// 오브젝트 생성
 	CPlayer* pPlayer = new CPlayer();
-	pPlayer->setPos(fPoint(100.f, (float)(WINSIZEY - T_SIZE)));
+	pPlayer->setPos(fPoint(100.f, WINSIZEY - 100.f));
+
 	for (int i = 0; i < 20; i++)
 	{
 		CTile* pTile1 = new CTile();
@@ -35,6 +36,9 @@ void CScene_Stage01::enter()
 
 	// 각 씬마다 오브젝트끼리 충돌 여부 설정가능
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::TILE);
+	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::MONSTER);
+	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::TILE);
+	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::BLOCK);
 }
 
 void CScene_Stage01::exit()

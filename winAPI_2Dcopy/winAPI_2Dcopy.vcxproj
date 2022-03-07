@@ -151,10 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CAnimation.h" />
+    <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CEventManager.h" />
+    <ClInclude Include="CFireball.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CItem_Coin.h" />
     <ClInclude Include="CItem_Flower.h" />
@@ -188,10 +191,13 @@
     <ClInclude Include="winAPI_2Dcopy.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAnimation.cpp" />
+    <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CEventManager.cpp" />
+    <ClCompile Include="CFireball.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CItem_Coin.cpp" />
     <ClCompile Include="CItem_Flower.cpp" />

@@ -7,10 +7,10 @@ class CResourceManager
 	SINGLETON(CResourceManager);
 
 private:
-	map<UINT, CTexture*> m_mapTex;		
+	map<KEY_RES, CTexture*> m_mapTex;
 
 public:
-	CTexture* FindTexture(const UINT& strKey);
-	CTexture* LoadTextrue(const UINT& strKey, const wstring& strRelativePath);
+	CTexture* FindTexture(const KEY_RES& eKey);
+	CTexture* LoadTextrue(const KEY_RES& eKey, const wstring& strRelativePath);
 
 };

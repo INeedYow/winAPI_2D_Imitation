@@ -4,6 +4,8 @@
 
 #pragma once
 
+#pragma comment(lib, "msimg32.lib")
+
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 // Windows 헤더 파일
@@ -16,7 +18,7 @@
 
 #include <time.h>
 #include <math.h>
-
+#include <assert.h>
 
 // # STL
 #include <vector>
@@ -44,6 +46,8 @@ extern HINSTANCE	hInstance;
 #define ISCOLLPR			isCollisionPointToRect
 #define ISCOLLRR			isCollisionRectToRect
 
+#define COLLRR				collisionRectToRect
+
 // # 비트연산
 	// 상태값
 #define S_JUMP				0x0001
@@ -58,14 +62,24 @@ extern HINSTANCE	hInstance;
 	// player
 #define P_SPD				100
 #define P_JUMPSPD			300
-#define P_SSIZEX			50	
-#define P_SSIZEY			50	
-#define P_BSIZEX			50	
-#define P_BSIZEY			100
 #define P_ACCEL 			250
 #define P_DECEL				175
+#define P_GRAV				400
+#define P_GRAVMAX			(P_GRAV * 3)
+		// smallMario
+#define P_sizex				25
+#define P_sizey				20
+		// bigMario
+#define P_SIZEX				30
+#define P_SIZEY				55
 	// tile
 #define T_SIZE				50
+	// fireball
+#define FB_SIZE				10
+#define FB_SPD				360
+#define FB_DUR				8
+#define FB_GRAV				1500
+#define FB_GRAVMAX			(FB_GRAV * 3)
 
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
@@ -77,7 +91,7 @@ enum class GROUP_OBJECT
 	BLOCK,
 	ITEM,
 	PLAYER,
-	MONSER,
+	MONSTER,
 	FIREBALL,
 
 	SIZE
@@ -92,8 +106,19 @@ enum class GROUP_SCENE
 	SIZE
 };
 
-#define IKEY	KEY_ITEM
-enum class KEY_ITEM
+#define MARIO	TYPE_MARIO
+enum class TYPE_MARIO
+{
+	smMARIO,
+	bgMARIO,
+	frMARIO,
+
+	SIZE
+};
+
+
+#define ITEM	GROUP_ITEM
+enum class GROUP_ITEM
 {
 	NONE,
 	COIN,
@@ -157,6 +182,30 @@ enum class TYPE_EVENT
 	END
 };
 
+#define DIR		COLL_DIR
+enum class COLL_DIR
+{
+	NONE,
+	TOP,
+	BOTTOM,
+	LEFT,
+	RIGHT,
+
+	END
+};
+
+#define KEY_RES	KEY_RESOURCE
+enum class KEY_RESOURCE
+{
+	TEX_PLAYER,
+	TEX_MONSTER,
+	TEX_FIREBALL,
+
+	SIZE
+
+};
+
+
 // # Util
 #include "struct.h"
 #include "SingleTon.h"
@@ -177,7 +226,7 @@ enum class TYPE_EVENT
 #include "CObject.h"
 // # winAPI_2Dcopy.cpp에 static 멤버변수 초기화할 때 필요
 #include "CCollider.h"
-
+#include "CAnimator.h"
 
 #define DT						CTimeManager::getInst()->getDT()
 #define fDT						CTimeManager::getInst()->getfDT()
@@ -187,5 +236,9 @@ enum class TYPE_EVENT
 #define KEY_OFF(key)			CKeyManager::getInst()->getKeyOff(key)
 #define KEY_NONE(key)			CKeyManager::getInst()->getKeyNone(key)
 
-#define createObj(pObj, group)	CEventManager::getInst()->eventCreateObject(pObj, group)
+#define createObj(pObj, eGroup)	CEventManager::getInst()->eventCreateObject(pObj, eGroup)
 #define deleteObj(pObj)			CEventManager::getInst()->eventDeleteObject(pObj)
+#define changeScn(eScn)			CEventManager::getInst()->eventChangeScene(eScn)
+
+#define createAnim				getAnimator()->createAnimation
+#define PLAY(name)				getAnimator()->play(name)
