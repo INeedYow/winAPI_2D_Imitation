@@ -1,33 +1,23 @@
 #include "framework.h"
 #include "func.h"
 
-// TODO 수정필요
-DIR collisionRectToRect(const fPoint& pos1, const fPoint& size1, const fPoint& pos2, const fPoint& size2)
-{	
-	if (!ISCOLLRR(pos1, size1, pos2, size2))
-		return DIR::NONE;
+class CCollider;
 
-	RECT rt = { (int)(pos2.x - (size2.x + size1.x) / 2),
-				(int)(pos2.y - (size2.y + size1.y) / 2),
-				(int)(pos2.x + (size2.x + size1.x) / 2),
-				(int)(pos2.y + (size2.y + size1.y) / 2) };
-
-	if (rt.top < pos1.y && pos1.y < rt.bottom)
-	{
-		if (rt.left <= pos1.x && pos1.x < pos2.x)
-			return DIR::LEFT;
-		if (rt.right >= pos1.x && pos1.x > pos2.x)
-			return DIR::RIGHT;
+DIR collisionRectToRect(CCollider* coll1, CCollider* coll2)
+{	// 이미 충돌인 상태에서
+	fPoint pos1 =coll1->getPos();
+	fPoint pos2 =coll2->getPos();
+	
+	if (abs(pos2.x - pos1.x) < abs(pos2.y - pos1.x))	// x 거리가 y 거리보다 짧으면
+	{	// top or bottom
+		if (pos2.y > pos1.y) return DIR::TOP;
+		return DIR::BOTTOM;
 	}
-
-	if (rt.left < pos1.x && pos1.x < rt.right)
-	{
-		if (rt.top <= pos1.y && pos1.y < pos2.y)
-			return DIR::TOP;
-		if (rt.bottom >= pos1.y && pos1.y > pos2.y)
-			return DIR::BOTTOM;
+	else
+	{	// left or right
+		if (pos2.x > pos1.x) return DIR::LEFT;
+		return DIR::RIGHT;
 	}
-	return DIR::NONE;
 }
 
 bool isCollisionRectToRect(const fPoint& pos1, const fPoint& size1, const fPoint& pos2, const fPoint& size2)

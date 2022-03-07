@@ -242,3 +242,4 @@ enum class KEY_RESOURCE
 
 #define createAnim				getAnimator()->createAnimation
 #define PLAY(name)				getAnimator()->play(name)
+

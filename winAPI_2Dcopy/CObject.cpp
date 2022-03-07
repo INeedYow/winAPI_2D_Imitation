@@ -3,11 +3,6 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 
-void CObject::setDead()
-{
-	m_bDead = true;
-}
-
 CObject::CObject()
 {
 	m_fptPos	= {};
@@ -83,6 +78,11 @@ OBJ CObject::getType()
 	return m_eType;
 }
 
+void CObject::setDead()
+{
+	m_bDead = true;
+}
+
 bool CObject::isDead()
 {
 	return m_bDead;
@@ -96,6 +96,7 @@ void CObject::finalUpdate()
 
 void CObject::render(HDC hDC)
 {
+	componentRender(hDC);
 }
 
 void CObject::componentRender(HDC hDC)
