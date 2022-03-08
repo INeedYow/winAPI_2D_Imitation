@@ -5,18 +5,19 @@ class CTexture;
 
 class CPlayer : public CObject
 {
-	static UINT s_uiCoin;
+	static UINT	s_uiCoin;
+	static bool	s_bTransform;			// 변신할 때 다른 업데이트 안 돌게 할 생각
 
-	float		m_fSpeedL;		// 왼쪽 속력
-	float		m_fSpeedR;		// 오른쪽 속력
-	float		m_fSpeedY;		// 점프 속력
+	float		m_fSpeedL;				// 왼쪽 속력
+	float		m_fSpeedR;				// 오른쪽 속력
+	float		m_fSpeedY;				// 점프 속력
 	float		m_fGravity;
-	float		m_fTimer;
+	float		m_fTransformTimer;		// 변신 타이머
 
-	UINT		m_uiBottomCnt;	// 아래 충돌 카운트
+	UINT		m_uiBottomCnt;			// 아래 충돌 카운트
 
-	UINT		m_uiState;		// 상태(SUPER,DIR,JUMP)	// dir 0이 left
-	MARIO		m_eMario;		// 미니마리오, 빅마리오, 불꽃마리오 종류가 셋이라 비트 연산보다 이게 나을 것 같음
+	UINT		m_uiState;				// 상태(SUPER,DIR,JUMP)	// dir 0이 left
+	TYPE_MARIO	m_eMario;				// 미니마리오, 빅마리오, 불꽃마리오 종류가 셋이라 비트 연산보다 이게 나을 것 같음
 
 	CTexture*	m_pTex;
 	// 모든 오브젝트가 가질 건데 CObject에 공통으로 묶는 게?
@@ -31,6 +32,7 @@ public:
 
 	static UINT getCoin();
 	static void setCoin(UINT coin);
+	static bool getTransformMode();
 
 	virtual void collisionKeep(CCollider* pOther);
 	virtual void collisionEnter(CCollider* pOther);

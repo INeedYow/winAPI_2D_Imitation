@@ -10,7 +10,7 @@ CObject::CObject()
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
 	m_bDead		= false;
-	m_eType		= OBJ::DEFAULT;
+	m_eName		= OBJNAME::DEFAULT;
 }
 
 
@@ -18,7 +18,7 @@ CObject::CObject(const CObject& other)
 {
 	m_fptPos	= other.m_fptPos;
 	m_fptSize	= other.m_fptSize;
-	m_eType		= other.m_eType;
+	m_eName		= other.m_eName;
 	m_bDead		= false;
 
 	// 컨포넌트 복사생성자 관리 (other에 있는 경우)
@@ -58,9 +58,9 @@ void CObject::setSize(fPoint size)
 	m_fptSize = size;
 }
 
-void CObject::setType(OBJ type)
+void CObject::setName(OBJNAME name)
 {
-	m_eType = type;
+	m_eName = name;
 }
 
 fPoint CObject::getPos()
@@ -73,9 +73,9 @@ fPoint CObject::getSize()
 	return m_fptSize;
 }
 
-OBJ CObject::getType()
+OBJNAME CObject::getName()
 {
-	return m_eType;
+	return m_eName;
 }
 
 void CObject::setDead()

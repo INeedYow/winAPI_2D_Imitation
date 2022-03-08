@@ -5,21 +5,23 @@
 #include "CAnimation.h"
 
 UINT    CPlayer::s_uiCoin = 0;
+bool	CPlayer::s_bTransform = false;
 
 CPlayer::CPlayer()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint((float)P_sizex, (float)P_sizey));
-	setType(OBJ::PLAYER);
+	setName(OBJNAME::MARIO);
 	m_fSpeedL	= 0.f;
 	m_fSpeedR	= 0.f;
 	m_fSpeedY	= 0.f;
-	m_fGravity  = 0.f;
-	m_fTimer	= 0.f;
-	m_eMario	= MARIO::smMARIO;
+	m_fGravity	= 0.f;
+	m_fTransformTimer	= 0.f;
+	m_eMario	= TYPE_MARIO::smMARIO;
 	m_uiBottomCnt = 0;
 	m_uiState	= 0;
 	m_uiState |= S_JUMP;
+	s_bTransform = false;
 
 	createCollider();
 	getCollider()->setSize(fPoint((float)P_sizex - 8, (float)P_sizey - 6));
@@ -77,6 +79,32 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
+	if (s_bTransform)
+	{
+		m_fTransformTimer -= fDT;
+
+		if (m_fTransformTimer <= 0.f)
+		{
+			s_bTransform = false;
+			m_fTransformTimer = 0.f;
+		}
+		// TODO 변신
+		switch (m_eMario)
+		{	// 아이템 먹자마자 마리오 타입 변환 시켜놨음
+		case TYPE_MARIO::bgMARIO: // sm->bg
+			// TODO : small->big 애니메이션
+			// 임시로 달리는 애니메이션 넣어놨음
+			drawMario(L"Run");
+			break;
+		case TYPE_MARIO::smMARIO:
+			// TODO : big->small 애니메이션
+			break;
+		}
+		getAnimator()->update();
+		return;
+	}
+
+
 	fPoint pos = getPos();
 
 	if (KEY_HOLD(VK_LEFT) && KEY_NONE(VK_RIGHT))		// 왼쪽 키 입력
@@ -164,22 +192,22 @@ void CPlayer::update()
 		drawMario(L"Jump");
 	}
 
-	if (MARIO::frMARIO == m_eMario && KEY_ON('A'))		// fire 상태, a키로 불꽃 발사 
+	if (TYPE_MARIO::frMARIO == m_eMario && KEY_ON('A'))		// fire 상태, a키로 불꽃 발사 
 		createFireball();
 
 	if (KEY_ON('P'))
 	{
 		switch (m_eMario)
 		{
-		case MARIO::smMARIO:
-			m_eMario = MARIO::bgMARIO;
+		case TYPE_MARIO::smMARIO:
+			m_eMario = TYPE_MARIO::bgMARIO;
 			setBgMario();
 			break;
-		case MARIO::bgMARIO:
-			m_eMario = MARIO::frMARIO;
+		case TYPE_MARIO::bgMARIO:
+			m_eMario = TYPE_MARIO::frMARIO;
 			break;
-		case MARIO::frMARIO:
-			m_eMario = MARIO::smMARIO;
+		case TYPE_MARIO::frMARIO:
+			m_eMario = TYPE_MARIO::smMARIO;
 			setSmMario();
 			break;
 		}
@@ -234,6 +262,12 @@ void CPlayer::setCoin(UINT coin)
 	s_uiCoin = coin;
 }
 
+bool CPlayer::getTransformMode()
+{
+	return s_bTransform;
+}
+
+// 벽에 딱 붙어서 쏘면 벽 뚫고 쏘는 버그...
 void CPlayer::createFireball()
 {
 	fPoint pos = getPos();
@@ -262,10 +296,10 @@ void CPlayer::createFireball()
 
 void CPlayer::collisionKeep(CCollider* pOther)
 {
-	switch (pOther->getOwner()->getType())
+	switch (pOther->getOwner()->getName())
 	{
-	case OBJ::BLOCK:
-	case OBJ::TILE:
+	case OBJNAME::BLOCK:
+	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
 		case DIR::LEFT:
@@ -290,14 +324,18 @@ void CPlayer::collisionKeep(CCollider* pOther)
 }
 
 // 현재 바닥 뚫고 낙하하는 버그
+	// -> 아마 벽이랑 비비면서 BottomCnt가 이상해져서 중력 작용해버려서 그런거같은데)
+	// 결국 충돌이 문제인듯?
 void CPlayer::collisionEnter(CCollider* pOther)
 {
-	switch (pOther->getOwner()->getType())
+	switch (pOther->getOwner()->getName())
 	{
-	case OBJ::BLOCK:
-	case OBJ::TILE:
+		//벽 충돌 관련
+	case OBJNAME::BLOCK:
+	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
+			// TODO 좌우처럼 위치보정
 		case DIR::TOP:	// 착지
 			if (m_uiState & S_JUMP)
 				m_uiState &= ~(S_JUMP);
@@ -322,20 +360,31 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		break;
 		}
 		break;
-		// TODO : 현재 오브젝트 구별하려고 enum OBJ를 쓰는데 ITEM의 종류 구분이 안 돼있어서
-		// 아이템용 구별 키값을 또 만들거나 더 세분화된 enum으로 나눠야 할듯
-	case OBJ::ITEM:	// 임시 테스트로 그냥 ITEM
-		setCoin(getCoin() + 1);
+
+		// 아이템 충돌 관련
+	//case OBJNAME::ITEM_COIN:
+	//	setCoin(getCoin() + 1);
+	//	break;
+	//case OBJNAME::ITEM_MUSHROOM:
+
+		//임시로 코인먹으면 버섯효과 내서 테스트
+	case OBJNAME::ITEM_COIN:
+		if (TYPE_MARIO::smMARIO == m_eMario)
+		{
+			s_bTransform = true;
+			setBgMario();
+			m_fTransformTimer = 2.f;
+		}
 		break;
 	}
 }
 
 void CPlayer::collisionExit(CCollider* pOther)
 {
-	switch (pOther->getOwner()->getType())
+	switch (pOther->getOwner()->getName())
 	{
-	case OBJ::BLOCK:
-	case OBJ::TILE:
+	case OBJNAME::BLOCK:
+	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
 		case DIR::TOP:	// 낙하
@@ -354,15 +403,15 @@ void CPlayer::drawMario(const wstring& commonName)
 
 	switch (m_eMario)
 	{
-	case MARIO::smMARIO:
+	case TYPE_MARIO::smMARIO:
 		str = L"sm";
 		break;
 
-	case MARIO::bgMARIO:
+	case TYPE_MARIO::bgMARIO:
 		str = L"bg";
 		break;
 
-	case MARIO::frMARIO:
+	case TYPE_MARIO::frMARIO:
 		str = L"fr";
 		break;
 	}
@@ -379,9 +428,11 @@ void CPlayer::setSmMario()
 {
 	setSize(fPoint((float)P_sizex - 8, (float)P_sizey - 6));
 	getCollider()->setOffset(fPoint(0.f, 20.f));
+	m_eMario = TYPE_MARIO::smMARIO;
 }
 void CPlayer::setBgMario()
 {
 	setSize(fPoint((float)P_SIZEX - 8, (float)P_SIZEY - 6));
 	getCollider()->setOffset(fPoint(0.f, 6.f));
+	m_eMario = TYPE_MARIO::bgMARIO;
 }

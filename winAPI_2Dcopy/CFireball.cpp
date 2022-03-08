@@ -5,7 +5,7 @@ CFireball::CFireball()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint ((float)FB_SIZE, (float)FB_SIZE));
-	setType(OBJ::FIREBALL);
+	setName(OBJNAME::FIREBALL);
 	m_fSpeed	= (float)FB_SPD;
 	m_fDuration = (float)FB_DUR;
 	m_fvDir		= {};
@@ -63,13 +63,13 @@ void CFireball::render(HDC hDC)
 
 void CFireball::collisionEnter(CCollider* pOther)
 {
-	switch (pOther->getOwner()->getType())
+	switch (pOther->getOwner()->getName())
 	{
-	case OBJ::MONSTER:
+	case OBJNAME::MONSTER:
 		deleteObj(this);
 		break;
-	case OBJ::TILE:
-	case OBJ::BLOCK:
+	case OBJNAME::TILE:
+	case OBJNAME::BLOCK:
 		switch (COLLRR(getCollider(), pOther))
 		{
 		case DIR::LEFT:

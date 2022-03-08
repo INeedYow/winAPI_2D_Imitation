@@ -101,6 +101,28 @@ enum class GROUP_OBJECT
 	SIZE
 };
 
+#define OBJNAME	OBJECT_NAME
+enum class OBJECT_NAME
+{
+	DEFAULT,
+	MARIO,
+
+	MONSTER,
+
+	ITEM_COIN,
+	ITEM_FLOWER,
+	ITEM_MUSHROOM,
+	ITEM_STAR,
+
+	BLOCK,
+	TILE,
+
+	FIREBALL,
+
+
+	SIZE
+};
+
 #define SCENE	GROUP_SCENE
 enum class GROUP_SCENE
 {
@@ -110,7 +132,6 @@ enum class GROUP_SCENE
 	SIZE
 };
 
-#define MARIO	TYPE_MARIO
 enum class TYPE_MARIO
 {
 	smMARIO,

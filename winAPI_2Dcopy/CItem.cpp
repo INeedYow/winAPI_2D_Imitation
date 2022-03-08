@@ -5,7 +5,6 @@ CItem::CItem()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint(1.f, 1.f));
-	setType(OBJ::ITEM);
 }
 
 CItem::~CItem()

@@ -5,6 +5,7 @@ CItem_Coin::CItem_Coin()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint((float)IT_SIZE, (float)IT_SIZE));
+	setName(OBJNAME::ITEM_COIN);
 
 	m_pTex = loadTex(KEY_RES::TEX_ITEM_FB, L"texture\\subObject.bmp");
 
@@ -36,6 +37,6 @@ void CItem_Coin::render(HDC hDC)
 
 void CItem_Coin::collisionEnter(CCollider* pOther)
 {
-	if (pOther->getOwner()->getType() == OBJ::PLAYER)
+	if (pOther->getOwner()->getName() == OBJNAME::MARIO)
 		deleteObj(this);
 }
