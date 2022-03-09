@@ -3,7 +3,6 @@
 
 class CCollider;
 
-// 모든 문제의 원흉
 // x가 더 긴 캐릭터가 움직일 때 대각선 위에서 left로 판정이 나서 이동이 막힘
 DIR collisionRectToRect(CCollider* coll1, CCollider* coll2)
 {	// 이미 충돌인 상태에서
@@ -11,19 +10,38 @@ DIR collisionRectToRect(CCollider* coll1, CCollider* coll2)
 	fPoint pos2 = coll2->getPos();
 	fPoint size2 = coll2->getOwner()->getSize();
 
-	if (abs(pos2.x - pos1.x) <= abs(pos2.y - pos1.y))	// x 거리가 y 거리보다 짧으면
-	{	// top or bottom
-		if (pos2.y - size2.y / 2 > pos1.y) return DIR::TOP;
-		if (pos2.y + size2.y / 2 < pos1.y) return DIR::BOTTOM;
+	if (pos2.y - size2.y / 2 <= pos1.y && pos1.y <= pos2.y + size2.y / 2)
+	{
+		if (pos1.x <= pos2.x - size2.x / 2) return DIR::LEFT;
+		if (pos1.x >= pos2.x + size2.x / 2) return DIR::RIGHT;
 	}
 	else
-	{	// left or right
-		if (pos2.x - size2.x / 2 > pos1.x) return DIR::LEFT;
-		if (pos2.x + size2.x / 2 < pos1.x) return DIR::RIGHT;
+	{
+		if (pos1.y <= pos2.y - size2.y / 2) return DIR::TOP;
+		if (pos1.y >= pos2.y + size2.y / 2) return DIR::BOTTOM;
 	}
 	return DIR::NONE;
-	// None 해도 되나?
 }
+
+// x가 더 긴 캐릭터가 움직일 때 대각선 위에서 left로 판정이 나서 이동이 막힘
+//DIR collisionRectToRect(CCollider* coll1, CCollider* coll2)
+//{	// 이미 충돌인 상태에서
+//	fPoint pos1 = coll1->getPos();
+//	fPoint pos2 = coll2->getPos();
+//	fPoint size2 = coll2->getOwner()->getSize();
+//
+//	if (abs(pos2.x - pos1.x) <= abs(pos2.y - pos1.y))	// x 거리가 y 거리보다 짧으면
+//	{	// top or bottom
+//		if (pos2.y - size2.y / 2 > pos1.y) return DIR::TOP;
+//		if (pos2.y + size2.y / 2 < pos1.y) return DIR::BOTTOM;
+//	}
+//	else
+//	{	// left or right
+//		if (pos2.x - size2.x / 2 > pos1.x) return DIR::LEFT;
+//		if (pos2.x + size2.x / 2 < pos1.x) return DIR::RIGHT;
+//	}
+//	return DIR::NONE;
+//}
 
 bool isCollisionRectToRect(const fPoint& pos1, const fPoint& size1, const fPoint& pos2, const fPoint& size2)
 {	// == ISCOLLRR					// 사각형1 좌표, 사이즈				// 사각형2 좌표, 사이즈

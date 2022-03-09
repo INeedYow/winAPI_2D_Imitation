@@ -52,11 +52,10 @@ extern HINSTANCE	hInstance;
 	// 상태값
 #define S_JUMP				0x0001
 #define S_DIR				0x0002
-#define S_BIG				0x0004
-#define S_FIRE				0x0008
+#define S_SUPER				0x0004
+#define S_INVINCIBLE		0x0008
 
-#define S_SUPER				0x0010
-
+#define S_DEATH				0x4000
 #define S_CAMERA			0x8000
 
 
@@ -84,6 +83,8 @@ extern HINSTANCE	hInstance;
 #define FB_GRAVMAX			(FB_GRAV * 3)
 	// item
 #define IT_SIZE				30
+#define ITM_SPD				80
+
 
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐

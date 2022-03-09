@@ -6,17 +6,19 @@ class CTexture;
 class CPlayer : public CObject
 {
 	static UINT	s_uiCoin;
-	static bool	s_bTransform;			// 변신할 때 다른 업데이트 안 돌게 할 생각
+	static bool	s_bTransform;			// 변신할 때 다른 업데이트 안 돌게
 
 	float		m_fSpeedL;				// 왼쪽 속력
 	float		m_fSpeedR;				// 오른쪽 속력
 	float		m_fSpeedY;				// 점프 속력
 	float		m_fGravity;
+
 	float		m_fTransformTimer;		// 변신 타이머
+	float		m_fInvincibleTimer;		// 무적 타이머
 
-	UINT		m_uiBottomCnt;			// 아래 충돌 카운트
+	int			m_iBottomCnt;			// 지면과 충돌 카운트
 
-	UINT		m_uiState;				// 상태(SUPER,DIR,JUMP)	// dir 0이 left
+	UINT		m_uiState;				// 상태(SUPER,DIR,JUMP등등)	// dir 0이 left
 	TYPE_MARIO	m_eMario;				// 미니마리오, 빅마리오, 불꽃마리오 종류가 셋이라 비트 연산보다 이게 나을 것 같음
 
 	CTexture*	m_pTex;

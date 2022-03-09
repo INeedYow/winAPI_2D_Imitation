@@ -3,6 +3,7 @@
 #include "CPlayer.h"
 #include "CTile.h"
 #include "CItem_Coin.h"
+#include "CItem_Mushroom.h"
 
 #include "SelectGDI.h"
 
@@ -62,6 +63,11 @@ void CScene_Stage01::enter()
 		addObject(pCoin, OBJ::ITEM);
 	}
 
+	CItem_Mushroom* pItemMush = new CItem_Mushroom();
+	pItemMush->setPos(fPoint(420.f, 650.f));
+	pItemMush->setDir(fVec2(1.f, 0.f));
+	addObject(pItemMush, OBJ::ITEM);
+
 
 
 
@@ -72,6 +78,8 @@ void CScene_Stage01::enter()
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::MONSTER);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::TILE);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::BLOCK);
+	CCollisionManager::getInst()->checkGroup(OBJ::ITEM, OBJ::TILE);
+	CCollisionManager::getInst()->checkGroup(OBJ::ITEM, OBJ::BLOCK);
 
 	setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	//setTrace(pPlayer);

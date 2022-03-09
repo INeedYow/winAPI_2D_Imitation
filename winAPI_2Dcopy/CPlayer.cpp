@@ -17,8 +17,9 @@ CPlayer::CPlayer()
 	m_fSpeedY	= 0.f;
 	m_fGravity	= 0.f;
 	m_fTransformTimer	= 0.f;
+	m_fInvincibleTimer	= 0.f;
 	m_eMario	= TYPE_MARIO::smMARIO;
-	m_uiBottomCnt = 0;
+	m_iBottomCnt = 0;
 	m_uiState	= 0;
 	m_uiState |= S_JUMP;
 	s_bTransform = false;
@@ -67,7 +68,14 @@ CPlayer::CPlayer()
 	createAnim(L"frRun_L",		m_pTex, fPoint(256.f, 256.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 3);
 	createAnim(L"frRun_R",		m_pTex, fPoint(256.f, 320.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 3);
 	
-	// 연속 동작 안 됨 -> player update()에서 animator 업데이트 안 해줘서 그랬음
+	createAnim(L"bgFromSmall_L",m_pTex, fPoint(384.f, 0.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
+	createAnim(L"bgFromSmall_R",m_pTex, fPoint(384.f, 64.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
+	createAnim(L"smFromBig_L",	m_pTex, fPoint(448.f, 0.f),		fPoint(64.f, 64.f),		fPoint(-64.f, 0.f),		0.3f, 2);
+	createAnim(L"smFromBig_R",	m_pTex, fPoint(448.f, 64.f),	fPoint(64.f, 64.f),		fPoint(-64.f, 0.f),		0.3f, 2);
+	createAnim(L"frFromSmall_L",m_pTex, fPoint(512.f, 0.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
+	createAnim(L"frFromSmall_R",m_pTex, fPoint(512.f, 64.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
+
+	createAnim(L"smDeath",		m_pTex, fPoint(512.f, 64.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
 
 	PLAY(L"smStand_R");
 
@@ -88,23 +96,33 @@ void CPlayer::update()
 			s_bTransform = false;
 			m_fTransformTimer = 0.f;
 		}
-		// TODO 변신
+
 		switch (m_eMario)
-		{	// 아이템 먹자마자 마리오 타입 변환 시켜놨음
-		case TYPE_MARIO::bgMARIO: // sm->bg
-			// TODO : small->big 애니메이션
-			// 임시로 달리는 애니메이션 넣어놨음
-			drawMario(L"Run");
+		{
+		case TYPE_MARIO::bgMARIO:		// small->big
+			drawMario(L"FromSmall");
 			break;
-		case TYPE_MARIO::smMARIO:
-			// TODO : big->small 애니메이션
+		case TYPE_MARIO::smMARIO:		// big->small
+			drawMario(L"FromBig");
+			break;
+		case TYPE_MARIO::frMARIO:		// small->fire
+			drawMario(L"FromSmall");
 			break;
 		}
 		getAnimator()->update();
-		return;
+		return;							// 변신하는 동안 변신 모습만 보여주고 리턴
 	}
 
+	if (m_uiState & S_INVINCIBLE)
+	{	// TODO 무적일 때 타이머랑 상태값 설정은 했는데 무적 효과 설정은 안 했음(충돌에서 하면될듯)
+		m_fInvincibleTimer -= fDT;
 
+		if (m_fInvincibleTimer < 0.f)
+		{
+			m_fInvincibleTimer = 0.f;
+			m_uiState &= ~(S_INVINCIBLE);
+		}
+	}
 	fPoint pos = getPos();
 
 	if (KEY_HOLD(VK_LEFT) && KEY_NONE(VK_RIGHT))		// 왼쪽 키 입력
@@ -175,16 +193,18 @@ void CPlayer::update()
 	if (KEY_ON(VK_SPACE) && !(m_uiState & S_JUMP))		// 공중에 있지 않으면서 스페이스 누르면 점프
 	{
 		m_fGravity = 0.f;
+		pos.y--;										// 지면과 충돌 시 1픽셀 겹쳐있게 했더니 점프가 제대로 안 돼서 점프할 때 1픽셀 올려줌
 		m_fSpeedY = P_JUMPSPD;
 		m_uiState |= S_JUMP;
 	}
 
-	if (m_uiBottomCnt <= 0)
+	if (m_iBottomCnt <= 0)
 		m_uiState |= S_JUMP;
 
 	if (m_uiState & S_JUMP)								// 공중에 뜬 상태면 중력 적용
 	{
 		pos.y -= ((m_fSpeedY - m_fGravity) * fDT);
+		//m_uiBottomCnt = 0;
 
 		if (m_fGravity < (float)P_GRAVMAX)
 			m_fGravity += P_GRAV * fDT;
@@ -231,14 +251,14 @@ void CPlayer::update()
 
 	// bottomCnt 출력용..
 	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d", m_uiBottomCnt, s_uiCoin);
+	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d", m_iBottomCnt, s_uiCoin);
 	SetWindowText(hWnd, szBuffer);
 
 	// 임시로 만든 되돌리는 키
 	if (KEY_ON('R'))
 	{
 		pos = { 100.f, 500.f };
-		m_uiBottomCnt = 0;
+		m_iBottomCnt = 0;
 	}
 
 	setPos(pos);
@@ -302,6 +322,10 @@ void CPlayer::collisionKeep(CCollider* pOther)
 	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
+		case DIR::TOP:
+			if (m_uiState & S_JUMP)
+				m_uiState &= ~(S_JUMP);
+			break;
 		case DIR::LEFT:
 		{
 			fPoint pos = getPos();
@@ -335,16 +359,21 @@ void CPlayer::collisionEnter(CCollider* pOther)
 	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
-			// TODO 좌우처럼 위치보정
 		case DIR::TOP:	// 착지
+		{	// 지면과 1픽셀 겹치게 위치시켜서 exit말고 keep 호출되도록, 
+			fPoint pos = getPos();
+			pos.y = pOther->getPos().y - getCollider()->getOffset().y + pOther->getOffset().y 
+				- (pOther->getSize().y + getCollider()->getSize().y) / 2 + 1;
+			setPos(pos);
 			if (m_uiState & S_JUMP)
 				m_uiState &= ~(S_JUMP);
-			m_uiBottomCnt++;
+			m_iBottomCnt++;
 			break;
-		case DIR::LEFT:	// offset.x는 알아서 양음을 가질테니 무조건 +해주면 될듯, size는 방향따라 -+
+		}
+		case DIR::LEFT:
 		{
 			fPoint pos = getPos();
-			pos.x = pOther->getPos().x + (pOther->getOffset().x - pOther->getSize().x - getCollider()->getSize().x) / 2;
+			pos.x = pOther->getPos().x + (getCollider()->getOffset().x + pOther->getOffset().x - pOther->getSize().x - getCollider()->getSize().x) / 2;
 			setPos(pos);
 			m_fSpeedR = 0.f;
 			break;
@@ -352,7 +381,7 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		case DIR::RIGHT:
 		{
 			fPoint pos = getPos();
-			pos.x = pOther->getPos().x + (pOther->getOffset().x + pOther->getSize().x + getCollider()->getSize().x) / 2;
+			pos.x = pOther->getPos().x + (getCollider()->getOffset().x + pOther->getOffset().x + pOther->getSize().x + getCollider()->getSize().x) / 2;
 			setPos(pos);
 			m_fSpeedL = 0.f;
 			break;
@@ -362,13 +391,10 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		break;
 
 		// 아이템 충돌 관련
-	//case OBJNAME::ITEM_COIN:
-	//	setCoin(getCoin() + 1);
-	//	break;
-	//case OBJNAME::ITEM_MUSHROOM:
-
-		//임시로 코인먹으면 버섯효과 내서 테스트
 	case OBJNAME::ITEM_COIN:
+		setCoin(getCoin() + 1);
+		break;
+	case OBJNAME::ITEM_MUSHROOM:
 		if (TYPE_MARIO::smMARIO == m_eMario)
 		{
 			s_bTransform = true;
@@ -379,6 +405,12 @@ void CPlayer::collisionEnter(CCollider* pOther)
 	}
 }
 
+// 벽에 비비면서 점프하면 bottomCnt -1되는 게
+// 처음 enter할 때는 left로 진입해서 bottomCnt++된 적이 없고
+// keep상태에서 점프하다가 exit할 때에는 top판정으로 충돌 탈출 해버리니까
+// --만 1회 더 진행돼서 -1이 나온다고 생각됨
+// 해결 방법은?
+// 그냥 카운트 음수되면 0으로 바꿔주면 해결되긴 한데 꼼수인 느낌이라
 void CPlayer::collisionExit(CCollider* pOther)
 {
 	switch (pOther->getOwner()->getName())
@@ -387,9 +419,13 @@ void CPlayer::collisionExit(CCollider* pOther)
 	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
-		case DIR::TOP:	// 낙하
-			if (--m_uiBottomCnt <= 0)
+		case DIR::TOP:
+			if (--m_iBottomCnt <= 0)
+			{
+				if (m_iBottomCnt < 0)
+					m_iBottomCnt = 0;
 				m_uiState |= S_JUMP;
+			}
 			break;
 		}
 		break;
