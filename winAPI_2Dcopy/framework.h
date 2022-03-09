@@ -49,23 +49,27 @@ extern HINSTANCE	hInstance;
 #define COLLRR				collisionRectToRect
 
 // # 비트연산
-	// 상태값
-#define S_JUMP				0x0001
+	// 플레이어 상태값
+#define S_AIR				0x0001
 #define S_DIR				0x0002
 #define S_SUPER				0x0004
 #define S_INVINCIBLE		0x0008
 
-#define S_DEATH				0x4000
-#define S_CAMERA			0x8000
+//#define S_NOTWORKABLE		0x4000
+#define S_DEATH				0x8000
 
 
 // # 능력치
+	// obj
+#define O_GRAV				400
+#define O_GRAVMAX			(O_GRAV * 3)
 	// player
 #define P_SPD				100
 #define P_JUMPSPD			300
+#define P_BOUNCESPD			200
 #define P_ACCEL 			250
 #define P_DECEL				175
-#define P_GRAV				400
+#define P_GRAV				O_GRAV
 #define P_GRAVMAX			(P_GRAV * 3)
 		// smallMario
 #define P_sizex				22
@@ -77,13 +81,22 @@ extern HINSTANCE	hInstance;
 #define T_SIZE				50
 	// fireball
 #define FB_SIZE				10
-#define FB_SPD				250
+#define FB_SPD				400
 #define FB_DUR				8
-#define FB_GRAV				1000
+#define FB_GRAV				1500
 #define FB_GRAVMAX			(FB_GRAV * 3)
 	// item
 #define IT_SIZE				30
-#define ITM_SPD				80
+#define IT_GRAV				O_GRAV
+#define IT_GRAVMAX			(IT_GRAV * 3)
+#define ITM_SPD				70
+	// monster
+#define M_GRAV				O_GRAV
+#define M_GRAVMAX			(M_GRAV * 3)
+		// turtle
+#define MT_SIZEX			36
+#define MT_SIZEY			30
+#define MT_SPD				90
 
 
 // # enum 열거형
@@ -92,12 +105,15 @@ extern HINSTANCE	hInstance;
 enum class GROUP_OBJECT
 {
 	DEFAULT,
+	SHELL,
 	TILE,
 	BLOCK,
 	ITEM,
 	PLAYER,
 	MONSTER,
 	FIREBALL,
+
+	ETC,
 
 	SIZE
 };
@@ -106,9 +122,13 @@ enum class GROUP_OBJECT
 enum class OBJECT_NAME
 {
 	DEFAULT,
+	DANCEMARIO,
+
 	MARIO,
 
-	MONSTER,
+	MONS_TURTLE,
+	MONS_PLANTS,
+	MONS_MUSH,
 
 	ITEM_COIN,
 	ITEM_FLOWER,
@@ -120,6 +140,7 @@ enum class OBJECT_NAME
 
 	FIREBALL,
 
+	SHELL,
 
 	SIZE
 };
@@ -228,6 +249,7 @@ enum class KEY_RESOURCE
 {
 	TEX_PLAYER,
 	TEX_MONSTER,
+	TEX_KOOPA,
 	TEX_ITEM_FB,
 
 	SIZE
@@ -239,7 +261,6 @@ enum class KEY_RESOURCE
 #include "struct.h"
 #include "SingleTon.h"
 #include "func.h"
-//#include "SelectGDI.h"		// 사용하는 cpp 파일에서 참조하는 식으로
 
 
 // # Core, Manager, Class

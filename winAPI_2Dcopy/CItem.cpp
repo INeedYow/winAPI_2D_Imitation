@@ -3,8 +3,7 @@
 
 CItem::CItem()
 {
-	setPos(fPoint(0.f, 0.f));
-	setSize(fPoint(1.f, 1.f));
+	setSize(fPoint((float)IT_SIZE, (float)IT_SIZE));
 }
 
 CItem::~CItem()

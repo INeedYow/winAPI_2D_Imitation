@@ -10,6 +10,7 @@ CFireball::CFireball()
 	m_fDuration = (float)FB_DUR;
 	m_fvDir		= {};
 	m_fGravity = 0.f;
+	m_bWorkable = true;
 
 	createCollider();
 	getCollider()->setSize(fPoint((float)FB_SIZE, (float)FB_SIZE));
@@ -63,38 +64,45 @@ void CFireball::render(HDC hDC)
 
 void CFireball::collisionEnter(CCollider* pOther)
 {
-	switch (pOther->getOwner()->getName())
+	if (m_bWorkable)
 	{
-	case OBJNAME::MONSTER:
-		deleteObj(this);
-		break;
-	case OBJNAME::TILE:
-	case OBJNAME::BLOCK:
-		switch (COLLRR(getCollider(), pOther))
+		switch (pOther->getOwner()->getName())
 		{
-		case DIR::LEFT:
-		case DIR::RIGHT:
+		case OBJNAME::MONS_MUSH:
+		case OBJNAME::MONS_TURTLE:
+		case OBJNAME::MONS_PLANTS:
 			deleteObj(this);
+			m_bWorkable = false;
 			break;
-		case DIR::BOTTOM:
-		{
-			fPoint pos = getPos();
-			pos.y = pOther->getPos().y + (pOther->getOffset().y + pOther->getSize().y + getCollider()->getSize().y) / 2;
-			setPos(pos);
-			m_fvDir.y = 1.f;
-		}
+		case OBJNAME::TILE:
+		case OBJNAME::BLOCK:
+			switch (COLLRR(getCollider(), pOther))
+			{
+			case DIR::LEFT:
+			case DIR::RIGHT:
+				deleteObj(this);
+				m_bWorkable = false;
+				break;
+			case DIR::BOTTOM:
+			{
+				fPoint pos = getPos();
+				pos.y = pOther->getPos().y + (pOther->getOffset().y + pOther->getSize().y + getCollider()->getSize().y) / 2;
+				setPos(pos);
+				m_fvDir.y = 1.f;
+			}
 			break;
-		case DIR::TOP:
-		{
-			fPoint pos = getPos();
-			pos.y = pOther->getPos().y + (pOther->getOffset().y - pOther->getSize().y - getCollider()->getSize().y) / 2;
-			setPos(pos);
-			m_fvDir.y = -1.f;
-			m_fGravity = 0.f;
+			case DIR::TOP:
+			{
+				fPoint pos = getPos();
+				pos.y = pOther->getPos().y + (pOther->getOffset().y - pOther->getSize().y - getCollider()->getSize().y) / 2;
+				setPos(pos);
+				m_fvDir.y = -1.f;
+				m_fGravity = 0.f;
+				break;
+			}
+			}
 			break;
-		}
-		}
-		break;
 
+		}
 	}
 }

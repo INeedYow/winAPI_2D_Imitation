@@ -1,19 +1,15 @@
 #pragma once
-#include "CItem.h"
-
-class CItem_Mushroom : public CItem
+#include "CObject.h"
+class CShell : public CObject
 {
 	float	m_fSpeed;
 	fVec2	m_fvDir;
-	int		m_iBottomCnt;
-	float	m_fGravity;
-	bool	m_bAir;
 
 	CTexture* m_pTex;
 
 public:
-	CItem_Mushroom();
-	virtual ~CItem_Mushroom();
+	CShell();
+	virtual ~CShell();
 
 	void setDir(fVec2 dir);
 
@@ -21,6 +17,5 @@ public:
 	virtual void render(HDC hDC);
 
 	virtual void collisionEnter(CCollider* pOther);
-	virtual void collisionExit(CCollider* pOther);
 };
 

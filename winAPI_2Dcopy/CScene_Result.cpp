@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CScene_Result.h"
 #include "CPlayer.h"
+#include "CDanceMario.h"
 
 #include "SelectGDI.h"
 
@@ -8,13 +9,13 @@ CScene_Result::CScene_Result()
 {
 	setName(L"Result_Scene");
 
-	// 임시
 	m_szText = L"다시하기(R)";
 	m_wcTry[0] = {};
 	m_iShakeX = 580;
 	m_iShakeY = 280;
 	m_ucColor = 0;
 	m_bFlick = true;
+
 }
 
 CScene_Result::~CScene_Result()
@@ -23,10 +24,12 @@ CScene_Result::~CScene_Result()
 
 void CScene_Result::update()
 {
+	CScene::update();
+
 	if (m_bFlick)
 	{
-		m_iShakeX = rand() % 5 + 578;
-		m_iShakeY = rand() % 5 + 278;
+		m_iShakeX = rand() % 7 + 577;
+		m_iShakeY = rand() % 7 + 277;
 
 		if (++m_ucColor >= 255)
 		{
@@ -37,17 +40,24 @@ void CScene_Result::update()
 	}
 	else
 	{
-		if (m_ucColor >= 1)
-		{
-			m_iShakeX = rand() % 5 + 578;
-			m_iShakeY = rand() % 5 + 278;
-			m_ucColor--;
-		}
-		else
+		if (m_ucColor == 0)
 		{
 			m_iShakeX = 580;
 			m_iShakeY = 280;
 		}
+		if (m_ucColor == 1)
+		{
+			CDanceMario* cDancer = new CDanceMario();
+			createObj(cDancer, OBJ::ETC);
+			m_ucColor--;
+		}
+		if (m_ucColor >= 2)
+		{
+			m_iShakeX = rand() % 7 + 577;
+			m_iShakeY = rand() % 7 + 277;
+			m_ucColor--;
+		}
+		
 	}
 
 	if (KEY_ON('R'))
@@ -56,6 +66,8 @@ void CScene_Result::update()
 
 void CScene_Result::render(HDC hDC)
 {
+	CScene::render(hDC);
+
 	SelectGDI font1(hDC, FONT::COMIC48);
 
 	TextOutW(hDC, 560, 580, m_szText, (int)wcslen(m_szText));
@@ -79,4 +91,8 @@ void CScene_Result::exit()
 	m_iShakeY = 280;
 	m_ucColor = 0;
 	m_bFlick = true;
+
+	deleteObjectAll();
+
+	CCollisionManager::getInst()->resetGroup();
 }

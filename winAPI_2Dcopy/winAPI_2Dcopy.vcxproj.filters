@@ -94,6 +94,9 @@
     <Filter Include="Engine\Manager\CCameraManager">
       <UniqueIdentifier>{dd3aee8e-dc8f-4239-aaf8-5cec7c845127}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Obj_etc">
+      <UniqueIdentifier>{d7460843-3052-4e34-a263-6d294bb293f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,6 +219,12 @@
     <ClInclude Include="CScene_Result.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CShell.h">
+      <Filter>Object\Obj_etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CDanceMario.h">
+      <Filter>Object\Obj_etc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -319,6 +328,12 @@
     </ClCompile>
     <ClCompile Include="CScene_Result.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CShell.cpp">
+      <Filter>Object\Obj_etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CDanceMario.cpp">
+      <Filter>Object\Obj_etc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

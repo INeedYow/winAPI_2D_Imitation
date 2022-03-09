@@ -8,13 +8,14 @@ UINT	CPlayer::s_uiCoin		= 0;
 UINT	CPlayer::s_uiScore		= 0;
 UINT	CPlayer::s_uiTryCnt		= 0;
 bool	CPlayer::s_bTransform	= false;
-
+float	CPlayer::s_fCamPosX = WINSIZEX / 2;
 
 CPlayer::CPlayer()
 {
 	setPos(fPoint(0.f, 0.f));
 	setSize(fPoint((float)P_sizex, (float)P_sizey));
 	setName(OBJNAME::MARIO);
+	s_fCamPosX	= WINSIZEX / 2.f;
 	m_fSpeedL	= 0.f;
 	m_fSpeedR	= 0.f;
 	m_fSpeedY	= 0.f;
@@ -24,7 +25,7 @@ CPlayer::CPlayer()
 	m_eMario	= TYPE_MARIO::smMARIO;
 	m_iBottomCnt = 0;
 	m_uiState	= 0;
-	m_uiState |= S_JUMP;
+	m_uiState |= S_AIR;
 	s_bTransform = false;
 
 	createCollider();
@@ -78,6 +79,32 @@ CPlayer::CPlayer()
 	createAnim(L"frFromSmall_L",m_pTex, fPoint(512.f, 0.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
 	createAnim(L"frFromSmall_R",m_pTex, fPoint(512.f, 64.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
 
+	createAnim(L"sp_smStand_L", m_pTex, fPoint(0.f, 384.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
+	createAnim(L"sp_smStand_R", m_pTex, fPoint(0.f, 448.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
+	createAnim(L"sp_bgStand_L", m_pTex, fPoint(0.f, 512.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
+	createAnim(L"sp_bgStand_R", m_pTex, fPoint(0.f, 576.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
+	
+	createAnim(L"sp_smJump_L", m_pTex,	fPoint(64.f, 384.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 1);
+	createAnim(L"sp_smJump_R", m_pTex,	fPoint(64.f, 448.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 1);
+	createAnim(L"sp_bgJump_L", m_pTex,	fPoint(64.f, 512.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 1);
+	createAnim(L"sp_bgJump_R", m_pTex,	fPoint(64.f, 576.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 1);
+
+	createAnim(L"sp_smSlide_L", m_pTex, fPoint(128.f, 384.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+	createAnim(L"sp_smSlide_R", m_pTex, fPoint(128.f, 448.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+	createAnim(L"sp_bgSlide_L", m_pTex, fPoint(128.f, 512.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+	createAnim(L"sp_bgSlide_R", m_pTex, fPoint(128.f, 576.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+
+	createAnim(L"sp_smZig_L", m_pTex,	fPoint(192.f, 384.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+	createAnim(L"sp_smZig_R", m_pTex,	fPoint(192.f, 448.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+	createAnim(L"sp_bgZig_L", m_pTex,	fPoint(192.f, 512.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+	createAnim(L"sp_bgZig_R", m_pTex,	fPoint(192.f, 576.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 1);
+
+	createAnim(L"sp_smRun_L", m_pTex,	fPoint(256.f, 384.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 3);
+	createAnim(L"sp_smRun_R", m_pTex,	fPoint(256.f, 448.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 3);
+	createAnim(L"sp_bgRun_L", m_pTex,	fPoint(256.f, 512.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 3);
+	createAnim(L"sp_bgRun_R", m_pTex,	fPoint(256.f, 576.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.2f, 3);
+
+
 	createAnim(L"Death",		m_pTex, fPoint(512.f, 128.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
 
 	PLAY(L"smStand_R");
@@ -87,6 +114,7 @@ CPlayer::CPlayer()
 CPlayer::~CPlayer()
 {
 }
+
 void CPlayer::update()
 {
 	if (m_uiState & S_DEATH)
@@ -122,21 +150,27 @@ void CPlayer::update()
 		switch (m_eMario)
 		{
 		case TYPE_MARIO::bgMARIO:		// small->big
-			drawMario(L"FromSmall");
+			if (m_uiState & S_DIR) 
+				PLAY(L"bgFromSmall_R");
+			else PLAY(L"bgFromSmall_L");
 			break;
 		case TYPE_MARIO::smMARIO:		// big->small
-			drawMario(L"FromBig");
+			if (m_uiState & S_DIR)
+				PLAY(L"smFromBig_R");
+			else PLAY(L"smFromBig_L");
 			break;
 		case TYPE_MARIO::frMARIO:		// small->fire
-			drawMario(L"FromSmall");
+			if (m_uiState & S_DIR)
+				PLAY(L"frFromSmall_R");
+			else PLAY(L"frFromSmall_L");
 			break;
 		}
 		getAnimator()->update();
 		return;							// 변신하는 동안 변신 모습만 보여주고 리턴
 	}
 
-	if (m_uiState & S_INVINCIBLE)
-	{	// TODO 무적일 때 타이머랑 상태값 설정은 했는데 무적 효과 설정은 안 했음(충돌에서 하면될듯)
+	if (m_uiState & S_INVINCIBLE)		// 무적
+	{	
 		m_fInvincibleTimer -= fDT;
 
 		if (m_fInvincibleTimer < 0.f)
@@ -195,6 +229,17 @@ void CPlayer::update()
 	}
 
 	pos.x += (m_fSpeedR - m_fSpeedL) * fDT;
+	
+	// 카메라
+	if (pos.x > s_fCamPosX)
+	{
+		s_fCamPosX += 110 * fDT;
+		setFocus(fPoint(s_fCamPosX, WINSIZEY / 2.f));
+	}
+
+	// 맵 탈출방지
+	if (pos.x < s_fCamPosX - WINSIZEX / 2.f)
+		pos.x = s_fCamPosX - WINSIZEX / 2.f;
 
 	if (m_fSpeedR == 0 && m_fSpeedL == 0)
 		drawMario(L"Stand");
@@ -207,18 +252,18 @@ void CPlayer::update()
 			 (m_fSpeedL > 70.f && m_fSpeedR < 50.f))
 		drawMario(L"Run");
 
-	if (KEY_ON(VK_SPACE) && !(m_uiState & S_JUMP))		// 공중에 있지 않으면서 스페이스 누르면 점프
+	if (KEY_ON(VK_SPACE) && !(m_uiState & S_AIR))		// 공중에 있지 않으면서 스페이스 누르면 점프
 	{
 		m_fGravity = 0.f;
 		pos.y--;										// 지면과 충돌 시 1픽셀 겹쳐있게 했더니 점프가 제대로 안 돼서 점프할 때 1픽셀 올려줌
 		m_fSpeedY = P_JUMPSPD;
-		m_uiState |= S_JUMP;
+		m_uiState |= S_AIR;
 	}
 
 	if (m_iBottomCnt <= 0)
-		m_uiState |= S_JUMP;
+		m_uiState |= S_AIR;
 
-	if (m_uiState & S_JUMP)								// 공중에 뜬 상태면 중력 적용
+	if (m_uiState & S_AIR)								// 공중에 뜬 상태면 중력 적용
 	{
 		pos.y -= ((m_fSpeedY - m_fGravity) * fDT);
 
@@ -227,6 +272,8 @@ void CPlayer::update()
 
 		drawMario(L"Jump");
 	}
+
+	if (pos.y > WINSIZEY) death();
 
 	if (TYPE_MARIO::frMARIO == m_eMario && KEY_ON('A'))		// fire 상태, a키로 불꽃 발사 
 		createFireball();
@@ -249,23 +296,7 @@ void CPlayer::update()
 		}
 	}
 
-	// 시점 토글
-	if (KEY_ON('O'))
-	{
-		if (m_uiState & S_CAMERA)
-		{
-			setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-			CCameraManager::getInst()->setTraceObj(nullptr);
-			m_uiState &= ~(S_CAMERA);
-		}
-		else
-		{
-			setTrace(this);
-			m_uiState |= S_CAMERA;
-		}
-	}
-
-	// bottomCnt 출력용..
+	// 출력용..
 	wchar_t szBuffer[255] = {};
 	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d \t Score : %d", m_iBottomCnt, s_uiCoin, s_uiScore);
 	SetWindowText(hWnd, szBuffer);
@@ -312,9 +343,19 @@ void CPlayer::setTryCnt(UINT cnt)
 	s_uiTryCnt = cnt;
 }
 
+void CPlayer::setCamPos(float posX)
+{
+	s_fCamPosX = posX;
+}
+
 bool CPlayer::isTransform()
 {
 	return s_bTransform;
+}
+
+float CPlayer::getCamPos()
+{
+	return s_fCamPosX;
 }
 
 UINT CPlayer::getTryCnt()
@@ -358,8 +399,8 @@ void CPlayer::collisionKeep(CCollider* pOther)
 		switch (COLLRR(getCollider(), pOther))
 		{
 		case DIR::TOP:
-			if (m_uiState & S_JUMP)
-				m_uiState &= ~(S_JUMP);
+			if (m_uiState & S_AIR)
+				m_uiState &= ~(S_AIR);
 			break;
 		case DIR::LEFT:
 		{
@@ -382,14 +423,12 @@ void CPlayer::collisionKeep(CCollider* pOther)
 	}
 }
 
-// 현재 바닥 뚫고 낙하하는 버그
-	// -> 아마 벽이랑 비비면서 BottomCnt가 이상해져서 중력 작용해버려서 그런거같은데)
-	// 결국 충돌이 문제인듯?
+// 점프하다가 벽 꼭지점에 걸치면 벽 윗면 타고 직선이동하다가 벽 끝나면 점프하는 버그있음
 void CPlayer::collisionEnter(CCollider* pOther)
 {
 	switch (pOther->getOwner()->getName())
 	{
-		//벽 충돌 관련
+		//벽 충돌
 	case OBJNAME::BLOCK:
 	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
@@ -400,8 +439,8 @@ void CPlayer::collisionEnter(CCollider* pOther)
 			pos.y = pOther->getPos().y - getCollider()->getOffset().y + pOther->getOffset().y 
 				- (pOther->getSize().y + getCollider()->getSize().y) / 2 + 1;
 			setPos(pos);
-			if (m_uiState & S_JUMP)
-				m_uiState &= ~(S_JUMP);
+			if (m_uiState & S_AIR)
+				m_uiState &= ~(S_AIR);
 			m_iBottomCnt++;
 			break;
 		}
@@ -421,10 +460,13 @@ void CPlayer::collisionEnter(CCollider* pOther)
 			m_fSpeedL = 0.f;
 			break;
 		}
+		case DIR::BOTTOM:	// 머리콩
+			m_fSpeedY = 0.f;
+			break;
 		}
 		break;
 
-		// 아이템 충돌 관련
+		// 아이템 충돌
 	case OBJNAME::ITEM_COIN:
 		setCoin(getCoin() + 1);
 		s_uiScore += 100;
@@ -438,32 +480,62 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		}
 		s_uiScore += 3000;
 		break;
-		
-	case OBJNAME::MONSTER:
-		switch (COLLRR(getCollider(), pOther))
+	case OBJNAME::ITEM_FLOWER:
+		if (TYPE_MARIO::smMARIO == m_eMario)
 		{
-		case DIR::TOP:
-			// TODO 몬스터 납작(은 몬스터쪽에서 할 일), 약간 튀어오름
-			m_fGravity = 0.f;
-			m_fSpeedY = P_JUMPSPD / 2;
-			s_uiScore += 1000;
-			break;
+			s_bTransform = true;
+			setBgMario();
+			m_eMario = TYPE_MARIO::frMARIO;
+			m_fTransformTimer = 2.f;
+		}
+		else if (TYPE_MARIO::bgMARIO == m_eMario)
+		{
+			//s_bTransform = true;
+			m_eMario = TYPE_MARIO::frMARIO;
+			//m_fTransformTimer = 2.f;
+		}
+		s_uiScore += 4000;
+		break;
+		
+		// 몬스터 충돌
+	case OBJNAME::MONS_TURTLE:
+		// 무적 아이템(별) 먹었을 때 제외, 이미 피해입어서 무적일 때 제외
+		if (!(m_uiState & S_SUPER) && !(m_uiState & S_INVINCIBLE))	
+		{	// TODO 거북이 밟았을 때 상태값을 받아서 충돌처리 다르게 하고싶었는데 CMonster의 isState()를 불러올 수가 없음
+			//if (pOther->getOwner()->isState())
+			//{
 
-		default:
-			// TODO 피해입음(폼다운 + 무적 부여, 사망)
-			switch (m_eMario)
+			//}
+			switch (COLLRR(getCollider(), pOther))
 			{
-			case TYPE_MARIO::smMARIO:
-				death();
+			case DIR::TOP:
+				// TODO  약한 점프
+				m_fGravity = 0.f;
+				m_fSpeedY = (float)P_BOUNCESPD;
+				s_uiScore += 1000;
 				break;
-			case TYPE_MARIO::bgMARIO:
 
-				break;
-			case TYPE_MARIO::frMARIO:
+			default:
+				// TODO 피해입음(폼다운 + 무적 부여, 사망)
+				switch (m_eMario)
+				{
+				case TYPE_MARIO::smMARIO:
+					death();
+					break;
+				case TYPE_MARIO::bgMARIO:
+					setSmMario();
+					m_uiState |= S_INVINCIBLE;
+					m_fInvincibleTimer = 2.5f;
+					break;
+				case TYPE_MARIO::frMARIO:
+					setBgMario();
+					m_uiState |= S_INVINCIBLE;
+					m_fInvincibleTimer = 2.5f;
+					break;
+				}
+
 				break;
 			}
-
-			break;
 		}
 		break;
 	}
@@ -488,7 +560,7 @@ void CPlayer::collisionExit(CCollider* pOther)
 			{
 				if (m_iBottomCnt < 0)
 					m_iBottomCnt = 0;
-				m_uiState |= S_JUMP;
+				m_uiState |= S_AIR;
 			}
 			break;
 		}
@@ -501,26 +573,36 @@ void CPlayer::drawMario(const wstring& commonName)
 {
 	wstring str;
 
-	switch (m_eMario)
+	if (m_uiState & S_SUPER || m_uiState & S_INVINCIBLE)
 	{
-	case TYPE_MARIO::smMARIO:
-		str = L"sm";
-		break;
+		if (m_eMario == TYPE_MARIO::smMARIO)
+			str = L"sp_sm";
+		else
+			str = L"sp_bg";
+	}
+	else
+	{
+		switch (m_eMario)
+		{
+		case TYPE_MARIO::smMARIO:
+			str = L"sm";
+			break;
 
-	case TYPE_MARIO::bgMARIO:
-		str = L"bg";
-		break;
+		case TYPE_MARIO::bgMARIO:
+			str = L"bg";
+			break;
 
-	case TYPE_MARIO::frMARIO:
-		str = L"fr";
-		break;
+		case TYPE_MARIO::frMARIO:
+			str = L"fr";
+			break;
+		}
 	}
 
 	if (m_uiState & S_DIR)
 		str += (commonName + L"_R");
 	else
 		str += (commonName + L"_L");
-
+	
 	PLAY(str);
 }
 
@@ -529,7 +611,7 @@ void CPlayer::death()
 	m_uiState |= S_DEATH;
 	m_fSpeedY = P_JUMPSPD;
 	m_fGravity = 0.f;
-	m_fInvincibleTimer = 3.3f;
+	m_fInvincibleTimer = 2.8f;
 	PLAY(L"Death");
 	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::TILE);
 	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::BLOCK);

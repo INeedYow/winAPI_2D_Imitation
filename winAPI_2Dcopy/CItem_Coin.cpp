@@ -13,7 +13,6 @@ CItem_Coin::CItem_Coin()
 	getCollider()->setSize(fPoint((float)IT_SIZE - 1, (float)IT_SIZE - 1));
 	getCollider()->setOffset(fPoint(0.f, 0.f));
 	getCollider()->setShape(SHAPE::RECT);
-	// 원으로 하면 되지만 네모가 계산이 빠르니까 그냥 네모로
 
 	createAnimator();
 

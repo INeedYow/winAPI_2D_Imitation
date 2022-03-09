@@ -48,12 +48,18 @@ void CEventManager::execute(const tEvent& _event)
 	}
 }
 
+// 불꽃으로 몬스터 맞추다보면 오류
+// delete vecDead[i]에서 nullptr 오류 뜨는데
+// 불꽃 하나가 동시에 둘 이상의 몬스터와 충돌해서 vecDead에 두 번 추가돼서 그런듯
+// 해결 방법은?
+// isDead는 어차피 그 프레임 끝나야 적용되니까 안 되고
+// bool이나 비트연산으로 충돌처리 최초 1회만 적용되게 해야겠는데
+	// -> 해결 된 듯?
 void CEventManager::update()
 {	
 	// 전 프레임 집행유예 처리 (순서 주의)
 	for (int i = 0; i < m_vecDead.size(); i++)
 		delete m_vecDead[i];
-	// TODO 불꽃 난사하면 여기서 오류뜸
 	
 	m_vecDead.clear();
 
