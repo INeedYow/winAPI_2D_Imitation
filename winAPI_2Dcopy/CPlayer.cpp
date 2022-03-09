@@ -4,8 +4,11 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 
-UINT    CPlayer::s_uiCoin = 0;
-bool	CPlayer::s_bTransform = false;
+UINT	CPlayer::s_uiCoin		= 0;
+UINT	CPlayer::s_uiScore		= 0;
+UINT	CPlayer::s_uiTryCnt		= 0;
+bool	CPlayer::s_bTransform	= false;
+
 
 CPlayer::CPlayer()
 {
@@ -75,7 +78,7 @@ CPlayer::CPlayer()
 	createAnim(L"frFromSmall_L",m_pTex, fPoint(512.f, 0.f),		fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
 	createAnim(L"frFromSmall_R",m_pTex, fPoint(512.f, 64.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.3f, 2);
 
-	createAnim(L"smDeath",		m_pTex, fPoint(512.f, 64.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
+	createAnim(L"Death",		m_pTex, fPoint(512.f, 128.f),	fPoint(64.f, 64.f),		fPoint(64.f, 0.f),		0.5f, 1);
 
 	PLAY(L"smStand_R");
 
@@ -84,9 +87,28 @@ CPlayer::CPlayer()
 CPlayer::~CPlayer()
 {
 }
-
 void CPlayer::update()
 {
+	if (m_uiState & S_DEATH)
+	{
+		m_fInvincibleTimer -= fDT;
+
+		fPoint pos = getPos();
+
+		pos.y -= (m_fSpeedY - m_fGravity) * fDT;
+
+		m_fGravity += 600.f * fDT;
+
+		if (m_fInvincibleTimer < 0.f)
+		{
+			changeScn(SCENE::RESULT);
+		}
+
+		setPos(pos);
+		getAnimator()->update();
+		return;
+	}
+
 	if (s_bTransform)
 	{
 		m_fTransformTimer -= fDT;
@@ -136,7 +158,7 @@ void CPlayer::update()
 		if (m_fSpeedL < (float)P_ACCEL)
 			m_fSpeedL += P_ACCEL * fDT;						// 왼쪽 속도 증가
 
-		if (m_fSpeedR > 60.f)
+		if (m_fSpeedR > 50.f)
 			drawMario(L"Zig");
 	}
 	else												// 왼쪽 키 안 누르면
@@ -161,7 +183,7 @@ void CPlayer::update()
 		if (m_fSpeedR < (float)P_ACCEL)
 			m_fSpeedR += P_ACCEL * fDT;						// 오른쪽 속도 증가
 
-		if (m_fSpeedL > 60.f)
+		if (m_fSpeedL > 50.f)
 			drawMario(L"Zig");
 	}
 	else												// 오른쪽 키 안 누르면
@@ -175,20 +197,15 @@ void CPlayer::update()
 	pos.x += (m_fSpeedR - m_fSpeedL) * fDT;
 
 	if (m_fSpeedR == 0 && m_fSpeedL == 0)
-	{
 		drawMario(L"Stand");
-	}
-	else
-	{
-		if (KEY_NONE(VK_RIGHT) && KEY_NONE(VK_LEFT) &&
-			((0.f < m_fSpeedR && m_fSpeedR < 50.f) ||
-			( 0.f < m_fSpeedL && m_fSpeedL < 50.f)))
-			drawMario(L"Slide");
 
-		else if (m_fSpeedR > 50.f && m_fSpeedL == 0.f ||
-			m_fSpeedL > 50.f && m_fSpeedR == 0.f)
-			drawMario(L"Run");
-	}
+	else if (KEY_NONE(VK_RIGHT) && KEY_NONE(VK_LEFT)&&
+			(m_fSpeedR < 50.f || m_fSpeedL < 50.f))
+		drawMario(L"Slide");
+
+	else if ((m_fSpeedR > 70.f && m_fSpeedL < 50.f) || 
+			 (m_fSpeedL > 70.f && m_fSpeedR < 50.f))
+		drawMario(L"Run");
 
 	if (KEY_ON(VK_SPACE) && !(m_uiState & S_JUMP))		// 공중에 있지 않으면서 스페이스 누르면 점프
 	{
@@ -204,7 +221,6 @@ void CPlayer::update()
 	if (m_uiState & S_JUMP)								// 공중에 뜬 상태면 중력 적용
 	{
 		pos.y -= ((m_fSpeedY - m_fGravity) * fDT);
-		//m_uiBottomCnt = 0;
 
 		if (m_fGravity < (float)P_GRAVMAX)
 			m_fGravity += P_GRAV * fDT;
@@ -251,13 +267,13 @@ void CPlayer::update()
 
 	// bottomCnt 출력용..
 	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d", m_iBottomCnt, s_uiCoin);
+	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d \t Score : %d", m_iBottomCnt, s_uiCoin, s_uiScore);
 	SetWindowText(hWnd, szBuffer);
 
 	// 임시로 만든 되돌리는 키
 	if (KEY_ON('R'))
 	{
-		pos = { 100.f, 500.f };
+		death();
 		m_iBottomCnt = 0;
 	}
 
@@ -277,14 +293,33 @@ UINT CPlayer::getCoin()
 	return s_uiCoin;
 }
 
+UINT CPlayer::getScore()
+{
+	return 0;
+}
+
 void CPlayer::setCoin(UINT coin)
 {
 	s_uiCoin = coin;
 }
 
-bool CPlayer::getTransformMode()
+void CPlayer::setScore(UINT score)
+{
+}
+
+void CPlayer::setTryCnt(UINT cnt)
+{
+	s_uiTryCnt = cnt;
+}
+
+bool CPlayer::isTransform()
 {
 	return s_bTransform;
+}
+
+UINT CPlayer::getTryCnt()
+{
+	return s_uiTryCnt;
 }
 
 // 벽에 딱 붙어서 쏘면 벽 뚫고 쏘는 버그...
@@ -386,13 +421,13 @@ void CPlayer::collisionEnter(CCollider* pOther)
 			m_fSpeedL = 0.f;
 			break;
 		}
-		break;
 		}
 		break;
 
 		// 아이템 충돌 관련
 	case OBJNAME::ITEM_COIN:
 		setCoin(getCoin() + 1);
+		s_uiScore += 100;
 		break;
 	case OBJNAME::ITEM_MUSHROOM:
 		if (TYPE_MARIO::smMARIO == m_eMario)
@@ -400,6 +435,35 @@ void CPlayer::collisionEnter(CCollider* pOther)
 			s_bTransform = true;
 			setBgMario();
 			m_fTransformTimer = 2.f;
+		}
+		s_uiScore += 3000;
+		break;
+		
+	case OBJNAME::MONSTER:
+		switch (COLLRR(getCollider(), pOther))
+		{
+		case DIR::TOP:
+			// TODO 몬스터 납작(은 몬스터쪽에서 할 일), 약간 튀어오름
+			m_fGravity = 0.f;
+			m_fSpeedY = P_JUMPSPD / 2;
+			s_uiScore += 1000;
+			break;
+
+		default:
+			// TODO 피해입음(폼다운 + 무적 부여, 사망)
+			switch (m_eMario)
+			{
+			case TYPE_MARIO::smMARIO:
+				death();
+				break;
+			case TYPE_MARIO::bgMARIO:
+
+				break;
+			case TYPE_MARIO::frMARIO:
+				break;
+			}
+
+			break;
 		}
 		break;
 	}
@@ -458,6 +522,19 @@ void CPlayer::drawMario(const wstring& commonName)
 		str += (commonName + L"_L");
 
 	PLAY(str);
+}
+
+void CPlayer::death()
+{
+	m_uiState |= S_DEATH;
+	m_fSpeedY = P_JUMPSPD;
+	m_fGravity = 0.f;
+	m_fInvincibleTimer = 3.3f;
+	PLAY(L"Death");
+	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::TILE);
+	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::BLOCK);
+	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::ITEM);
+	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::MONSTER);
 }
 
 void CPlayer::setSmMario()

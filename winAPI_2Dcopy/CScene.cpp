@@ -34,11 +34,11 @@ void CScene::update()
 {
 	for (UINT i = 0; i < (UINT)OBJ::SIZE; i++)
 	{
-		if (CPlayer::getTransformMode() && i != (UINT)OBJ::PLAYER)	// 변신 중이면 플레이어 빼고 continue;
+		if (CPlayer::isTransform() && i != (UINT)OBJ::PLAYER)	// 변신 중이면 플레이어 빼고 continue;
 			continue;
 		for (UINT j = 0; j < m_arrObj[i].size(); j++)
 		{
-			if (!m_arrObj[i][j]->isDead())				// 유예 중이면 업데이트 x
+			if (!m_arrObj[i][j]->isDead())					// 유예 중이면 업데이트 x
 				m_arrObj[i][j]->update();
 		}
 	}

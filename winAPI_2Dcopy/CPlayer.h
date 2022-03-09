@@ -6,6 +6,8 @@ class CTexture;
 class CPlayer : public CObject
 {
 	static UINT	s_uiCoin;
+	static UINT s_uiScore;
+	static UINT s_uiTryCnt;
 	static bool	s_bTransform;			// 변신할 때 다른 업데이트 안 돌게
 
 	float		m_fSpeedL;				// 왼쪽 속력
@@ -33,14 +35,20 @@ public:
 	virtual void render(HDC hDC);
 
 	static UINT getCoin();
+	static UINT getScore();
+	static UINT getTryCnt();
+	static bool isTransform();
+
 	static void setCoin(UINT coin);
-	static bool getTransformMode();
+	static void setScore(UINT score);
+	static void setTryCnt(UINT cnt);
 
 	virtual void collisionKeep(CCollider* pOther);
 	virtual void collisionEnter(CCollider* pOther);
 	virtual void collisionExit(CCollider* pOther);
 
 	void drawMario(const wstring& commonName);
+	void death();
 
 	void setSmMario();
 	void setBgMario();

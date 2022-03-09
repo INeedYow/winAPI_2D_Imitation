@@ -129,7 +129,8 @@ enum class GROUP_SCENE
 {
 	TITLE,
 	STAGE_01,
-	
+	RESULT,
+
 	SIZE
 };
 
@@ -185,6 +186,7 @@ enum class TYPE_FONT
 	COMIC24,
 	COMIC18,
 	COMIC48,
+	COMIC72,
 
 	SIZE
 };

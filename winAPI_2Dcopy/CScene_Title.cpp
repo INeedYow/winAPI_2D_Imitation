@@ -34,7 +34,7 @@ void CScene_Title::render(HDC hDC)
 	SetTextColor(hDC, RGB(255, 0, 255));
 	SetBkMode(hDC, TRANSPARENT);
 
-	TextOutW(hDC, (int)WINSIZEX / 2 - 115, (int)WINSIZEY / 2 + 150, m_strMsg, (int)wcslen(m_strMsg));
+	TextOutW(hDC, (int)WINSIZEX / 2 - 125, (int)WINSIZEY / 2 + 150, m_strMsg, (int)wcslen(m_strMsg));
 	SetTextColor(hDC, RGB(0, 0, 0));
 }
 

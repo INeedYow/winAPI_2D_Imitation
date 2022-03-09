@@ -75,6 +75,8 @@ void CScene_Stage01::enter()
 	// 각 씬마다 오브젝트끼리 충돌 여부 설정가능
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::TILE);
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::ITEM);
+	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::BLOCK);
+	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::MONSTER);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::MONSTER);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::TILE);
 	CCollisionManager::getInst()->checkGroup(OBJ::FIREBALL, OBJ::BLOCK);

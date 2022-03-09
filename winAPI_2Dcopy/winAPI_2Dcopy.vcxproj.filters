@@ -213,6 +213,9 @@
     <ClInclude Include="CCameraManager.h">
       <Filter>Engine\Manager\CCameraManager</Filter>
     </ClInclude>
+    <ClInclude Include="CScene_Result.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -313,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="CCameraManager.cpp">
       <Filter>Engine\Manager\CCameraManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Result.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
