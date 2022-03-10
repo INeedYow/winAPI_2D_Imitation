@@ -5,11 +5,11 @@
 CItem_Star::CItem_Star()
 {
 	setName(OBJNAME::ITEM_STAR);
-	m_fSpeed = (float)ITM_SPD;
-	m_fvDir = {};
-	m_iBottomCnt = 0;
+	m_fSpeed = (float)ITS_SPD;
+	m_fvDir = { 1.f , 0.f };
 	m_fGravity = 0.f;
 	m_bAir = true;
+	m_iBottomCnt = 0;
 
 	m_pTex = loadTex(KEY_RES::TEX_ITEM_FB, L"texture\\subObject.bmp");
 
@@ -37,7 +37,6 @@ void CItem_Star::update()
 {
 	fPoint pos = getPos();
 
-
 	if (m_bAir)
 	{
 		pos.y += m_fGravity * fDT;
@@ -64,11 +63,16 @@ void CItem_Star::render(HDC hDC)
 	componentRender(hDC);
 }
 
+void CItem_Star::collisionKeep(CCollider* pOther)
+{
+}
+
 void CItem_Star::collisionEnter(CCollider* pOther)
 {
 	switch (pOther->getOwner()->getName())
 	{
 	case OBJNAME::MARIO:
+	case OBJNAME::SUPERMARIO:
 		deleteObj(this);
 		break;
 	case OBJNAME::TILE:
@@ -100,5 +104,21 @@ void CItem_Star::collisionEnter(CCollider* pOther)
 
 void CItem_Star::collisionExit(CCollider* pOther)
 {
-
+	switch (pOther->getOwner()->getName())
+	{
+	case OBJNAME::BLOCK:
+	case OBJNAME::TILE:
+		switch (COLLRR(getCollider(), pOther))
+		{
+		case DIR::TOP:
+			if (--m_iBottomCnt <= 0)
+			{
+				if (m_iBottomCnt < 0)
+					m_iBottomCnt = 0;
+				m_bAir = true;
+			}
+			break;
+		}
+		break;
+	}
 }

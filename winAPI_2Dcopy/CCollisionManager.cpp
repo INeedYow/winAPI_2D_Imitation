@@ -18,8 +18,8 @@ void CCollisionManager::collisionGroupUpdate(OBJ obj1, OBJ obj2)
 {
 	CScene* pCurScene = CSceneManager::getInst()->getCurScene();
 
-	vector<CObject*> vec1 = pCurScene->getGroupObject(obj1);
-	vector<CObject*> vec2 = pCurScene->getGroupObject(obj2);
+	const vector<CObject*> vec1 = pCurScene->getGroupObject(obj1);
+	const vector<CObject*> vec2 = pCurScene->getGroupObject(obj2);
 
 	for (int i = 0; i < vec1.size(); i++)
 	{

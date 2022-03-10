@@ -27,6 +27,9 @@ CMonster_Turtle::CMonster_Turtle()
 	
 	createAnim(L"move_L",	m_pTex, fPoint(0.f, 0.f),		fPoint(40.f, 44.f),		fPoint(40.f, 0.f),	0.2f, 4);
 	createAnim(L"move_R",	m_pTex, fPoint(0.f, 44.f),		fPoint(40.f, 44.f),		fPoint(40.f, 0.f),	0.2f, 4);
+	
+	createAnim(L"shell",	m_pTex, fPoint(0.f, 88.f),		fPoint(32.f, 32.f),		fPoint(32.f, 0.f),	0.5f, 1);
+	
 	createAnim(L"death",	m_pTex, fPoint(128.f, 88.f),	fPoint(32.f, 32.f),		fPoint(32.f, 0.f),	0.5f, 1);
 
 	m_fvDir.x > 0.f ? PLAY(L"move_R") : PLAY(L"move_L");
@@ -43,6 +46,11 @@ void CMonster_Turtle::setDir(fVec2 dir)
 
 void CMonster_Turtle::update()
 {
+	if (getName() == OBJNAME::MONS_SHELL)
+	{
+		return;
+	}
+
 	fPoint pos = getPos();
 
 	if (isState(S_DIR))
@@ -104,12 +112,32 @@ void CMonster_Turtle::collisionEnter(CCollider* pOther)
 			setStateTrue(S_DIR);
 			break;
 		}
-		// TODO 마리오한테 위에서 밟히면 껍데기로 바뀌게
+		// TODO 거북이 껍데기 구현
 	case OBJNAME::MARIO:
+	case OBJNAME::SUPERMARIO:
 		if (DIR::BOTTOM == COLLRR(getCollider(), pOther))
-			becomeShell();
+		{
+			switch (getName())
+			{
+			case OBJNAME::MONS_TURTLE:
+				becomeShell();
+				break;
+			case OBJNAME::MONS_SHELL:
+			{
+				CShell* pShell = new CShell();
+				pShell->setPos(getPos());
+				// 거북이 입장에서 오른쪽 왼쪽 충돌이니까 방향 조심
+				if (isLeftColl(getCollider(), pOther))
+					pShell->setDir(fVec2(-1.f, 0.f));
+				else
+					pShell->setDir(fVec2(1.f, 0.f));
+
+				createObj(pShell, OBJ::SHELL);
+				break;
+			}
+			}
+		}
 		break;
-		// TODO 마리오가 밀어서 움직이는 SHELL일 때만 죽게 하는 방법 고민
 	case OBJNAME::FIREBALL:
 	case OBJNAME::SHELL:
 		death();
@@ -138,10 +166,10 @@ void CMonster_Turtle::collisionExit(CCollider* pOther)
 	}
 }
 
-// 쉘을 상태값으로 부여할지 새로 오브젝트 만들어서 줘야할지 아직 고민 중
-// 플레이어에서 쉘인지 상태값을 알 방법이 있나
 void CMonster_Turtle::becomeShell()
 {
+	setName(OBJNAME::MONS_SHELL);
+	PLAY(L"shell");
 }
 
 // 죽는 이펙트 보여주는 클래스는 따로 만들어야 충돌 설정도 다르게 할 수 있고

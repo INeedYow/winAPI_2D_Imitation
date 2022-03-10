@@ -15,7 +15,7 @@ public:
 	virtual ~CMonster_Turtle();
 
 	void setDir(fVec2 dir);
-	
+
 	virtual void update();
 	virtual void render(HDC hDC);
 

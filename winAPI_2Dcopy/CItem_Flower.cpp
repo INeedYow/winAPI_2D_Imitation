@@ -43,6 +43,7 @@ void CItem_Flower::collisionEnter(CCollider* pOther)
 	switch (pOther->getOwner()->getName())
 	{
 	case OBJNAME::MARIO:
+	case OBJNAME::SUPERMARIO:
 		deleteObj(this);
 		break;
 	}

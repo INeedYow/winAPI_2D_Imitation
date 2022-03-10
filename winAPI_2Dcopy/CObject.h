@@ -49,7 +49,7 @@ public:
 
 	// 충돌 매니저가 충돌체의 충돌상태 함수를 호출 해주는데 오브젝트의 종류에 따라 충돌에 대한 후처리가 달라져야 하니까
 	// 충돌체의 Keep(),Enter(),Exit() 함수들이 각각 자신의 pOwner->Keep(),Enter(),Exit()을 호출하게 하는 방식으로 한다.
-	// 재정의 용도..
+	// 자식이 반드시 구현해야 하는 경우는 아니므로 순수가상함수로는 안 쓰는듯
 	virtual void collisionKeep(CCollider* pOther) {}	
 	virtual void collisionEnter(CCollider* pOther) {}
 	virtual void collisionExit(CCollider* pOther) {}

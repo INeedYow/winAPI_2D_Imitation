@@ -57,7 +57,6 @@ void CAnimator::createAnimation(const wstring& strName, CTexture* pTex, fPoint l
 	m_mapAni.insert(make_pair(strName, pAni));
 }
 
-// TODO map 안에 _scary가 nullptr이라는데 뭔 소리야
 CAnimation* CAnimator::findAnimation(const wstring& strName)
 {
 	map<wstring, CAnimation*>::iterator iter = m_mapAni.find(strName);

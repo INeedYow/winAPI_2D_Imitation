@@ -19,6 +19,7 @@ public:
 	virtual void update();
 	virtual void render(HDC hDC);
 
+	virtual void collisionKeep(CCollider* pOther);
 	virtual void collisionEnter(CCollider* pOther);
 	virtual void collisionExit(CCollider* pOther);
 };

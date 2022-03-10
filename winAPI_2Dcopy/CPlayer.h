@@ -54,9 +54,5 @@ public:
 
 	void setSmMario();
 	void setBgMario();
+	void getDamage();
 };
-
-
-// TODO 버섯, 꽃, 별 먹었을 때 잠시 멈추면서 플레이어 모습 변하는 과정만 update()되도록 하기
-// bool 변수로 true일 때 아예 업데이트 생략하도록 하면 될 것 같은 느낌
-// static이나 전역변수로?

@@ -95,6 +95,15 @@ struct fVec2
 		y = _y;
 	}
 
+	bool operator==(fVec2 other)
+	{
+		return (x == other.x && y == other.y);
+	}
+	bool operator!=(fVec2 other)
+	{
+		return !(*this == other);
+	}
+
 	fVec2& normalize()
 	{	// sqrt : Á¦°ö±Ù ÇÔ¼ö
 		float length = (float)sqrt((double)x * x + (double)y * y);

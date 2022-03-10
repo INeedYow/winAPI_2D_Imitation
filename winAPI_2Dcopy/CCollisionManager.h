@@ -23,7 +23,7 @@ private:
 
 	void collisionGroupUpdate(OBJ obj1, OBJ obj2);			// update 통해 내부적으로만 호출되는 함수라서 private
 	bool isCollision(CCollider* pColl1, SHAPE shape1, CCollider* pColl2, SHAPE shape2);  // 충돌여부 판정
-	DIR	 dirCollision(CCollider* pColl1, SHAPE shape1, CCollider* pColl2, SHAPE shape2); // 충돌방향 판정
+	//DIR	 dirCollision(CCollider* pColl1, SHAPE shape1, CCollider* pColl2, SHAPE shape2); // 충돌방향 판정
 
 public:
 	void init();

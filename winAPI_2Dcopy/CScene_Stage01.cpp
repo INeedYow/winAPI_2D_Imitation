@@ -5,6 +5,7 @@
 #include "CItem_Coin.h"
 #include "CItem_Mushroom.h"
 #include "CItem_Flower.h"
+#include "CItem_Star.h"
 #include "CMonster_Turtle.h"
 
 #include "CDanceMario.h"
@@ -46,11 +47,24 @@ void CScene_Stage01::update()
 		case 4:
 		case 5:
 		case 6:
+		case 10:
+		case 11:
 		{
 			CMonster_Turtle* pMsTurtle = new CMonster_Turtle();
 			pMsTurtle->setPos(fPoint((float)(a = rand() % 2 ? 1400 : 1600), 200.f));
 			pMsTurtle->setDir(fVec2((float)(a = rand() % 2 ? 1 : -1), 0.f));
 			createObj(pMsTurtle, OBJ::MONSTER);
+
+			CMonster_Turtle* pMsTurtle2 = new CMonster_Turtle();
+			pMsTurtle2->setPos(fPoint((float)(a = rand() % 2 ? 1400 : 1600), 200.f));
+			pMsTurtle2->setDir(fVec2((float)(a = rand() % 2 ? 1 : -1), 0.f));
+			createObj(pMsTurtle2, OBJ::MONSTER);
+
+			//CMonster_Turtle* pMsTurtle3 = new CMonster_Turtle();
+			//pMsTurtle3->setPos(fPoint((float)(a = rand() % 2 ? 1400 : 1600), 200.f));
+			//pMsTurtle3->setDir(fVec2((float)(a = rand() % 2 ? 1 : -1), 0.f));
+			//createObj(pMsTurtle3, OBJ::MONSTER);
+
 			break;
 		}
 		case 7:
@@ -58,15 +72,23 @@ void CScene_Stage01::update()
 			CItem_Coin* pCoin = new CItem_Coin();
 			pCoin->setPos(fPoint((float)(a = rand() % 2 ? 1450 : 1750), (float)(WINSIZEY - T_SIZE / 2 - T_SIZE - IT_SIZE * 3)));
 			createObj(pCoin, OBJ::ITEM);
-		break;
+			break;
+		}
+		case 8:
+		{
+		/*	CItem_Star * pStar = new CItem_Star();
+			pStar->setPos(fPoint((float)(a = rand() % 2 ? 1400 : 1600), 200.f));
+			pStar->setDir(fVec2((float)(a = rand() % 2 ? 1 : -1), 0.f));
+			createObj(pStar, OBJ::ITEM);
+			break;*/
 		}
 		case 19:
 		{
 			CItem_Flower* pFlower = new CItem_Flower();
 			pFlower->setPos(fPoint((float)(a = rand() % 2 ? 1400 : 1700), (float)(WINSIZEY - T_SIZE / 2 - T_SIZE - IT_SIZE - 6)));
 			createObj(pFlower, OBJ::ITEM);
+			break;
 		}
-		break;
 		
 		}
 
@@ -169,7 +191,6 @@ void CScene_Stage01::enter()
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::ITEM);
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::BLOCK);
 	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::MONSTER);
-	CCollisionManager::getInst()->checkGroup(OBJ::PLAYER, OBJ::SHELL);
 
 	CCollisionManager::getInst()->checkGroup(OBJ::MONSTER, OBJ::SHELL);
 	CCollisionManager::getInst()->checkGroup(OBJ::MONSTER, OBJ::TILE);
@@ -181,6 +202,9 @@ void CScene_Stage01::enter()
 
 	CCollisionManager::getInst()->checkGroup(OBJ::ITEM, OBJ::TILE);
 	CCollisionManager::getInst()->checkGroup(OBJ::ITEM, OBJ::BLOCK);
+
+	CCollisionManager::getInst()->checkGroup(OBJ::SHELL, OBJ::TILE);
+	CCollisionManager::getInst()->checkGroup(OBJ::SHELL, OBJ::BLOCK);
 
 	setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	//setTrace(pPlayer);

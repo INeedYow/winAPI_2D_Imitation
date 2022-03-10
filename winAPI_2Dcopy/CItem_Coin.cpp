@@ -36,6 +36,11 @@ void CItem_Coin::render(HDC hDC)
 
 void CItem_Coin::collisionEnter(CCollider* pOther)
 {
-	if (pOther->getOwner()->getName() == OBJNAME::MARIO)
+	switch (pOther->getOwner()->getName())
+	{
+	case OBJNAME::MARIO:
+	case OBJNAME::SUPERMARIO:
 		deleteObj(this);
+		break;
+	}
 }

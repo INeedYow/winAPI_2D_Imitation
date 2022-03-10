@@ -4,11 +4,13 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 
+#include "CMonster_Turtle.h"
+
 UINT	CPlayer::s_uiCoin		= 0;
 UINT	CPlayer::s_uiScore		= 0;
 UINT	CPlayer::s_uiTryCnt		= 0;
 bool	CPlayer::s_bTransform	= false;
-float	CPlayer::s_fCamPosX = WINSIZEX / 2;
+float	CPlayer::s_fCamPosX = WINSIZEX * 0.65;
 
 CPlayer::CPlayer()
 {
@@ -169,7 +171,13 @@ void CPlayer::update()
 		return;							// 변신하는 동안 변신 모습만 보여주고 리턴
 	}
 
-	if (m_uiState & S_INVINCIBLE)		// 무적
+	// 아이템 무적, 피격 시 잠시 무적
+		// 둘 애니메이션 구분하려 했는데 리소스에 너무 시간 쓰는 것 같아서 그냥 같은 리소스 씀
+		// 다만 아이템 무적일 때는 닿는 몬스터 다 죽게 하려하는데
+		// 충돌 상대가 내 상태값을 받을 수가 없으니 CObject에 상태값 변수를 만들던가
+		// 아니면 name으로 구분하는 수 밖에? -> name 으로 구분 시도 중
+	if (m_uiState & S_INVINCIBLE || 
+		m_uiState & S_SUPER)			
 	{	
 		m_fInvincibleTimer -= fDT;
 
@@ -177,6 +185,8 @@ void CPlayer::update()
 		{
 			m_fInvincibleTimer = 0.f;
 			m_uiState &= ~(S_INVINCIBLE);
+			m_uiState &= ~(S_SUPER);
+			setName(OBJNAME::MARIO);
 		}
 	}
 	fPoint pos = getPos();
@@ -233,7 +243,7 @@ void CPlayer::update()
 	// 카메라
 	if (pos.x > s_fCamPosX)
 	{
-		s_fCamPosX += 110 * fDT;
+		s_fCamPosX += 130 * fDT;
 		setFocus(fPoint(s_fCamPosX, WINSIZEY / 2.f));
 	}
 
@@ -301,7 +311,6 @@ void CPlayer::update()
 	swprintf_s(szBuffer, L"[Bobrio] BottomCnt : %d \t Coin : %d \t Score : %d", m_iBottomCnt, s_uiCoin, s_uiScore);
 	SetWindowText(hWnd, szBuffer);
 
-	// 임시로 만든 되돌리는 키
 	if (KEY_ON('R'))
 	{
 		death();
@@ -311,7 +320,6 @@ void CPlayer::update()
 	setPos(pos);
 	getAnimator()->update();
 }
-// TODO 맵 밖으로 떨어지면 트라이 횟수 1 증가시키고 (씬 전환 후 다시 복귀)
 
 
 void CPlayer::render(HDC hDC)
@@ -447,7 +455,8 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		case DIR::LEFT:
 		{
 			fPoint pos = getPos();
-			pos.x = pOther->getPos().x + (getCollider()->getOffset().x + pOther->getOffset().x - pOther->getSize().x - getCollider()->getSize().x) / 2;
+			pos.x = pOther->getPos().x + (getCollider()->getOffset().x + pOther->getOffset().x 
+				- pOther->getSize().x - getCollider()->getSize().x) / 2;
 			setPos(pos);
 			m_fSpeedR = 0.f;
 			break;
@@ -455,7 +464,8 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		case DIR::RIGHT:
 		{
 			fPoint pos = getPos();
-			pos.x = pOther->getPos().x + (getCollider()->getOffset().x + pOther->getOffset().x + pOther->getSize().x + getCollider()->getSize().x) / 2;
+			pos.x = pOther->getPos().x + (getCollider()->getOffset().x + pOther->getOffset().x 
+				+ pOther->getSize().x + getCollider()->getSize().x) / 2;
 			setPos(pos);
 			m_fSpeedL = 0.f;
 			break;
@@ -469,7 +479,7 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		// 아이템 충돌
 	case OBJNAME::ITEM_COIN:
 		setCoin(getCoin() + 1);
-		s_uiScore += 100;
+		s_uiScore += 200;
 		break;
 	case OBJNAME::ITEM_MUSHROOM:
 		if (TYPE_MARIO::smMARIO == m_eMario)
@@ -490,52 +500,37 @@ void CPlayer::collisionEnter(CCollider* pOther)
 		}
 		else if (TYPE_MARIO::bgMARIO == m_eMario)
 		{
-			//s_bTransform = true;
 			m_eMario = TYPE_MARIO::frMARIO;
-			//m_fTransformTimer = 2.f;
 		}
 		s_uiScore += 4000;
 		break;
-		
+	case OBJNAME::ITEM_STAR:
+		m_uiState |= S_SUPER;
+		m_fInvincibleTimer = 10.f;
+		s_uiScore += 5000;
+		setName(OBJNAME::SUPERMARIO);
+		break;
+
 		// 몬스터 충돌
 	case OBJNAME::MONS_TURTLE:
 		// 무적 아이템(별) 먹었을 때 제외, 이미 피해입어서 무적일 때 제외
 		if (!(m_uiState & S_SUPER) && !(m_uiState & S_INVINCIBLE))	
-		{	// TODO 거북이 밟았을 때 상태값을 받아서 충돌처리 다르게 하고싶었는데 CMonster의 isState()를 불러올 수가 없음
-			//if (pOther->getOwner()->isState())
-			//{
-
-			//}
-			switch (COLLRR(getCollider(), pOther))
-			{
-			case DIR::TOP:
-				// TODO  약한 점프
-				m_fGravity = 0.f;
-				m_fSpeedY = (float)P_BOUNCESPD;
-				s_uiScore += 1000;
-				break;
-
-			default:
-				// TODO 피해입음(폼다운 + 무적 부여, 사망)
-				switch (m_eMario)
-				{
-				case TYPE_MARIO::smMARIO:
-					death();
+		{	
+			if (pOther->getOwner()->getName() == OBJNAME::MONS_TURTLE)
+			{	// 거북이 상태일 때
+				switch (COLLRR(getCollider(), pOther))
+				{	// 약하게 다시 점프
+				case DIR::TOP:
+					m_fGravity = 0.f;
+					m_fSpeedY = (float)P_BOUNCESPD;
+					s_uiScore += 1000;
 					break;
-				case TYPE_MARIO::bgMARIO:
-					setSmMario();
-					m_uiState |= S_INVINCIBLE;
-					m_fInvincibleTimer = 2.5f;
-					break;
-				case TYPE_MARIO::frMARIO:
-					setBgMario();
-					m_uiState |= S_INVINCIBLE;
-					m_fInvincibleTimer = 2.5f;
+				default:
+					getDamage();
 					break;
 				}
-
-				break;
 			}
+			
 		}
 		break;
 	}
@@ -545,7 +540,6 @@ void CPlayer::collisionEnter(CCollider* pOther)
 // 처음 enter할 때는 left로 진입해서 bottomCnt++된 적이 없고
 // keep상태에서 점프하다가 exit할 때에는 top판정으로 충돌 탈출 해버리니까
 // --만 1회 더 진행돼서 -1이 나온다고 생각됨
-// 해결 방법은?
 // 그냥 카운트 음수되면 0으로 바꿔주면 해결되긴 한데 꼼수인 느낌이라
 void CPlayer::collisionExit(CCollider* pOther)
 {
@@ -611,7 +605,7 @@ void CPlayer::death()
 	m_uiState |= S_DEATH;
 	m_fSpeedY = P_JUMPSPD;
 	m_fGravity = 0.f;
-	m_fInvincibleTimer = 2.8f;
+	m_fInvincibleTimer = 2.7f;
 	PLAY(L"Death");
 	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::TILE);
 	CCollisionManager::getInst()->unCheckGroup(OBJ::PLAYER, OBJ::BLOCK);
@@ -630,4 +624,24 @@ void CPlayer::setBgMario()
 	setSize(fPoint((float)P_SIZEX - 8, (float)P_SIZEY - 6));
 	getCollider()->setOffset(fPoint(0.f, 6.f));
 	m_eMario = TYPE_MARIO::bgMARIO;
+}
+
+void CPlayer::getDamage()
+{
+	switch (m_eMario)
+	{
+	case TYPE_MARIO::smMARIO:
+		death();
+		break;
+	case TYPE_MARIO::bgMARIO:
+		setSmMario();
+		m_uiState |= S_INVINCIBLE;
+		m_fInvincibleTimer = 2.5f;
+		break;
+	case TYPE_MARIO::frMARIO:
+		setBgMario();
+		m_uiState |= S_INVINCIBLE;
+		m_fInvincibleTimer = 2.5f;
+		break;
+	}
 }

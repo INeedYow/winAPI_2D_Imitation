@@ -33,6 +33,8 @@ void CEventManager::execute(const tEvent& _event)
 			// 지우는 작업은 다음 프레임 update에서
 	{
 		CObject* pObj = (CObject*)_event.lParam;
+		if (pObj->isDead())
+			return;
 		pObj->setDead();
 		m_vecDead.push_back(pObj);
 	}
@@ -59,7 +61,13 @@ void CEventManager::update()
 {	
 	// 전 프레임 집행유예 처리 (순서 주의)
 	for (int i = 0; i < m_vecDead.size(); i++)
+	{
+		if (m_vecDead.size() > 20)
+		{
+			int a = 0;
+		}
 		delete m_vecDead[i];
+	}
 	
 	m_vecDead.clear();
 

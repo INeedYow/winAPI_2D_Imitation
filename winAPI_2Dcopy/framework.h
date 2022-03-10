@@ -55,7 +55,6 @@ extern HINSTANCE	hInstance;
 #define S_SUPER				0x0004
 #define S_INVINCIBLE		0x0008
 
-//#define S_NOTWORKABLE		0x4000
 #define S_DEATH				0x8000
 
 
@@ -89,7 +88,8 @@ extern HINSTANCE	hInstance;
 #define IT_SIZE				30
 #define IT_GRAV				O_GRAV
 #define IT_GRAVMAX			(IT_GRAV * 3)
-#define ITM_SPD				70
+#define ITM_SPD				60
+#define ITS_SPD				80
 	// monster
 #define M_GRAV				O_GRAV
 #define M_GRAVMAX			(M_GRAV * 3)
@@ -97,7 +97,8 @@ extern HINSTANCE	hInstance;
 #define MT_SIZEX			36
 #define MT_SIZEY			30
 #define MT_SPD				90
-
+	// shell
+#define SH_SPD				300
 
 // # enum 열거형
 	// 위에 위치할수록 아래 오브젝트에 의해 덮어짐
@@ -122,11 +123,12 @@ enum class GROUP_OBJECT
 enum class OBJECT_NAME
 {
 	DEFAULT,
-	DANCEMARIO,
 
 	MARIO,
+	SUPERMARIO,
 
 	MONS_TURTLE,
+	MONS_SHELL,
 	MONS_PLANTS,
 	MONS_MUSH,
 
@@ -141,6 +143,8 @@ enum class OBJECT_NAME
 	FIREBALL,
 
 	SHELL,
+	EFFECT,
+	DANCEMARIO,
 
 	SIZE
 };
@@ -261,7 +265,7 @@ enum class KEY_RESOURCE
 #include "struct.h"
 #include "SingleTon.h"
 #include "func.h"
-
+#include "Logger.h"
 
 // # Core, Manager, Class
 #include "CCore.h"

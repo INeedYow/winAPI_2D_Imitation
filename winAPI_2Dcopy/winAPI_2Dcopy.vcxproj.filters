@@ -225,6 +225,15 @@
     <ClInclude Include="CDanceMario.h">
       <Filter>Object\Obj_etc</Filter>
     </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>Object\Obj_etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tool.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -334,6 +343,12 @@
     </ClCompile>
     <ClCompile Include="CDanceMario.cpp">
       <Filter>Object\Obj_etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>Object\Obj_etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tool.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

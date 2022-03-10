@@ -69,6 +69,7 @@ void CItem_Mushroom::collisionEnter(CCollider* pOther)
 	switch (pOther->getOwner()->getName())
 	{
 	case OBJNAME::MARIO:
+	case OBJNAME::SUPERMARIO:
 		deleteObj(this);
 		break;
 	case OBJNAME::TILE:
