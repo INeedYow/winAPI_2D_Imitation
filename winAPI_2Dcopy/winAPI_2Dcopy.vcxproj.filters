@@ -234,6 +234,9 @@
     <ClInclude Include="CScene_Tool.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CBlock.h">
+      <Filter>Object\Obj_block</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -349,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="CScene_Tool.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlock.cpp">
+      <Filter>Object\Obj_block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

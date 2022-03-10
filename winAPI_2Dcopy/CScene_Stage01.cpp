@@ -2,6 +2,7 @@
 #include "CScene_Stage01.h"
 #include "CPlayer.h"
 #include "CTile.h"
+#include "CBlock.h"
 #include "CItem_Coin.h"
 #include "CItem_Mushroom.h"
 #include "CItem_Flower.h"
@@ -118,14 +119,14 @@ void CScene_Stage01::enter()
 
 	for (int i = 0; i < 20; i++)
 	{
-		CTile* pTile1 = new CTile();
-		pTile1->setPos(fPoint((float)(T_SIZE / 2 + i * T_SIZE), (float)(WINSIZEY - T_SIZE / 2)));
-		addObject(pTile1, OBJ::TILE);
+		CBlock* pBlock = new CBlock();
+		pBlock->setPos(fPoint((float)(T_SIZE / 2 + i * T_SIZE), (float)(WINSIZEY - T_SIZE / 2)));
+		addObject(pBlock, OBJ::BLOCK);
 	}
 
-	CTile* pTile2 = new CTile();
-	pTile2->setPos(fPoint((float)(700.f), (float)(WINSIZEY - T_SIZE / 2 - T_SIZE)));
-	addObject(pTile2, OBJ::TILE);
+	CBlock* pBlock2 = new CBlock();
+	pBlock2->setPos(fPoint((float)(700.f), (float)(WINSIZEY - T_SIZE / 2 - T_SIZE)));
+	addObject(pBlock2, OBJ::BLOCK);
 
 	addObject(pPlayer, OBJ::PLAYER);
 	
@@ -155,28 +156,28 @@ void CScene_Stage01::enter()
 
 	for (int i = 0; i < 20; i++)
 	{
-		CTile* pTile1 = new CTile();
-		pTile1->setPos(fPoint(1100.f + (float)(T_SIZE / 2 + i * T_SIZE), (float)(WINSIZEY - T_SIZE / 2)));
-		addObject(pTile1, OBJ::TILE);
+		CBlock* pBlock = new CBlock();
+		pBlock->setPos(fPoint(1100.f + (float)(T_SIZE / 2 + i * T_SIZE), (float)(WINSIZEY - T_SIZE / 2)));
+		addObject(pBlock, OBJ::BLOCK);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		CTile* pTile2 = new CTile();
-		pTile2->setPos(fPoint((float)(1100.f) + (i * 6 * T_SIZE), (float)(WINSIZEY - T_SIZE / 2 - T_SIZE)));
-		addObject(pTile2, OBJ::TILE);
+		CBlock* pBlock = new CBlock();
+		pBlock->setPos(fPoint((float)(1100.f) + (i * 6 * T_SIZE), (float)(WINSIZEY - T_SIZE / 2 - T_SIZE)));
+		addObject(pBlock, OBJ::BLOCK);
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		CTile* pTile2 = new CTile();
-		pTile2->setPos(fPoint((float)(1300.f) + (i * 5 * T_SIZE), (float)(WINSIZEY - T_SIZE / 2 - 3 * T_SIZE)));
-		addObject(pTile2, OBJ::TILE);
+		CBlock* pBlock = new CBlock();
+		pBlock->setPos(fPoint((float)(1300.f) + (i * 5 * T_SIZE), (float)(WINSIZEY - T_SIZE / 2 - 3 * T_SIZE)));
+		addObject(pBlock, OBJ::BLOCK);
 	}
 	for (int i = 0; i < 2; i++)
 	{
-		CTile* pTile2 = new CTile();
-		pTile2->setPos(fPoint(1400.f + 200 * i, (float)(WINSIZEY / 2.f) - 50));
-		addObject(pTile2, OBJ::TILE);
+		CBlock* pBlock = new CBlock();
+		pBlock->setPos(fPoint(1400.f + 200 * i, (float)(WINSIZEY / 2.f) - 50));
+		addObject(pBlock, OBJ::BLOCK);
 	}
 	
 	
