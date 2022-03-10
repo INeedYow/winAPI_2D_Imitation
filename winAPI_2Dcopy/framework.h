@@ -29,7 +29,7 @@ using namespace std;
 
 // # 전역 변수
 extern HWND			hWnd;
-extern HINSTANCE	hInstance;
+extern HINSTANCE	hInst;
 
 
 // # 전처리기
@@ -153,6 +153,7 @@ enum class OBJECT_NAME
 enum class GROUP_SCENE
 {
 	TITLE,
+	TOOL,
 	STAGE_01,
 	RESULT,
 
@@ -255,6 +256,7 @@ enum class KEY_RESOURCE
 	TEX_MONSTER,
 	TEX_KOOPA,
 	TEX_ITEM_FB,
+	TEX_TILE,
 
 	SIZE
 
@@ -302,5 +304,5 @@ enum class KEY_RESOURCE
 #define setTrace(pObj)			CCameraManager::getInst()->setTraceObj(pObj)
 #define getRendPos(pos)			CCameraManager::getInst()->getRenderPos(pos)
 
-#define loadTex					CResourceManager::getInst()->loadTextrue
+#define loadTex(eName, wsPath)	CResourceManager::getInst()->loadTextrue(eName, wsPath)
 

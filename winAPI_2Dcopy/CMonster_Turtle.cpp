@@ -112,32 +112,32 @@ void CMonster_Turtle::collisionEnter(CCollider* pOther)
 			setStateTrue(S_DIR);
 			break;
 		}
-		// TODO 거북이 껍데기 구현
+		break;
+		// vs MARIO
 	case OBJNAME::MARIO:
 	case OBJNAME::SUPERMARIO:
-		if (DIR::BOTTOM == COLLRR(getCollider(), pOther))
-		{
-			switch (getName())
-			{
-			case OBJNAME::MONS_TURTLE:
+		if (getName() == OBJNAME::MONS_TURTLE)
+		{	// 거북이일 때
+			if (DIR::BOTTOM == COLLRR(getCollider(), pOther))
 				becomeShell();
-				break;
-			case OBJNAME::MONS_SHELL:
-			{
+		}
+		else
+		{	// 등딱지일 때
+			if (!(DIR::TOP == COLLRR(getCollider(), pOther)))
+			{	// 마리오가 밑에 있는 경우만 아니라면 등딱지 발사
 				CShell* pShell = new CShell();
 				pShell->setPos(getPos());
-				// 거북이 입장에서 오른쪽 왼쪽 충돌이니까 방향 조심
+				// 거북이 입장에서 오른쪽 왼쪽 충돌이니까 방향 주의
 				if (isLeftColl(getCollider(), pOther))
 					pShell->setDir(fVec2(-1.f, 0.f));
 				else
 					pShell->setDir(fVec2(1.f, 0.f));
 
 				createObj(pShell, OBJ::SHELL);
-				break;
-			}
 			}
 		}
 		break;
+
 	case OBJNAME::FIREBALL:
 	case OBJNAME::SHELL:
 		death();

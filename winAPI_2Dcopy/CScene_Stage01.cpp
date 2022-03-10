@@ -29,6 +29,9 @@ void CScene_Stage01::update()
 {
 	CScene::update();
 
+	if (KEY_ON(VK_ESCAPE))
+		changeScn(SCENE::TITLE);
+
 	m_fTimer += fDT;
 
 	if (m_fTimer > 1.4f)

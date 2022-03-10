@@ -19,6 +19,9 @@ void CScene_Title::update()
 {
 	m_fTimer += fDT;
 
+	if (KEY_ON(VK_TAB))
+		changeScn(SCENE::TOOL);
+
 	if (KEY_ON(VK_SPACE))
 	{
 		changeScn(SCENE::STAGE_01);
