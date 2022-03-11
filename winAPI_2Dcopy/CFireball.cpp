@@ -31,6 +31,11 @@ CFireball::~CFireball()
 {
 }
 
+CFireball* CFireball::clone()
+{
+	return new CFireball(*this);
+}
+
 void CFireball::setDir(fVec2 dir)
 {
 	m_fvDir = dir.normalize();

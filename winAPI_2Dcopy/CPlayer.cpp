@@ -432,9 +432,13 @@ void CPlayer::collisionKeep(CCollider* pOther)
 	}
 }
 
-// 점프하다가 벽 꼭지점에 걸치면 벽 윗면 타고 직선이동하다가 벽 끝나면 점프하는 버그있음
 void CPlayer::collisionEnter(CCollider* pOther)
 {
+	// TODO 이름으로 구분하던 것 상태값 받아서 처리하기
+	// 다이나믹 캐스트
+	//((CMonster*)(pOther->getOwner()))->getState();
+
+
 	switch (pOther->getOwner()->getName())
 	{
 		//벽 충돌
@@ -517,9 +521,9 @@ void CPlayer::collisionEnter(CCollider* pOther)
 
 		// 몬스터 충돌
 	case OBJNAME::MONS_TURTLE:
-		// 무적 아이템(별) 먹었을 때 제외, 이미 피해입어서 무적일 때 제외
-		if (!(m_uiState & S_SUPER) && !(m_uiState & S_INVINCIBLE))	
-		{	
+		// 무적 아이템(별) 먹었을 때 제외
+		if (!(m_uiState & S_SUPER))	
+		{	// TODO name말고 상태값으로 처리하기
 			if (pOther->getOwner()->getName() == OBJNAME::MONS_TURTLE)
 			{	// 거북이 상태일 때
 				switch (COLLRR(getCollider(), pOther))
@@ -530,7 +534,10 @@ void CPlayer::collisionEnter(CCollider* pOther)
 					s_uiScore += 1000;
 					break;
 				default:
-					getDamage();
+					if (!(m_uiState & S_INVINCIBLE))
+					{	// 이미 피해입어서 무적일 때 제외
+						getDamage();
+					}
 					break;
 				}
 			}

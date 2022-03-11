@@ -13,6 +13,7 @@ class CMonster_Turtle : public CMonster
 public:
 	CMonster_Turtle();
 	virtual ~CMonster_Turtle();
+	virtual CMonster_Turtle* clone();
 
 	void setDir(fVec2 dir);
 

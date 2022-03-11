@@ -39,6 +39,11 @@ CMonster_Turtle::~CMonster_Turtle()
 {
 }
 
+CMonster_Turtle* CMonster_Turtle::clone()
+{
+	return new CMonster_Turtle(*this);
+}
+
 void CMonster_Turtle::setDir(fVec2 dir)
 {
 	m_fvDir = dir;

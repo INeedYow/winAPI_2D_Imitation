@@ -15,6 +15,7 @@ class CFireball : public CObject
 public:
 	CFireball();
 	virtual ~CFireball();
+	virtual CFireball* clone();
 
 	void setDir(fVec2 dir);
 

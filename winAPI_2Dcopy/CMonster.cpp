@@ -5,22 +5,16 @@
 CMonster::CMonster()
 {
 	m_ucState = 0;
-	//m_fTimer = 0.f;
 }
 
 CMonster::~CMonster()
 {
 }
 
-//void CMonster::setTimer(float time)
-//{
-//	m_fTimer = time;
-//}
-//
-//float CMonster::getTimer()
-//{
-//	return m_fTimer;
-//}
+UCHAR CMonster::getState()
+{
+	return m_ucState;
+}
 
 void CMonster::setStateTrue(UCHAR state)
 {

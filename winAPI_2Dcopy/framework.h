@@ -58,6 +58,7 @@ extern HINSTANCE	hInst;
 #define S_GOUP				0x0010
 
 #define S_DEATH				0x8000
+	// TODO 몬스터 상태값 (나눠야 할듯)
 
 
 // # 능력치
