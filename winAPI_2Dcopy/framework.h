@@ -55,6 +55,8 @@ extern HINSTANCE	hInst;
 #define S_SUPER				0x0004
 #define S_INVINCIBLE		0x0008
 
+#define S_GOUP				0x0010
+
 #define S_DEATH				0x8000
 
 

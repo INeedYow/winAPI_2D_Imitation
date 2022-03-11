@@ -280,6 +280,11 @@ void CPlayer::update()
 		if (m_fGravity < (float)P_GRAVMAX)
 			m_fGravity += P_GRAV * fDT;
 
+		if ((m_fSpeedY - m_fGravity) < 0.f)				// 점프 동작 중 올라가는 중인지(내려오는 중일 때에만 바닥에 착지하도록 충돌 설정)
+			m_uiState &= ~(S_GOUP);
+		else
+			m_uiState |= S_GOUP;
+
 		drawMario(L"Jump");
 	}
 
@@ -406,10 +411,6 @@ void CPlayer::collisionKeep(CCollider* pOther)
 	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
-		case DIR::TOP:
-			if (m_uiState & S_AIR)
-				m_uiState &= ~(S_AIR);
-			break;
 		case DIR::LEFT:
 		{
 			fPoint pos = getPos();
@@ -441,15 +442,18 @@ void CPlayer::collisionEnter(CCollider* pOther)
 	case OBJNAME::TILE:
 		switch (COLLRR(getCollider(), pOther))
 		{
-		case DIR::TOP:	// 착지
+		case DIR::TOP:
 		{	// 지면과 1픽셀 겹치게 위치시켜서 exit말고 keep 호출되도록, 
-			fPoint pos = getPos();
-			pos.y = pOther->getPos().y - getCollider()->getOffset().y + pOther->getOffset().y 
-				- (pOther->getSize().y + getCollider()->getSize().y) / 2 + 1;
-			setPos(pos);
-			if (m_uiState & S_AIR)
-				m_uiState &= ~(S_AIR);
-			m_iBottomCnt++;
+			if (!(m_uiState & S_GOUP))
+			{	// 점프 동작 중 내려오는 동안에 충돌 시 착지
+				fPoint pos = getPos();
+				pos.y = pOther->getPos().y - getCollider()->getOffset().y + pOther->getOffset().y
+					- (pOther->getSize().y + getCollider()->getSize().y) / 2 + 1;
+				setPos(pos);
+				if (m_uiState & S_AIR)
+					m_uiState &= ~(S_AIR);
+				m_iBottomCnt++;
+			}
 			break;
 		}
 		case DIR::LEFT:
