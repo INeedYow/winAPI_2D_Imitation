@@ -10,7 +10,7 @@ UINT	CPlayer::s_uiCoin		= 0;
 UINT	CPlayer::s_uiScore		= 0;
 UINT	CPlayer::s_uiTryCnt		= 0;
 bool	CPlayer::s_bTransform	= false;
-float	CPlayer::s_fCamPosX = WINSIZEX * 0.65;
+float	CPlayer::s_fCamPosX = WINSIZEX * 0.65f;
 
 CPlayer::CPlayer()
 {
@@ -376,7 +376,6 @@ UINT CPlayer::getTryCnt()
 	return s_uiTryCnt;
 }
 
-// º®¿¡ µü ºÙ¾î¼­ ½î¸é º® ¶Õ°í ½î´Â ¹ö±×...
 void CPlayer::createFireball()
 {
 	fPoint pos = getPos();
@@ -474,7 +473,7 @@ void CPlayer::collisionEnter(CCollider* pOther)
 			m_fSpeedL = 0.f;
 			break;
 		}
-		case DIR::BOTTOM:	// ¸Ó¸®Äá
+		case DIR::BOTTOM:	//
 			m_fSpeedY = 0.f;
 			break;
 		}

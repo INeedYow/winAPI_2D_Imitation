@@ -213,30 +213,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
-            //Device Context 만들어서 ID 반환
             HDC hdc = BeginPaint(hWnd, &ps);
-
-            //Rectangle(hdc, 0, 0, 200, 200);
-            //Ellipse(hdc, 300, 300, 600, 600);
-
-            //// 직접 펜과 브러쉬 만들어서 DC에 적용
-            //HPEN hGreenPen = CreatePen(PS_DOT, 10, RGB(g_color, g_color, g_color)); // J, K 눌러서 색 변화 가능
-            //HBRUSH hRedBrush = CreateSolidBrush(RGB(255, 255, 255));
-
-            //// 기존 펜과 브러쉬 ID값 저장
-            //HPEN hOldPen = (HPEN)SelectObject(hdc, hGreenPen);
-            //HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hRedBrush);
-
-            //Ellipse(hdc, g_mousePos.x - 50, g_mousePos.y - 50, g_mousePos.x + 50, g_mousePos.y + 50);
-            //Rectangle(hdc, g_keyPos.x - 10, g_keyPos.y - 10, g_keyPos.x + 10, g_keyPos.y + 10);
-
-            //// DC의 펜과 브러쉬를 원래 것으로 되돌림
-            //SelectObject(hdc, hOldPen);
-            //SelectObject(hdc, hOldBrush);
-
-            //// 다 쓴 펜, 브러쉬 삭제
-            //DeleteObject(hGreenPen);
-            //DeleteObject(hRedBrush);
 
             EndPaint(hWnd, &ps);
         }

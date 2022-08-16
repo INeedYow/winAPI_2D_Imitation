@@ -88,16 +88,17 @@ bool isCollisionCircleToRect(const fPoint& cp, int cr, const RECT& rt)
 		(int)rt.bottom + cr };
 
 	// 확장한 사각형 안에 원의 중심이 있다면 충돌 (꼭지점 충돌은 제외)
-	if ((rect.left <= cp.x && cp.x <= rect.right) && (rect.top <= cp.y && cp.y <= rect.bottom))
+	if ((rect.left <= cp.x && cp.x <= rect.right) && (rt.top <= cp.y && cp.y <= rt.bottom) ||
+		(rt.left <= cp.x && cp.x <= rt.right) && (rect.top <= cp.y && cp.y <= rect.bottom))
 		return true;
 
-	// 꼭지점 충돌 확인 (확장한 사각형의 각 꼭지점 좌표가 원 안에 있는지 확인)
+	// 꼭지점 충돌 확인 (사각형의 각 꼭지점 좌표가 원 안에 있는지 확인)
 	else
 	{
-		if (ISCOLLPC(fPoint((float)rect.left, (float)rect.top), cp, cr))			return true;
-		if (ISCOLLPC(fPoint((float)rect.right, (float)rect.top), cp, cr))			return true;
-		if (ISCOLLPC(fPoint((float)rect.right, (float)rect.bottom), cp, cr))		return true;
-		if (ISCOLLPC(fPoint((float)rect.left, (float)rect.bottom), cp, cr))			return true;
+		if (ISCOLLPC(fPoint((float)rt.left, (float)rt.top), cp, cr))			return true;
+		if (ISCOLLPC(fPoint((float)rt.right, (float)rt.top), cp, cr))			return true;
+		if (ISCOLLPC(fPoint((float)rt.right, (float)rt.bottom), cp, cr))		return true;
+		if (ISCOLLPC(fPoint((float)rt.left, (float)rt.bottom), cp, cr))			return true;
 	}
 	return false;
 }
